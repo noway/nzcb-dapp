@@ -24,6 +24,9 @@
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
+    "env": {
+      "es2020": true
+    },
     "extends": [
       "react-app",
       "react-app/jest"
