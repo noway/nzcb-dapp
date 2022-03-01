@@ -1,23 +1,25 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import "./App.css";
 
 function App() {
+  const [passURI, setPassURI] = useState("");
+  const verify = () => {
+    if (passURI.length > 0) {
+      window.open(passURI, "_blank");
+    }
+  };
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <form onSubmit={verify}>
+          <input
+            type="text"
+            onChange={(e) => setPassURI(e.target.value)}
+            value={passURI}
+          />
+
+          <button type="submit">Verify</button>
+        </form>
       </header>
     </div>
   );
