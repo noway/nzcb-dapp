@@ -147,7 +147,7 @@ const encodeBytes = (data: Uint8Array | never[]) => {
   throw new Error('Too big data');
 };
 
-export function getToBeSignedAndRs(pass: string) {
+export function getToBeSigned(pass: string) {
   const data = decodeCOSE(Stream.fromBase32(pass.substring(8)))
   const sig_structure = new Uint8Array([
     // array w/ 4 items
@@ -161,9 +161,14 @@ export function getToBeSignedAndRs(pass: string) {
     // #4: payload: CWT claims
     ...encodeBytes(data.payload),
   ]);
-  const ToBeSigned = buf2hex(sig_structure);
-  const r = `${buf2hex(data.signature.slice(0, 32))}`.toUpperCase()
-  const s = `${buf2hex(data.signature.slice(32, 64))}`.toUpperCase()
-  return { ToBeSigned, rs: [r, s] }
+  const ToBeSigned = sig_structure;
+  return ToBeSigned
+}
+
+export function getRs(pass: string) {
+  const data = decodeCOSE(Stream.fromBase32(pass.substring(8)))
+  const r = data.signature.slice(0, 32);
+  const s = data.signature.slice(32, 64);
+  return [r, s]
 }
 
