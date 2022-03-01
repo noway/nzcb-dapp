@@ -2025,6 +2025,11 @@
     "@typescript-eslint/types" "5.13.0"
     eslint-visitor-keys "^3.0.0"
 
+"@vaxxnz/nzcp@^1.1.1":
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/@vaxxnz/nzcp/-/nzcp-1.1.1.tgz#b3780fbab9e27ae2bf1cd030515375d056ec5722"
+  integrity sha512-XJQNCxKLxT7yXDBI0OzvJbQEUEUYqqcORhenqk/Bgi5LT8rE3yIWxV77y4XGj4Ukz5qL04sFKSnp7fWSZg7IHQ==
+
 "@webassemblyjs/ast@1.11.1":
   version "1.11.1"
   resolved "https://registry.yarnpkg.com/@webassemblyjs/ast/-/ast-1.11.1.tgz#2bfd767eae1a6996f432ff7e8d7fc75679c0b6a7"
