@@ -29,10 +29,10 @@
   },
   "devDependencies": {
     "crypto": "npm:crypto-browserify",
+    "fs": "npm:browserify-fs",
     "os": "npm:os-browserify",
     "path": "npm:path-browserify",
-    "stream": "npm:stream-browserify",
-    "fs": "npm:browserify-fs"
+    "stream": "npm:stream-browserify"
   },
   "scripts": {
     "start": "react-scripts start",
