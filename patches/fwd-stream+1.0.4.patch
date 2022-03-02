@@ -1,0 +1,12 @@
+diff --git a/node_modules/fwd-stream/index.js b/node_modules/fwd-stream/index.js
+index 68d723a..6b785a1 100644
+--- a/node_modules/fwd-stream/index.js
++++ b/node_modules/fwd-stream/index.js
+@@ -1,6 +1,7 @@
+ var Writable = require('readable-stream/writable');
+ var Readable = require('readable-stream/readable');
+ var Duplex = require('readable-stream/duplex');
++window.Buffer = require('buffer').Buffer;
+ 
+ var DUMMY = new Buffer(0);
+ var noop = function() {};
