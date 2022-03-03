@@ -32,6 +32,7 @@ function App() {
   const [error, setError] = useState<Error | null>(null);
 
   const prove = async (passURI: string) => {
+    const _ = verifyPassURIOffline(passURI, { didDocument: DID_DOCUMENTS.MOH_EXAMPLE });
     const ToBeSigned = getToBeSigned(passURI)
     const data = prepareToBeSigned(ToBeSigned, 314)
     const input = { toBeSigned: bufferToBitArray(data.bytes), toBeSignedLen: data.bytesLen }
@@ -52,7 +53,6 @@ function App() {
   const verify = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     if (passURI.length > 0) {
-      // const result = verifyPassURIOffline(passURI, { didDocument: DID_DOCUMENTS.MOH_EXAMPLE });
       prove(passURI);
     }
   };
