@@ -62,17 +62,17 @@ function decodeCBOR(stream: Stream) {
   function decodeUint(stream: Stream, v: number) {
     let x = v & 31;
     if (x <= 23) { // small
-    } else if (x == 24) { // 8-bit
+    } else if (x === 24) { // 8-bit
       x = stream.getc();
-    } else if (x == 25) { // 16-bit
+    } else if (x === 25) { // 16-bit
       x = stream.getc() << 8;
       x |= stream.getc();
-    } else if (x == 26) { // 32-bit
+    } else if (x === 26) { // 32-bit
       x = stream.getc() << 24;
       x |= stream.getc() << 16;
       x |= stream.getc() << 8;
       x |= stream.getc();
-    } else if (x == 27) { // 64-bit
+    } else if (x === 27) { // 64-bit
       x = stream.getc() << 56;
       x |= stream.getc() << 48;
       x |= stream.getc() << 40;
@@ -125,12 +125,6 @@ function decodeCOSE(stream: Stream) {
     payload: data[2],
     signature: data[3],
   };
-}
-
-function buf2hex(buffer: Uint8Array) { // buffer is an ArrayBuffer
-  return [...new Uint8Array(buffer)]
-    .map(x => x.toString(16).padStart(2, '0'))
-    .join('');
 }
   
 const encodeBytes = (data: Uint8Array | never[]) => {
