@@ -37,9 +37,6 @@ function App() {
       console.log('credSubjHash',credSubjHash)
       console.log('toBeSignedHash',toBeSignedHash)
       console.log('exp',exp)
-      console.log('1',compare(credSubjHash, pubIdentity.credSubjHash))
-      console.log('2',compare(toBeSignedHash, pubIdentity.toBeSignedHash))
-      console.log('3',exp === pubIdentity.exp)
 
       if (compare(credSubjHash, pubIdentity.credSubjHash) && compare(toBeSignedHash, pubIdentity.toBeSignedHash) && exp === pubIdentity.exp) {
         setCircuitResultMatches(true)
