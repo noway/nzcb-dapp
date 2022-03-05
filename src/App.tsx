@@ -18,21 +18,18 @@ function App() {
     try {
       const input = getNZCPCircuitInput(passURI);
       console.log('proving...', input)
-      const { proof, publicSignals } = await groth16.fullProve(input, "nzcp_example.wasm", "nzcp_example_0001.zkey")
-      const { credSubjHash, toBeSignedHash, exp } = signalsToPubIdentity(publicSignals);
 
-      console.log('proof', proof, publicSignals)
-      console.log('credSubjHash',credSubjHash)
-      console.log('toBeSignedHash',toBeSignedHash)
-      console.log('exp',exp)
+      const { proof, publicSignals } = await groth16.fullProve(input, "nzcp_example.wasm", "nzcp_example_0001.zkey")
+      const actualPubIdentity = signalsToPubIdentity(publicSignals);
+      console.log('proof', proof, publicSignals, actualPubIdentity)
 
       const expectedPubIdentity = await getNZCPPubIdentity(passURI);
-      console.log('pubIdentity',expectedPubIdentity)
+      console.log('expectedPubIdentity',expectedPubIdentity)
   
       if (
-        compare(credSubjHash, expectedPubIdentity.credSubjHash)
-          && compare(toBeSignedHash, expectedPubIdentity.toBeSignedHash)
-          && exp === expectedPubIdentity.exp
+        compare(actualPubIdentity.credSubjHash, expectedPubIdentity.credSubjHash)
+          && compare(actualPubIdentity.toBeSignedHash, expectedPubIdentity.toBeSignedHash)
+          && actualPubIdentity.exp === expectedPubIdentity.exp
       ) {
         setCircuitResultMatches(true)
       } else {
