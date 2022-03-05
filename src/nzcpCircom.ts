@@ -1,5 +1,5 @@
 import { DID_DOCUMENTS, verifyPassURIOffline } from "@vaxxnz/nzcp";
-import { getToBeSigned } from "./nzcp";
+import { encodeToBeSigned } from "./nzcp";
 
 export function prepareToBeSigned(input: Uint8Array, maxLen: number) {
   const bytes = new Uint8Array(maxLen);
@@ -18,7 +18,7 @@ export function getNZCPPubIdentity(passURI: string, isLive: boolean) {
   const credentialSubject = verificationResult.credentialSubject
   const { givenName, familyName, dob } = credentialSubject;
   const credSubjConcat = `${givenName},${familyName},${dob}`
-  const toBeSignedByteArray = getToBeSigned(passURI)
+  const toBeSignedByteArray = encodeToBeSigned(passURI)
   const credSubjHash = crypto.subtle.digest("SHA-256", new TextEncoder().encode(credSubjConcat))
   const toBeSignedHash = crypto.subtle.digest("SHA-256", toBeSignedByteArray)
   const exp = verificationResult.raw.exp

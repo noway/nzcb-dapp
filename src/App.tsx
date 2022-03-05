@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./App.css";
-import { getToBeSigned } from "./nzcp";
+import { encodeToBeSigned } from "./nzcp";
 import { groth16 } from 'snarkjs'
 import { bufferToBitArray } from "./utils";
 import { getNZCPPubIdentity, prepareToBeSigned } from "./nzcpCircom";
@@ -15,7 +15,7 @@ function App() {
 
   const prove = async (passURI: string) => {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const ToBeSigned = getToBeSigned(passURI)
+    const ToBeSigned = encodeToBeSigned(passURI)
     const data = prepareToBeSigned(ToBeSigned, 314)
     const input = { toBeSigned: bufferToBitArray(data.bytes), toBeSignedLen: data.bytesLen }
     console.log('proving...', input)
