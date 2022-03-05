@@ -3,13 +3,6 @@
 
 export type Data = string | number | Uint8Array | Data[] | Map<Data, Data>;
 
-class VerificationError extends Error {
-  static invalidData() {
-    return "This QR code is invalid.";
-  }
-}
-
-
 function base32ToBytes(input: string) {
   const output = new Uint8Array(Math.ceil((input.length * 5) / 8));
   let buff = 0,
@@ -17,7 +10,7 @@ function base32ToBytes(input: string) {
     val;
   for (let inp = 0, outp = 0; inp < input.length; inp++) {
     if ((val = "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567".indexOf(input[inp])) < 0) {
-      throw VerificationError.invalidData();
+      throw new Error('invalid data');
     }
     buff = (buff << 5) | val;
     if ((bits += 5) >= 8) {
@@ -132,7 +125,7 @@ function decodeCBORStream(stream: Stream) {
       return dMap;
     }
     // return null
-    throw VerificationError.invalidData();
+    throw new Error('invalid data');
   }
   return decode(stream);
 }
@@ -146,7 +139,7 @@ export function decodeCBOR(bytes: Uint8Array) {
 export function decodeCOSE(bytes: Uint8Array) {
   const stream = new Stream(bytes);
   if (stream.getc() !== 0xd2) {
-    throw VerificationError.invalidData();
+    throw new Error('invalid data');
   }
   const data = decodeCBORStream(stream);
   if (
@@ -158,7 +151,7 @@ export function decodeCOSE(bytes: Uint8Array) {
     !(data[2] instanceof Uint8Array) ||
     !(data[3] instanceof Uint8Array)
   ) {
-    throw VerificationError.invalidData();
+    throw new Error('invalid data');
   }
   return {
     bodyProtected: data[0],
