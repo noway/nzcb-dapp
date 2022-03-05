@@ -1,6 +1,9 @@
 import { Data, decodeBytes, decodeCBOR, decodeCOSE, encodeToBeSigned } from "./nzcpTools";
 import { bitArrayToBuffer, bufferToBitArray, fitBytes } from "./utils";
 
+const TO_BE_SIGNED_MAX_LEN = 314;
+const SHA256_LEN_BITS = 256;
+
 export interface PubIdentity {
   credSubjHash: Uint8Array;
   toBeSignedHash: Uint8Array;
@@ -26,11 +29,10 @@ export async function getNZCPPubIdentity(passURI: string): Promise<PubIdentity> 
   return pubIdentity;
 }
 
-
 export function signalsToPubIdentity(publicSignals: number[]): PubIdentity {
-  const credSubjHash = bitArrayToBuffer(publicSignals.slice(0, 256));
-  const toBeSignedHash = bitArrayToBuffer(publicSignals.slice(256, 512));
-  const exp = Number(publicSignals[512]);
+  const credSubjHash = bitArrayToBuffer(publicSignals.slice(0, SHA256_LEN_BITS));
+  const toBeSignedHash = bitArrayToBuffer(publicSignals.slice(SHA256_LEN_BITS, 2 * SHA256_LEN_BITS));
+  const exp = Number(publicSignals[2 * SHA256_LEN_BITS]);
   return { credSubjHash, toBeSignedHash, exp };
 }
 
@@ -38,7 +40,7 @@ export function getNZCPCircuitInput(passURI: string) {
   const bytes = decodeBytes(passURI);
   const cose = decodeCOSE(bytes);
   const ToBeSigned = encodeToBeSigned(cose.bodyProtected, cose.payload);
-  const fitToBeSigned = fitBytes(ToBeSigned, 314);
+  const fitToBeSigned = fitBytes(ToBeSigned, TO_BE_SIGNED_MAX_LEN);
   const input = { toBeSigned: bufferToBitArray(fitToBeSigned), toBeSignedLen: ToBeSigned.length };
   return input;
 }
