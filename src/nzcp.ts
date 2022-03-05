@@ -174,6 +174,7 @@ const encodeBytes = (data: Uint8Array | never[]) => {
   throw new Error("Too big data");
 };
 
+// TODO: rename to encodeToBeSigned
 export function getToBeSigned(pass: string) {
   const data = decodeCOSE(Stream.fromBase32(pass.substring(8)));
   const sig_structure = new Uint8Array([
