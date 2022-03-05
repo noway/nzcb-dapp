@@ -1,18 +1,10 @@
 import { Data, decodeBytes, decodeCBOR, decodeCOSE, encodeToBeSigned } from "./nzcpTools";
-import { bitArrayToBuffer, bufferToBitArray } from "./utils";
+import { bitArrayToBuffer, bufferToBitArray, fitBytes } from "./utils";
 
 export interface PubIdentity {
   credSubjHash: Uint8Array;
   toBeSignedHash: Uint8Array;
   exp: number;
-}
-
-export function fitBytes(input: Uint8Array, maxLen: number) {
-  const bytes = new Uint8Array(maxLen);
-  for (let i = 0; i < input.length; i++) {
-    bytes[i] = input[i];
-  }
-  return bytes;
 }
 
 export async function getNZCPPubIdentity(passURI: string): Promise<PubIdentity> {

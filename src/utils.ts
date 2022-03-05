@@ -25,3 +25,11 @@ export function compare(a: Uint8Array, b: Uint8Array) {
   }
   return true;
 }
+
+export function fitBytes(input: Uint8Array, maxLen: number) {
+  const bytes = new Uint8Array(maxLen);
+  for (let i = 0; i < input.length; i++) {
+    bytes[i] = input[i];
+  }
+  return bytes;
+}
