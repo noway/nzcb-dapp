@@ -10,7 +10,7 @@ const EXAMPLE_PASS_URI = "NZCP:/1/2KCEVIQEIVVWK6JNGEASNICZAEP2KALYDZSGSZB2O5SWEO
 function App() {
   const [passURI, setPassURI] = useState(EXAMPLE_PASS_URI);
   const [proving, setProving] = useState(false);
-  const [error, setError] = useState<Error | null>(null);
+  const [provingError, setProvingError] = useState<Error | null>(null);
   const [circuitResultMatches, setCircuitResultMatches] = useState<boolean>(false);
 
   const prove = async (passURI: string) => {
@@ -37,7 +37,7 @@ function App() {
       }
     }
     catch (e) {
-      setError(e as Error);
+      setProvingError(e as Error);
       console.log('proof error', e)
     }
     setProving(false);
@@ -54,14 +54,17 @@ function App() {
     <div className="App">
       <header className="App-header">
         {proving ? "Proving, this may take a while..." : ""}
-        {error ? "Error while proving:  " + error.message : ""}
+        {provingError ? "Error while proving:  " + provingError.message : ""}
         <p>Circuit result matches: {circuitResultMatches ? "yes" : "no"}</p>
         <form onSubmit={verify}>
-          <input
-            type="text"
-            onChange={(e) => setPassURI(e.target.value)}
-            value={passURI}
-          />
+          <div>
+            <textarea
+              onChange={(e) => setPassURI(e.target.value)}
+              value={passURI}
+              cols={50}
+              rows={12}
+            />
+          </div>
           <button type="submit">Verify</button>
         </form>
       </header>
