@@ -1,4 +1,11 @@
 import { Data, decodeBytes, decodeCBOR, decodeCOSE, encodeToBeSigned } from "./nzcpTools";
+import { bitArrayToBuffer, bufferToBitArray } from "./utils";
+
+export interface PubIdentity {
+  credSubjHash: Uint8Array;
+  toBeSignedHash: Uint8Array;
+  exp: number;
+}
 
 export function fitBytes(input: Uint8Array, maxLen: number) {
   const bytes = new Uint8Array(maxLen);
@@ -8,11 +15,11 @@ export function fitBytes(input: Uint8Array, maxLen: number) {
   return bytes;
 }
 
-export async function getNZCPPubIdentity(passURI: string) {
+export async function getNZCPPubIdentity(passURI: string): Promise<PubIdentity> {
   const bytes = decodeBytes(passURI);
   const cose = decodeCOSE(bytes);
   const claims = decodeCBOR(cose.payload) as Map<Data, Data>;
-  const exp = claims.get(4);
+  const exp = claims.get(4) as number;
   const vc = claims.get("vc") as Map<string, Data>
   const credentialSubject = vc.get("credentialSubject") as Map<string, string>;
   const givenName = credentialSubject.get("givenName");
@@ -26,3 +33,21 @@ export async function getNZCPPubIdentity(passURI: string) {
   console.log('credSubjConcat', credSubjConcat);
   return pubIdentity;
 }
+
+
+export function signalsToPubIdentity(publicSignals: number[]): PubIdentity {
+  const credSubjHash = bitArrayToBuffer(publicSignals.slice(0, 256));
+  const toBeSignedHash = bitArrayToBuffer(publicSignals.slice(256, 512));
+  const exp = Number(publicSignals[512]);
+  return { credSubjHash, toBeSignedHash, exp };
+}
+
+export function getNZCPCircuitInput(passURI: string) {
+  const bytes = decodeBytes(passURI);
+  const cose = decodeCOSE(bytes);
+  const ToBeSigned = encodeToBeSigned(cose.bodyProtected, cose.payload);
+  const fitToBeSigned = fitBytes(ToBeSigned, 314);
+  const input = { toBeSigned: bufferToBitArray(fitToBeSigned), toBeSignedLen: ToBeSigned.length };
+  return input;
+}
+
