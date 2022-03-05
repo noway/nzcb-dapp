@@ -1,0 +1,13 @@
+diff --git a/node_modules/@iden3/binfileutils/node_modules/ffjavascript/src/threadman.js b/node_modules/@iden3/binfileutils/node_modules/ffjavascript/src/threadman.js
+index 61310a9..d476273 100644
+--- a/node_modules/@iden3/binfileutils/node_modules/ffjavascript/src/threadman.js
++++ b/node_modules/@iden3/binfileutils/node_modules/ffjavascript/src/threadman.js
+@@ -25,6 +25,8 @@ const MEM_SIZE = 25;  // Memory size in 64K Pakes (1600Kb)
+ import thread from "./threadman_thread.js";
+ import os from "os";
+ import Worker from "web-worker";
++import process from "process"
++window.process = process;
+ 
+ class Deferred {
+     constructor() {
