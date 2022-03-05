@@ -1,13 +1,32 @@
 // author: putara
 // https://github.com/putara/nzcp/blob/master/verifier.js
 
-type Data = string | number | Uint8Array | Data[] | { [key: string]: Data };
+export type Data = string | number | Uint8Array | Data[] | Map<Data, Data>;
 
 class VerificationError extends Error {
   static invalidData() {
     return "This QR code is invalid.";
   }
 }
+
+
+function base32ToBytes(input: string) {
+  const output = new Uint8Array(Math.ceil((input.length * 5) / 8));
+  let buff = 0,
+    bits = 0,
+    val;
+  for (let inp = 0, outp = 0; inp < input.length; inp++) {
+    if ((val = "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567".indexOf(input[inp])) < 0) {
+      throw VerificationError.invalidData();
+    }
+    buff = (buff << 5) | val;
+    if ((bits += 5) >= 8) {
+      output[outp++] = buff >> (bits -= 8);
+    }
+  }
+  return output;
+}
+
 
 class Stream {
   data: Uint8Array;
@@ -42,26 +61,10 @@ class Stream {
     this.ptr += len;
     return out;
   }
-  static fromBase32(input: string) {
-    const output = new Uint8Array(Math.ceil((input.length * 5) / 8));
-    let buff = 0,
-      bits = 0,
-      val;
-    for (let inp = 0, outp = 0; inp < input.length; inp++) {
-      if ((val = "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567".indexOf(input[inp])) < 0) {
-        throw VerificationError.invalidData();
-      }
-      buff = (buff << 5) | val;
-      if ((bits += 5) >= 8) {
-        output[outp++] = buff >> (bits -= 8);
-      }
-    }
-    return new Stream(output);
-  }
 }
 
 // RFC 7049
-function decodeCBOR(stream: Stream) {
+function decodeCBORStream(stream: Stream) {
   function decodeUint(stream: Stream, v: number) {
     let x = v & 31;
     if (x <= 23) {
@@ -119,12 +122,14 @@ function decodeCBOR(stream: Stream) {
       return d;
     } else if (type === 5) {
       // object
-      const d: Record<string, Data> = Object.fromEntries(
-        new Array(decodeUint(stream, v))
-          .fill(undefined)
-          .map((_) => [decode(stream), decode(stream)])
-      );
-      return d;
+      const dMap: Map<Data, Data> = new Map();
+      const len = decodeUint(stream, v);
+      for (let i = 0; i < len; ++i) {
+        const key = decode(stream);
+        const value = decode(stream);
+        dMap.set(key, value);
+      }
+      return dMap;
     }
     // return null
     throw VerificationError.invalidData();
@@ -132,13 +137,18 @@ function decodeCBOR(stream: Stream) {
   return decode(stream);
 }
 
+export function decodeCBOR(bytes: Uint8Array) {
+  return decodeCBORStream(new Stream(bytes));
+}
+
 // https://nzcp.covid19.health.nz/#data-model
 // RFC 8392
-function decodeCOSE(stream: Stream) {
+export function decodeCOSE(bytes: Uint8Array) {
+  const stream = new Stream(bytes);
   if (stream.getc() !== 0xd2) {
     throw VerificationError.invalidData();
   }
-  const data = decodeCBOR(stream);
+  const data = decodeCBORStream(stream);
   if (
     !(data instanceof Array) ||
     data.length !== 4 ||
@@ -174,8 +184,13 @@ const encodeBytes = (data: Uint8Array | never[]) => {
   throw new Error("Too big data");
 };
 
-export function encodeToBeSigned(pass: string) {
-  const data = decodeCOSE(Stream.fromBase32(pass.substring(8)));
+export function decodeBytes(passURI: string): Uint8Array {
+  // not verifying version-identifier or the prefix
+  return base32ToBytes(passURI.substring(8))
+}
+
+export function encodeToBeSigned(bodyProtected: Uint8Array, payload: Uint8Array) {
+  // const data = decodeCOSE(bytes);
   const sig_structure = new Uint8Array([
     // array w/ 4 items
     0x84,
@@ -192,18 +207,18 @@ export function encodeToBeSigned(pass: string) {
     0x65,
     0x31,
     // #2: body_protected: CWT headers
-    ...encodeBytes(data.bodyProtected),
+    ...encodeBytes(bodyProtected),
     // #3: external_aad: empty
     ...encodeBytes([]),
     // #4: payload: CWT claims
-    ...encodeBytes(data.payload),
+    ...encodeBytes(payload),
   ]);
   const ToBeSigned = sig_structure;
   return ToBeSigned;
 }
 
-export function getRs(pass: string) {
-  const data = decodeCOSE(Stream.fromBase32(pass.substring(8)));
+export function decodeRS(bytes: Uint8Array) {
+  const data = decodeCOSE(bytes);
   const r = data.signature.slice(0, 32);
   const s = data.signature.slice(32, 64);
   return [r, s];

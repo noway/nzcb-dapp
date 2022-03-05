@@ -1,5 +1,4 @@
-import { DID_DOCUMENTS, verifyPassURIOffline } from "@vaxxnz/nzcp";
-import { encodeToBeSigned } from "./nzcp";
+import { Data, decodeBytes, decodeCBOR, decodeCOSE, encodeToBeSigned } from "./nzcpTools";
 
 export function prepareToBeSigned(input: Uint8Array, maxLen: number) {
   const bytes = new Uint8Array(maxLen);
@@ -10,20 +9,21 @@ export function prepareToBeSigned(input: Uint8Array, maxLen: number) {
   return { bytes, bytesLen };
 }
 
-export function getNZCPPubIdentity(passURI: string, isLive: boolean) {
-  const verificationResult = verifyPassURIOffline(passURI, { didDocument: isLive ? DID_DOCUMENTS.MOH_LIVE : DID_DOCUMENTS.MOH_EXAMPLE })
-  if (!verificationResult.success) {
-    throw new Error('Invalid COVID pass')
-  }
-  const credentialSubject = verificationResult.credentialSubject
-  const { givenName, familyName, dob } = credentialSubject;
+export async function getNZCPPubIdentity(passURI: string) {
+  const bytes = decodeBytes(passURI);
+  const cose = decodeCOSE(bytes);
+  const claims = decodeCBOR(cose.payload) as Map<Data, Data>;
+  const exp = claims.get(4);
+  const vc = claims.get("vc") as Map<string, Data>
+  const credentialSubject = vc.get("credentialSubject") as Map<string, string>;
+  const givenName = credentialSubject.get("givenName");
+  const familyName = credentialSubject.get("familyName");
+  const dob = credentialSubject.get("dob");
   const credSubjConcat = `${givenName},${familyName},${dob}`
-  const toBeSignedByteArray = encodeToBeSigned(passURI)
-  const credSubjHash = crypto.subtle.digest("SHA-256", new TextEncoder().encode(credSubjConcat))
-  const toBeSignedHash = crypto.subtle.digest("SHA-256", toBeSignedByteArray)
-  const exp = verificationResult.raw.exp
+  const toBeSignedByteArray = encodeToBeSigned(cose.bodyProtected, cose.payload)
+  const credSubjHash = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(credSubjConcat))
+  const toBeSignedHash = await crypto.subtle.digest("SHA-256", toBeSignedByteArray)
   const pubIdentity = { credSubjHash, toBeSignedHash, exp };
   console.log('credSubjConcat', credSubjConcat);
-  console.log('pubIdentity', pubIdentity);
   return pubIdentity;
 }

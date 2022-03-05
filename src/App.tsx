@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./App.css";
-import { encodeToBeSigned } from "./nzcp";
+import { decodeBytes, decodeCOSE, encodeToBeSigned } from "./nzcpTools";
 import { groth16 } from 'snarkjs'
 import { bufferToBitArray } from "./utils";
 import { getNZCPPubIdentity, prepareToBeSigned } from "./nzcpCircom";
@@ -15,12 +15,14 @@ function App() {
 
   const prove = async (passURI: string) => {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const ToBeSigned = encodeToBeSigned(passURI)
+    const bytes = decodeBytes(passURI);
+    const cose = decodeCOSE(bytes);
+    const ToBeSigned = encodeToBeSigned(cose.bodyProtected, cose.payload);
     const data = prepareToBeSigned(ToBeSigned, 314)
     const input = { toBeSigned: bufferToBitArray(data.bytes), toBeSignedLen: data.bytesLen }
     console.log('proving...', input)
 
-    const pubIdentity = getNZCPPubIdentity(passURI, false);
+    const pubIdentity = await getNZCPPubIdentity(passURI);
     console.log('pubIdentity',pubIdentity)
 
     setProving(true)
@@ -61,3 +63,4 @@ function App() {
 }
 
 export default App;
+
