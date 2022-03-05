@@ -33,3 +33,16 @@ export function fitBytes(input: Uint8Array, maxLen: number) {
   }
   return bytes;
 }
+
+export function chunksToBits(chunks: bigint[], chunkSize: number) {
+  const bits = new Array(chunks.length * chunkSize);
+  for (let i = 0; i < chunks.length; i++) {
+      const chunk = chunks[i];
+      for (let j = 0; j < chunkSize; j++) {
+          const bitIdx = i * chunkSize + j;
+          const byte = (chunk >> BigInt(j)) & 1n;
+          bits[bitIdx] = Number(byte);
+      }
+  }
+  return bits
+}

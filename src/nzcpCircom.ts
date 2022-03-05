@@ -1,5 +1,5 @@
 import { Data, decodeBytes, decodeCBOR, decodeCOSE, encodeToBeSigned } from "./nzcpTools";
-import { bitArrayToBuffer, bufferToBitArray, fitBytes } from "./utils";
+import { bitArrayToBuffer, bufferToBitArray, chunksToBits, fitBytes } from "./utils";
 
 const TO_BE_SIGNED_MAX_LEN = 314;
 const SHA256_LEN_BITS = 256;
@@ -29,10 +29,11 @@ export async function getNZCPPubIdentity(passURI: string): Promise<PubIdentity> 
   return pubIdentity;
 }
 
-export function signalsToPubIdentity(publicSignals: number[]): PubIdentity {
-  const credSubjHash = bitArrayToBuffer(publicSignals.slice(0, SHA256_LEN_BITS));
-  const toBeSignedHash = bitArrayToBuffer(publicSignals.slice(SHA256_LEN_BITS, 2 * SHA256_LEN_BITS));
-  const exp = Number(publicSignals[2 * SHA256_LEN_BITS]);
+export function signalsToPubIdentity(publicSignals: string[]): PubIdentity {
+  const bigintSignals = publicSignals.map(s => BigInt(s));
+  const credSubjHash = fitBytes(bitArrayToBuffer(chunksToBits(bigintSignals.slice(0, 2), 248)), 32);
+  const toBeSignedHash = fitBytes(bitArrayToBuffer(chunksToBits(bigintSignals.slice(2, 4), 248)), 32);
+  const exp = Number(bigintSignals[4]);
   return { credSubjHash, toBeSignedHash, exp };
 }
 

@@ -20,7 +20,7 @@ function App() {
       console.log('proving...', input)
 
       const { proof, publicSignals } = await groth16.fullProve(input, "nzcp_example.wasm", "nzcp_example_0001.zkey")
-      const actualPubIdentity = signalsToPubIdentity(publicSignals);
+      const actualPubIdentity = signalsToPubIdentity(publicSignals as string[]);
       console.log('proof', proof, publicSignals, actualPubIdentity)
 
       const expectedPubIdentity = await getNZCPPubIdentity(passURI);
