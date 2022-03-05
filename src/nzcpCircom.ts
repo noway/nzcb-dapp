@@ -20,8 +20,8 @@ export async function getNZCPPubIdentity(passURI: string) {
   const dob = credentialSubject.get("dob");
   const credSubjConcat = `${givenName},${familyName},${dob}`
   const toBeSignedByteArray = encodeToBeSigned(cose.bodyProtected, cose.payload)
-  const credSubjHash = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(credSubjConcat)) as Uint8Array
-  const toBeSignedHash = await crypto.subtle.digest("SHA-256", toBeSignedByteArray) as Uint8Array
+  const credSubjHash = new Uint8Array(await crypto.subtle.digest("SHA-256", new TextEncoder().encode(credSubjConcat)))
+  const toBeSignedHash = new Uint8Array(await crypto.subtle.digest("SHA-256", toBeSignedByteArray))
   const pubIdentity = { credSubjHash, toBeSignedHash, exp };
   console.log('credSubjConcat', credSubjConcat);
   return pubIdentity;
