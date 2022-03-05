@@ -2,7 +2,6 @@ import { Data, decodeBytes, decodeCBOR, decodeCOSE, encodeToBeSigned } from "./n
 import { bitArrayToBuffer, bufferToBitArray, chunksToBits, fitBytes } from "./utils";
 
 const TO_BE_SIGNED_MAX_LEN = 314;
-const SHA256_LEN_BITS = 256;
 
 export interface PubIdentity {
   credSubjHash: Uint8Array;
