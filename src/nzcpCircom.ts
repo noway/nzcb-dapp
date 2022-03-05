@@ -1,12 +1,11 @@
 import { Data, decodeBytes, decodeCBOR, decodeCOSE, encodeToBeSigned } from "./nzcpTools";
 
-export function prepareToBeSigned(input: Uint8Array, maxLen: number) {
+export function fitBytes(input: Uint8Array, maxLen: number) {
   const bytes = new Uint8Array(maxLen);
   for (let i = 0; i < input.length; i++) {
     bytes[i] = input[i];
   }
-  const bytesLen = input.length;
-  return { bytes, bytesLen };
+  return bytes;
 }
 
 export async function getNZCPPubIdentity(passURI: string) {
