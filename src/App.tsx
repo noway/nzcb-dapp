@@ -71,7 +71,7 @@ function App() {
       const verifier = Verifier__factory.connect("0x8EE8e8974CA1917f9F91BD2F441C20ab3A57dF15", signer)
       console.log('verifier', verifier)
       const a: [bigint, bigint] = [BigInt(proof.pi_a[0]), BigInt(proof.pi_a[1])]
-      const b: [[bigint, bigint],[bigint, bigint]] = [[BigInt(proof.pi_b[0][0]), BigInt(proof.pi_b[0][1])], [BigInt(proof.pi_b[1][0]), BigInt(proof.pi_b[1][1])]]
+      const b: [[bigint, bigint], [bigint, bigint]] = [[BigInt(proof.pi_b[0][1]), BigInt(proof.pi_b[0][0])], [BigInt(proof.pi_b[1][1]), BigInt(proof.pi_b[1][0])]]
       const c: [bigint, bigint] = [BigInt(proof.pi_c[0]), BigInt(proof.pi_c[1])]
       const input: [bigint, bigint, bigint, bigint, bigint] = [BigInt(publicSignals[0]), BigInt(publicSignals[1]), BigInt(publicSignals[2]), BigInt(publicSignals[3]), BigInt(publicSignals[4])];
       console.log(a, b, c, input)
