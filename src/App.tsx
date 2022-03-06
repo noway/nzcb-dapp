@@ -32,7 +32,7 @@ function App() {
       const actualPubIdentity = signalsToPubIdentity(publicSignals as string[]);
       console.log('proof', proof, publicSignals, actualPubIdentity)
 
-      const expectedPubIdentity = await getNZCPPubIdentity(passURI);
+      const expectedPubIdentity = await getNZCPPubIdentity(passURI, signer.address);
       console.log('expectedPubIdentity',expectedPubIdentity)
 
       const verifier = Verifier__factory.connect("0x5230C4C95b9A3b09Ad6dFC1DC901Df369c772Ca3", signer)
@@ -40,7 +40,7 @@ function App() {
       const a: [bigint, bigint] = [BigInt(proof.pi_a[0]), BigInt(proof.pi_a[1])]
       const b: [[bigint, bigint], [bigint, bigint]] = [[BigInt(proof.pi_b[0][1]), BigInt(proof.pi_b[0][0])], [BigInt(proof.pi_b[1][1]), BigInt(proof.pi_b[1][0])]]
       const c: [bigint, bigint] = [BigInt(proof.pi_c[0]), BigInt(proof.pi_c[1])]
-      const input: [bigint, bigint, bigint, bigint, bigint] = [BigInt(publicSignals[0]), BigInt(publicSignals[1]), BigInt(publicSignals[2]), BigInt(publicSignals[3]), BigInt(publicSignals[4])];
+      const input: [bigint, bigint, bigint] = [BigInt(publicSignals[0]), BigInt(publicSignals[1]), BigInt(publicSignals[2])];
       console.log(a, b, c, input)
       const result = await verifier.verifyProof(a, b, c, input)
       setVerifierResult(result)
@@ -50,6 +50,7 @@ function App() {
       if (
         compare(actualPubIdentity.credSubjHash, expectedPubIdentity.credSubjHash)
           && compare(actualPubIdentity.toBeSignedHash, expectedPubIdentity.toBeSignedHash)
+          && compare(actualPubIdentity.data, expectedPubIdentity.data)
           && actualPubIdentity.exp === expectedPubIdentity.exp
       ) {
         setCircuitResultMatches(true)

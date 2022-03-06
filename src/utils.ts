@@ -46,3 +46,11 @@ export function chunksToBits(chunks: bigint[], chunkSize: number) {
   }
   return bits
 }
+
+export function bitArrayToNum(a: number[]) {
+  let num = 0;
+  for(let i = 0; i < a.length; i++) {
+      num |= a[i] << i;
+  }
+  return num
+}
