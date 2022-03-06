@@ -28,18 +28,21 @@
     "web-vitals": "^2.1.0"
   },
   "devDependencies": {
+    "@typechain/ethers-v5": "^9.0.0",
     "crypto": "npm:crypto-browserify",
     "fs": "npm:browserify-fs",
     "os": "npm:os-browserify",
     "path": "npm:path-browserify",
-    "stream": "npm:stream-browserify"
+    "stream": "npm:stream-browserify",
+    "typechain": "^7.0.0"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "postinstall": "patch-package"
+    "postinstall": "patch-package",
+    "compile-contract-types": "typechain --target ethers-v5 --out-dir './contracts/types' './contracts/*.json'"
   },
   "eslintConfig": {
     "env": {
