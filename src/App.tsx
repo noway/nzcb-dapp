@@ -21,7 +21,7 @@ function App() {
       const circuitInput = getNZCPCircuitInput(passURI);
       console.log('proving...', circuitInput)
 
-      // const { proof, publicSignals } = await groth16.fullProve(input, "nzcp_example.wasm", "nzcp_example_0001.zkey")
+      // const { proof, publicSignals } = await groth16.fullProve(circuitInput, "nzcp_example.wasm", "nzcp_example_0001.zkey")
 
       const proof = {
           "pi_a": [
