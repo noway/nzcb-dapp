@@ -24,51 +24,13 @@ function App() {
 
       const { proof, publicSignals } = await groth16.fullProve(circuitInput, "nzcp_example.wasm", "nzcp_example_0001.zkey")
 
-      /*
-      const proof = {
-          "pi_a": [
-              "11539412160635928257474705897328090833904257557011703342609204998872599021700",
-              "10075336503032401675008831281140418134130223717686211900553986791890393047912",
-              "1"
-          ],
-          "pi_b": [
-              [
-                  "12577053859341466967328809342389909001282846992486541048083717533911962519196",
-                  "3412509244958026751356623685831257262721005109871343475300497514693756809551"
-              ],
-              [
-                  "21449278417468229923175013013204242195790618479058852822382222068633114698253",
-                  "184048061663936649139110486270255416945364992762624325173617761547526351785"
-              ],
-              [
-                  "1",
-                  "0"
-              ]
-          ],
-          "pi_c": [
-              "5449975126432875366447163766082505697678831194928898594313613338480181339695",
-              "19230229730190395864604850707670124848599447045112424019625046176191381575300",
-              "1"
-          ],
-          "protocol": "groth16",
-          "curve": "bn128"
-      }
-      const publicSignals = [
-          "332803489704591243828114355286261993890678185647226483553216796488284950010",
-          "213",
-          "366677313775235426412199931337625106565467678080892143469223808086055532772",
-          "119",
-          "1951416330"
-      ]
-      */
-      const url = "http://127.0.0.1:7545";
-      const provider = new providers.JsonRpcProvider(url);
+      const provider = new providers.JsonRpcProvider("http://127.0.0.1:7545");
 
       const actualPubIdentity = signalsToPubIdentity(publicSignals as string[]);
       console.log('proof', proof, publicSignals, actualPubIdentity)
 
       const expectedPubIdentity = await getNZCPPubIdentity(passURI);
-      // console.log('expectedPubIdentity',expectedPubIdentity)
+      console.log('expectedPubIdentity',expectedPubIdentity)
 
       const signer = new Wallet("e5b2911264f13b902da8790d0136661f418c301dda2e8f37124a3da585983302", provider);
       const verifier = Verifier__factory.connect("0x71d379Db8dbf9d9f8454C95ad56b9D3463cF996B", signer)
