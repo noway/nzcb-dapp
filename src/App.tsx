@@ -4,7 +4,7 @@ import { groth16 } from 'snarkjs'
 import { compare } from "./utils";
 import { getNZCPPubIdentity,  getNZCPCircuitInput, signalsToPubIdentity } from "./nzcpCircom";
 import { Verifier__factory } from "./contracts/types/factories/Verifier__factory";
-import { providers, Signer, Wallet } from "ethers";
+import { providers, Signer, utils, Wallet } from "ethers";
 
 const EXAMPLE_PASS_URI = "NZCP:/1/2KCEVIQEIVVWK6JNGEASNICZAEP2KALYDZSGSZB2O5SWEOTOPJRXALTDN53GSZBRHEXGQZLBNR2GQLTOPICRUYMBTIFAIGTUKBAAUYTWMOSGQQDDN5XHIZLYOSBHQJTIOR2HA4Z2F4XXO53XFZ3TGLTPOJTS6MRQGE4C6Y3SMVSGK3TUNFQWY4ZPOYYXQKTIOR2HA4Z2F4XW46TDOAXGG33WNFSDCOJONBSWC3DUNAXG46RPMNXW45DFPB2HGL3WGFTXMZLSONUW63TFGEXDALRQMR2HS4DFQJ2FMZLSNFTGSYLCNRSUG4TFMRSW45DJMFWG6UDVMJWGSY2DN53GSZCQMFZXG4LDOJSWIZLOORUWC3CTOVRGUZLDOSRWSZ3JOZSW4TTBNVSWISTBMNVWUZTBNVUWY6KOMFWWKZ2TOBQXE4TPO5RWI33CNIYTSNRQFUYDILJRGYDVAYFE6VGU4MCDGK7DHLLYWHVPUS2YIDJOA6Y524TD3AZRM263WTY2BE4DPKIF27WKF3UDNNVSVWRDYIYVJ65IRJJJ6Z25M2DO4YZLBHWFQGVQR5ZLIWEQJOZTS3IQ7JTNCFDX"
 
@@ -19,12 +19,15 @@ function App() {
   const prove = async (passURI: string) => {
     setProving(true)
     try {
-      const circuitInput = getNZCPCircuitInput(passURI);
+
+      const provider = new providers.JsonRpcProvider("http://127.0.0.1:7545");
+      const signer = new Wallet("e5b2911264f13b902da8790d0136661f418c301dda2e8f37124a3da585983302", provider);
+
+      const circuitInput = getNZCPCircuitInput(passURI, signer.address);
       console.log('proving...', circuitInput)
 
       const { proof, publicSignals } = await groth16.fullProve(circuitInput, "nzcp_example.wasm", "nzcp_example_0001.zkey")
 
-      const provider = new providers.JsonRpcProvider("http://127.0.0.1:7545");
 
       const actualPubIdentity = signalsToPubIdentity(publicSignals as string[]);
       console.log('proof', proof, publicSignals, actualPubIdentity)
@@ -32,7 +35,6 @@ function App() {
       const expectedPubIdentity = await getNZCPPubIdentity(passURI);
       console.log('expectedPubIdentity',expectedPubIdentity)
 
-      const signer = new Wallet("e5b2911264f13b902da8790d0136661f418c301dda2e8f37124a3da585983302", provider);
       const verifier = Verifier__factory.connect("0x5230C4C95b9A3b09Ad6dFC1DC901Df369c772Ca3", signer)
       console.log('verifier', verifier)
       const a: [bigint, bigint] = [BigInt(proof.pi_a[0]), BigInt(proof.pi_a[1])]

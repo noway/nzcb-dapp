@@ -1,3 +1,4 @@
+import { utils } from "ethers";
 import { Data, decodeBytes, decodeCBOR, decodeCOSE, encodeToBeSigned } from "./nzcpTools";
 import { bitArrayToBuffer, bufferToBitArray, chunksToBits, fitBytes } from "./utils";
 
@@ -36,12 +37,14 @@ export function signalsToPubIdentity(publicSignals: string[]): PubIdentity {
   return { credSubjHash, toBeSignedHash, exp };
 }
 
-export function getNZCPCircuitInput(passURI: string) {
+export function getNZCPCircuitInput(passURI: string, signerAddress: string) {
   const bytes = decodeBytes(passURI);
   const cose = decodeCOSE(bytes);
   const ToBeSigned = encodeToBeSigned(cose.bodyProtected, cose.payload);
   const fitToBeSigned = fitBytes(ToBeSigned, TO_BE_SIGNED_MAX_LEN);
-  const input = { toBeSigned: bufferToBitArray(fitToBeSigned), toBeSignedLen: ToBeSigned.length };
+  const signedAddressBytes = utils.arrayify(signerAddress)
+  const data = fitBytes(signedAddressBytes, 25);
+  const input = { toBeSigned: bufferToBitArray(fitToBeSigned), toBeSignedLen: ToBeSigned.length, data: bufferToBitArray(data) };
   return input;
 }
 
