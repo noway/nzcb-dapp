@@ -13,6 +13,7 @@
     "browserify-fs": "^1.0.0",
     "buffer": "^6.0.3",
     "crypto-browserify": "^3.12.0",
+    "ethers": "^5.5.4",
     "os-browserify": "^0.3.0",
     "patch-package": "^6.4.7",
     "path-browserify": "^1.0.1",
