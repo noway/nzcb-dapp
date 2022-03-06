@@ -47,7 +47,6 @@ export function signalsToPubIdentity(publicSignals: string[]): PubIdentity {
   const credSubjHash = bitArrayToBuffer(credSubjHashBits)
   const toBeSignedHash = bitArrayToBuffer(toBeSignedHashBits)
   const exp = bitArrayToNum(expBits);
-
   const data = bitArrayToBuffer(dataBits)
 
   const pubIdentity = { credSubjHash, toBeSignedHash, exp, data };
@@ -63,5 +62,29 @@ export function getNZCPCircuitInput(passURI: string, signerAddress: string) {
   const data = fitBytes(signedAddressBytes, 25);
   const input = { toBeSigned: bufferToBitArray(fitToBeSigned), toBeSignedLen: ToBeSigned.length, data: bufferToBitArray(data) };
   return input;
+}
+
+interface ProofArgs {
+  a: [bigint, bigint];
+  b: [[bigint, bigint], [bigint, bigint]];
+  c: [bigint, bigint];
+  input: [bigint, bigint, bigint];
+}
+
+interface Proof {
+  pi_a: [string, string]
+  pi_b: [[string, string], [string, string]]
+  pi_c: [string, string]
+}
+
+type PublicSignals = [string, string, string]; 
+
+export function getProofArgs(proof: Proof, publicSignals: PublicSignals): ProofArgs {
+  const { pi_a, pi_b, pi_c } = proof;
+  const a: [bigint, bigint] = [BigInt(pi_a[0]), BigInt(pi_a[1])];
+  const b: [[bigint, bigint], [bigint, bigint]] = [[BigInt(pi_b[0][1]), BigInt(pi_b[0][0])], [BigInt(pi_b[1][1]), BigInt(pi_b[1][0])]];
+  const c: [bigint, bigint] = [BigInt(pi_c[0]), BigInt(pi_c[1])];
+  const input: [bigint, bigint, bigint] = [BigInt(publicSignals[0]), BigInt(publicSignals[1]), BigInt(publicSignals[2])];
+  return { a, b, c, input };
 }
 
