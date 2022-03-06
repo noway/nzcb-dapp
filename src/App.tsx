@@ -33,7 +33,7 @@ function App() {
       console.log('expectedPubIdentity',expectedPubIdentity)
 
       const signer = new Wallet("e5b2911264f13b902da8790d0136661f418c301dda2e8f37124a3da585983302", provider);
-      const verifier = Verifier__factory.connect("0x71d379Db8dbf9d9f8454C95ad56b9D3463cF996B", signer)
+      const verifier = Verifier__factory.connect("0x5230C4C95b9A3b09Ad6dFC1DC901Df369c772Ca3", signer)
       console.log('verifier', verifier)
       const a: [bigint, bigint] = [BigInt(proof.pi_a[0]), BigInt(proof.pi_a[1])]
       const b: [[bigint, bigint], [bigint, bigint]] = [[BigInt(proof.pi_b[0][1]), BigInt(proof.pi_b[0][0])], [BigInt(proof.pi_b[1][1]), BigInt(proof.pi_b[1][0])]]
