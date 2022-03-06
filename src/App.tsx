@@ -14,6 +14,7 @@ function App() {
   const [proving, setProving] = useState(false);
   const [provingError, setProvingError] = useState<Error | null>(null);
   const [circuitResultMatches, setCircuitResultMatches] = useState<boolean>(false);
+  const [verifierResult, setVerifierResult] = useState<boolean>(false);
 
   const prove = async (passURI: string) => {
     setProving(true)
@@ -21,8 +22,9 @@ function App() {
       const circuitInput = getNZCPCircuitInput(passURI);
       console.log('proving...', circuitInput)
 
-      // const { proof, publicSignals } = await groth16.fullProve(circuitInput, "nzcp_example.wasm", "nzcp_example_0001.zkey")
+      const { proof, publicSignals } = await groth16.fullProve(circuitInput, "nzcp_example.wasm", "nzcp_example_0001.zkey")
 
+      /*
       const proof = {
           "pi_a": [
               "11539412160635928257474705897328090833904257557011703342609204998872599021700",
@@ -58,6 +60,7 @@ function App() {
           "119",
           "1951416330"
       ]
+      */
       const url = "http://127.0.0.1:7545";
       const provider = new providers.JsonRpcProvider(url);
 
@@ -76,6 +79,7 @@ function App() {
       const input: [bigint, bigint, bigint, bigint, bigint] = [BigInt(publicSignals[0]), BigInt(publicSignals[1]), BigInt(publicSignals[2]), BigInt(publicSignals[3]), BigInt(publicSignals[4])];
       console.log(a, b, c, input)
       const result = await verifier.verifyProof(a, b, c, input)
+      setVerifierResult(result)
       console.log('result', result)
 
 
@@ -109,6 +113,7 @@ function App() {
         {proving ? "Proving, this may take a while..." : ""}
         {provingError ? "Error while proving:  " + provingError.message : ""}
         <p>Circuit result matches: {circuitResultMatches ? "yes" : "no"}</p>
+        <p>Verifier result: {verifierResult ? "true" : "false"}</p>
         <form onSubmit={verify}>
           <div>
             <textarea
