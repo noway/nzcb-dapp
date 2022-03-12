@@ -11,7 +11,7 @@ const EXAMPLE_PASS_URI = "NZCP:/1/2KCEVIQEIVVWK6JNGEASNICZAEP2KALYDZSGSZB2O5SWEO
 const CONTRACT_ADDRESS = "0x5230C4C95b9A3b09Ad6dFC1DC901Df369c772Ca3"
 
 const provider = new providers.JsonRpcProvider("http://127.0.0.1:7545");
-const signer = new Wallet("e5b2911264f13b902da8790d0136661f418c301dda2e8f37124a3da585983302", provider);
+const signer = new Wallet("ac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80", provider);
 
 const verifier = Verifier__factory.connect(CONTRACT_ADDRESS, signer)
 
