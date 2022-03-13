@@ -28,6 +28,7 @@ export async function getNZCPPubIdentity(passURI: string, signerAddress: string)
   const signedAddressBytes = utils.arrayify(signerAddress)
   const data = fitBytes(signedAddressBytes, 25);
   const pubIdentity = { credSubjHash, toBeSignedHash, exp, data };
+  console.log('exp', exp);
   console.log('credSubjConcat', credSubjConcat);
   return pubIdentity;
 }
