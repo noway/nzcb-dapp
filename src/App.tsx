@@ -3,7 +3,6 @@ import "./App.css";
 import { groth16 } from 'snarkjs'
 import { compare } from "./utils";
 import { getNZCPPubIdentity,  getNZCPCircuitInput, signalsToPubIdentity, getProofArgs } from "./nzcpCircom";
-import { Verifier__factory } from "./contracts/types/factories/Verifier__factory";
 import { ContractReceipt, providers, Wallet } from "ethers";
 import { NZCOVIDBadge__factory } from "./contracts/types";
 
@@ -19,7 +18,6 @@ console.log('signer.address',signer.address)
 const r = "0xD2E07B1DD7263D833166BDBB4F1A093837A905D7ECA2EE836B6B2ADA23C23154";
 const s = "0xFBA88A529F675D6686EE632B09EC581AB08F72B458904BB3396D10FA66D11477";
 
-// const verifier = Verifier__factory.connect(CONTRACT_ADDRESS, signer)
 const nzCovidBadge = NZCOVIDBadge__factory.connect(CONTRACT_ADDRESS, signer)
 
 function App() {
@@ -71,7 +69,7 @@ function App() {
     setProving(false);
   }
 
-  const verify = async (e: React.FormEvent<HTMLFormElement>) => {
+  const mint = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     if (passURI.length > 0) {
       prove(passURI);
@@ -85,7 +83,7 @@ function App() {
         {provingError ? "Error while proving:  " + provingError.message : ""}
         <p>Circuit result matches: {circuitResultMatches ? "yes" : "no"}</p>
         <p>Verifier result: {JSON.stringify(verifierResult, null, 2)}</p>
-        <form onSubmit={verify}>
+        <form onSubmit={mint}>
           <div>
             <textarea
               onChange={(e) => setPassURI(e.target.value)}
@@ -94,7 +92,7 @@ function App() {
               rows={12}
             />
           </div>
-          <button type="submit">Verify</button>
+          <button type="submit">Mint</button>
         </form>
       </header>
     </div>
