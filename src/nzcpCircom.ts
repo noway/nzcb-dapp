@@ -7,6 +7,7 @@ const TO_BE_SIGNED_MAX_LEN = 314;
 export interface PubIdentity {
   credSubjHash: Uint8Array;
   toBeSignedHash: Uint8Array;
+  nbf: number;
   exp: number;
   data: Uint8Array;
 }
@@ -15,6 +16,7 @@ export async function getNZCPPubIdentity(passURI: string, signerAddress: string)
   const bytes = decodeBytes(passURI);
   const cose = decodeCOSE(bytes);
   const claims = decodeCBOR(cose.payload) as Map<Data, Data>;
+  const nbf = claims.get(5) as number;
   const exp = claims.get(4) as number;
   const vc = claims.get("vc") as Map<string, Data>
   const credentialSubject = vc.get("credentialSubject") as Map<string, string>;
@@ -26,8 +28,8 @@ export async function getNZCPPubIdentity(passURI: string, signerAddress: string)
   const credSubjHash = new Uint8Array(await crypto.subtle.digest("SHA-256", new TextEncoder().encode(credSubjConcat)))
   const toBeSignedHash = new Uint8Array(await crypto.subtle.digest("SHA-256", toBeSignedByteArray))
   const signedAddressBytes = utils.arrayify(signerAddress)
-  const data = fitBytes(signedAddressBytes, 25);
-  const pubIdentity = { credSubjHash, toBeSignedHash, exp, data };
+  const data = fitBytes(signedAddressBytes, 21);
+  const pubIdentity = { credSubjHash, toBeSignedHash, exp, nbf, data };
   console.log('exp', exp);
   console.log('credSubjConcat', credSubjConcat);
   return pubIdentity;
@@ -35,22 +37,24 @@ export async function getNZCPPubIdentity(passURI: string, signerAddress: string)
 
 export function signalsToPubIdentity(publicSignals: string[]): PubIdentity {
   const SHA256_BYTES = 32;
-  const EXP_LEN_BITS = 8 * 4;
+  const TIMESTAMP_BITS = 8 * 4;
 
   const bigintSignals = publicSignals.map(s => BigInt(s));
   const bits = chunksToBits(bigintSignals, 248);
 
   const credSubjHashBits = bits.slice(0, SHA256_BYTES * 8);
   const toBeSignedHashBits = bits.slice(SHA256_BYTES * 8, 2 * SHA256_BYTES * 8);
-  const expBits = bits.slice(2 * SHA256_BYTES * 8, 2 * SHA256_BYTES * 8 + EXP_LEN_BITS);
-  const dataBits = bits.slice(2 * SHA256_BYTES * 8 + EXP_LEN_BITS);
+  const nbfBits = bits.slice(2 * SHA256_BYTES * 8, 2 * SHA256_BYTES * 8 + TIMESTAMP_BITS);
+  const expBits = bits.slice(2 * SHA256_BYTES * 8 + TIMESTAMP_BITS, 2 * SHA256_BYTES * 8 + 2 * TIMESTAMP_BITS);
+  const dataBits = bits.slice(2 * SHA256_BYTES * 8 + 2 * TIMESTAMP_BITS);
 
   const credSubjHash = bitArrayToBuffer(credSubjHashBits)
   const toBeSignedHash = bitArrayToBuffer(toBeSignedHashBits)
+  const nbf = bitArrayToNum(nbfBits);
   const exp = bitArrayToNum(expBits);
   const data = bitArrayToBuffer(dataBits)
 
-  const pubIdentity = { credSubjHash, toBeSignedHash, exp, data };
+  const pubIdentity = { credSubjHash, toBeSignedHash, nbf, exp, data };
   return pubIdentity;
 }
 
@@ -60,7 +64,7 @@ export function getNZCPCircuitInput(passURI: string, signerAddress: string) {
   const ToBeSigned = encodeToBeSigned(cose.bodyProtected, cose.payload);
   const fitToBeSigned = fitBytes(ToBeSigned, TO_BE_SIGNED_MAX_LEN);
   const signedAddressBytes = utils.arrayify(signerAddress)
-  const data = fitBytes(signedAddressBytes, 25);
+  const data = fitBytes(signedAddressBytes, 21);
   const input = { toBeSigned: bufferToBitArray(fitToBeSigned), toBeSignedLen: ToBeSigned.length, data: bufferToBitArray(data) };
   return input;
 }
