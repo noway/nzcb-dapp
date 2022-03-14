@@ -15,6 +15,7 @@ const provider = new providers.JsonRpcProvider("http://127.0.0.1:7545");
 const signer = new Wallet("ac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80", provider);
 console.log('signer.address',signer.address)
 
+// TODO: dynamic
 const r = "0xD2E07B1DD7263D833166BDBB4F1A093837A905D7ECA2EE836B6B2ADA23C23154";
 const s = "0xFBA88A529F675D6686EE632B09EC581AB08F72B458904BB3396D10FA66D11477";
 
