@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./App.css";
 import { groth16 } from 'snarkjs'
-import { compare } from "./utils";
+import { compare, fitBytes } from "./utils";
 import { getNZCPPubIdentity,  getNZCPCircuitInput, signalsToPubIdentity, getProofArgs } from "./nzcpCircom";
 import { ContractReceipt, providers, Wallet } from "ethers";
 import { NZCOVIDBadge__factory } from "./contracts/types";
@@ -30,8 +30,9 @@ function App() {
   const prove = async (passURI: string) => {
     setProving(true)
     try {
+      const secretIndex = fitBytes(new Uint8Array([0x00]), 32);
 
-      const circuitInput = getNZCPCircuitInput(passURI, signer.address);
+      const circuitInput = getNZCPCircuitInput(passURI, secretIndex, signer.address);
       console.log('proving...', circuitInput)
 
       const { proof, publicSignals } = await groth16.fullProve(circuitInput, "nzcp_example.wasm", "nzcp_example_0001.zkey")
@@ -39,7 +40,7 @@ function App() {
       const actualPubIdentity = signalsToPubIdentity(publicSignals as string[]);
       console.log('proof', proof, publicSignals, actualPubIdentity)
 
-      const expectedPubIdentity = await getNZCPPubIdentity(passURI, signer.address);
+      const expectedPubIdentity = await getNZCPPubIdentity(passURI, secretIndex, signer.address);
       console.log('expectedPubIdentity',expectedPubIdentity)
 
       const { a, b, c, input } = getProofArgs(proof, publicSignals);
@@ -52,7 +53,7 @@ function App() {
 
 
       if (
-        compare(actualPubIdentity.credSubjHash, expectedPubIdentity.credSubjHash)
+        compare(actualPubIdentity.nullifierRange, expectedPubIdentity.nullifierRange)
           && compare(actualPubIdentity.toBeSignedHash, expectedPubIdentity.toBeSignedHash)
           && compare(actualPubIdentity.data, expectedPubIdentity.data)
           && actualPubIdentity.exp === expectedPubIdentity.exp
