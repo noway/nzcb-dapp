@@ -23,16 +23,17 @@ export async function getNZCPPubIdentity(passURI: string, secretIndex: Uint8Arra
   const givenName = credentialSubject.get("givenName");
   const familyName = credentialSubject.get("familyName");
   const dob = credentialSubject.get("dob");
-  const nullifer = `${givenName},${familyName},${dob}`
+  const nullifier = `${givenName},${familyName},${dob}`
   const toBeSignedByteArray = encodeToBeSigned(cose.bodyProtected, cose.payload)
-  const nullifierHash = new Uint8Array(await crypto.subtle.digest("SHA-512", new TextEncoder().encode(nullifer)))
+  const nullifierBytes = fitBytes(new TextEncoder().encode(nullifier), 64);
+  const nullifierHash = new Uint8Array(await crypto.subtle.digest("SHA-512", nullifierBytes))
   const nullifierHashPart = nullifierHash.slice(0, 32)
   const toBeSignedHash = new Uint8Array(await crypto.subtle.digest("SHA-256", toBeSignedByteArray))
   const signedAddressBytes = utils.arrayify(signerAddress)
   const data = fitBytes(signedAddressBytes, 21);
   const pubIdentity = { nullifierHashPart, toBeSignedHash, exp, nbf, data };
   console.log('exp', exp);
-  console.log('nullifer', nullifer);
+  console.log('nullifer', nullifier);
   return pubIdentity;
 }
 
