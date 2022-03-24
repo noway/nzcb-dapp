@@ -53,7 +53,7 @@ function App() {
 
 
       if (
-        compare(actualPubIdentity.nullifierRange, expectedPubIdentity.nullifierRange)
+        compare(actualPubIdentity.nullifierHashPart, expectedPubIdentity.nullifierHashPart)
           && compare(actualPubIdentity.toBeSignedHash, expectedPubIdentity.toBeSignedHash)
           && compare(actualPubIdentity.data, expectedPubIdentity.data)
           && actualPubIdentity.exp === expectedPubIdentity.exp

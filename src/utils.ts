@@ -35,17 +35,23 @@ export function fitBytes(input: Uint8Array, maxLen: number) {
 }
 
 export function chunksToBits(chunks: bigint[], chunkSize: number) {
-  const bits = new Array(chunks.length * chunkSize);
+  let bits: number[] = [];
   for (let i = 0; i < chunks.length; i++) {
       const chunk = chunks[i];
-      for (let j = 0; j < chunkSize; j++) {
-          const bitIdx = i * chunkSize + j;
-          const byte = (chunk >> BigInt(j)) & 1n;
-          bits[bitIdx] = Number(byte);
-      }
+      bits = [...bits, ...chunkToBits(chunk, chunkSize)]
+  }
+  return bits;
+}
+
+export function chunkToBits(chunk: bigint, chunkSize: number) {
+  const bits = [];
+  for (let j = 0; j < chunkSize; j++) {
+      const byte = (chunk >> BigInt(j)) & 1n;
+      bits.push(Number(byte));
   }
   return bits
 }
+
 
 export function bitArrayToNum(a: number[]) {
   let num = 0n;
@@ -61,4 +67,25 @@ export function numToBitArray(n: bigint, len: number) {
       res[i] = Number((n >> BigInt(i)) & 1n);
   }
   return res;
+}
+
+
+export function evmRearrangeBits(bitArray: number[]) {
+  const res = []
+  const BYTE_LEN = 8;
+  for (let k = 0; k < bitArray.length / BYTE_LEN; k++) {
+      const b = bitArray.length / BYTE_LEN - 1 - k;
+      for (let i = 0; i < BYTE_LEN; i++) {
+          res[b * BYTE_LEN + (7 - i)] = bitArray[k * BYTE_LEN + i];
+      }
+  }
+  return res;
+}
+
+export function evmBytesToNum(bytes: Uint8Array) {
+  return bitArrayToNum(bufferToBitArray(bitArrayToBuffer(evmRearrangeBits(bufferToBitArray(bytes.reverse())))))
+}
+
+export function evmRearrangeBytes(bytes: Uint8Array) {
+  return bitArrayToBuffer(evmRearrangeBits(bufferToBitArray(bytes.reverse())))   
 }
