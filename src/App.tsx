@@ -27,6 +27,10 @@ function App() {
     setProving(true)
     try {
       const rs = getRS(passURI);
+
+      const expectedPubIdentity = await getNZCPPubIdentity(passURI, signer.address);
+      console.log('expectedPubIdentity',expectedPubIdentity)
+
       const circuitInput = getNZCPCircuitInput(passURI, signer.address);
       console.log('proving...', circuitInput)
 
@@ -34,9 +38,6 @@ function App() {
 
       const actualPubIdentity = signalsToPubIdentity(publicSignals as string[]);
       console.log('proof', proof, publicSignals, actualPubIdentity)
-
-      const expectedPubIdentity = await getNZCPPubIdentity(passURI, signer.address);
-      console.log('expectedPubIdentity',expectedPubIdentity)
 
       const { a, b, c, input } = getProofArgs(proof, publicSignals);
       console.log(a, b, c, input)
