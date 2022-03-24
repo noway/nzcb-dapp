@@ -83,9 +83,9 @@ export function evmRearrangeBits(bitArray: number[]) {
 }
 
 export function evmBytesToNum(bytes: Uint8Array) {
-  return bitArrayToNum(bufferToBitArray(bitArrayToBuffer(evmRearrangeBits(bufferToBitArray(bytes.reverse())))))
+  return bitArrayToNum(bufferToBitArray(bitArrayToBuffer(evmRearrangeBits(bufferToBitArray(bytes)))))
 }
 
 export function evmRearrangeBytes(bytes: Uint8Array) {
-  return bitArrayToBuffer(evmRearrangeBits(bufferToBitArray(bytes.reverse())))   
+  return bitArrayToBuffer(evmRearrangeBits(bufferToBitArray(bytes)))   
 }
