@@ -1,6 +1,6 @@
 import { utils } from "ethers";
 import { Data, decodeBytes, decodeCBOR, decodeCOSE, encodeToBeSigned } from "./nzcpTools";
-import { bitArrayToBuffer, bitArrayToNum, bufferToBitArray, chunksToBits, chunkToBits, evmBytesToNum, evmRearrangeBits, fitBytes, numToBitArray } from "./utils";
+import { bitArrayToBuffer, bitArrayToNum, bufferToBitArray, chunksToBits, chunkToBits, evmBytesToNum, evmRearrangeBits, evmRearrangeBytes, fitBytes, numToBitArray } from "./utils";
 
 const TO_BE_SIGNED_MAX_LEN = 314;
 
@@ -82,7 +82,7 @@ export function getNZCPCircuitInput(passURI: string, secretIndex: Uint8Array, si
   const ToBeSigned = encodeToBeSigned(cose.bodyProtected, cose.payload);
   const fitToBeSigned = fitBytes(ToBeSigned, TO_BE_SIGNED_MAX_LEN);
   const signedAddressBytes = utils.arrayify(signerAddress)
-  const data = fitBytes(signedAddressBytes, 21);
+  const data = fitBytes(evmRearrangeBytes(signedAddressBytes), 21);
   const input = { 
     toBeSigned: bufferToBitArray(fitToBeSigned), 
     toBeSignedLen: ToBeSigned.length, 
