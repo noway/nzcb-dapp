@@ -53,7 +53,7 @@ export function signalsToPubIdentity(publicSignals: string[]): PubIdentity {
   const toBeSignedHash = new Uint8Array([...Array.from(out1).slice(1), out2[0], out2[1]])
   const nbfBytes = new Uint8Array([out2[2], out2[3], out2[4], out2[5]])
   const expBytes = new Uint8Array([out2[6], out2[7], out2[8], out2[9]])
-  const data = out2.slice(10).reverse()
+  const data = out2.slice(10)
   const nbf = evmBytesToNum(nbfBytes);
   const exp = evmBytesToNum(expBytes);
 
@@ -82,7 +82,7 @@ export function getNZCPCircuitInput(passURI: string, signerAddress: string) {
   const ToBeSigned = encodeToBeSigned(cose.bodyProtected, cose.payload);
   const fitToBeSigned = fitBytes(ToBeSigned, TO_BE_SIGNED_MAX_LEN);
   const signedAddressBytes = utils.arrayify(signerAddress)
-  const data = fitBytes(evmRearrangeBytes(signedAddressBytes), 21);
+  const data = evmRearrangeBytes(fitBytes(signedAddressBytes, 21));
   const input = { 
     toBeSigned: bufferToBitArray(fitToBeSigned), 
     toBeSignedLen: ToBeSigned.length, 
