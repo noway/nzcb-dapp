@@ -12,7 +12,7 @@ export interface PubIdentity {
   data: Uint8Array;
 }
 
-export async function getNZCPPubIdentity(passURI: string, secretIndex: Uint8Array, signerAddress: string): Promise<PubIdentity> {
+export async function getNZCPPubIdentity(passURI: string, signerAddress: string): Promise<PubIdentity> {
   const bytes = decodeBytes(passURI);
   const cose = decodeCOSE(bytes);
   const claims = decodeCBOR(cose.payload) as Map<Data, Data>;
@@ -76,7 +76,7 @@ export function signalsToPubIdentity(publicSignals: string[]): PubIdentity {
   return pubIdentity;
 }
 
-export function getNZCPCircuitInput(passURI: string, secretIndex: Uint8Array, signerAddress: string) {
+export function getNZCPCircuitInput(passURI: string, signerAddress: string) {
   const bytes = decodeBytes(passURI);
   const cose = decodeCOSE(bytes);
   const ToBeSigned = encodeToBeSigned(cose.bodyProtected, cose.payload);
