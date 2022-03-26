@@ -5,13 +5,11 @@ import { compare } from "./utils";
 import { getNZCPPubIdentity,  getNZCPCircuitInput, signalsToPubIdentity, getProofArgs, getRS } from "./nzcpCircom";
 import { ContractReceipt, providers, Wallet } from "ethers";
 import { NZCOVIDBadge__factory } from "./contracts/types";
+import { CONTRACT_ADDRESS } from "./config";
 
-
-const CONTRACT_ADDRESS = "0xd5bB79bAa239196858afC864fEfA77beBA4b7AD1"
 
 const provider = new providers.JsonRpcProvider("http://127.0.0.1:7545");
 const signer = new Wallet("ac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80", provider);
-console.log('signer.address',signer.address)
 
 const nzCovidBadge = NZCOVIDBadge__factory.connect(CONTRACT_ADDRESS, signer)
 
