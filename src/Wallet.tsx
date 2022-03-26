@@ -14,23 +14,10 @@ export function Wallet(props: Props) {
       </button>
       {wallet && (
         <div>
-          <label>Switch Chain</label>
           {settingChain ? (
             <span>Switching chain...</span>
           ) : (
-            <select
-              onChange={({ target: { value } }) =>
-                {
-                  console.log('onChange called')
-                  setChain({ chainId: value })
-                }
-              }
-              value={connectedChain ? connectedChain.id : undefined}
-            >
-              {chains.map(({ id, label }) => {
-                return <option key={id} value={id}>{label}</option>
-              })}
-            </select>
+            <span>{chains.find(({ id }) => id === connectedChain?.id)?.label}</span>
           )}
           <button onClick={() => disconnect(wallet)}>
             Disconnect Wallet
