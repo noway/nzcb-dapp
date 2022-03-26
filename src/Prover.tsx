@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { groth16 } from 'snarkjs'
 import { compare, toHexString } from "./utils";
 import { getNZCPPubIdentity,  getNZCPCircuitInput, signalsToPubIdentity, getProofArgs, getRS, PubIdentity, Proof, PublicSignals } from "./nzcpCircom";
-import { ContractReceipt, providers, Wallet } from "ethers";
+import { BigNumber, ContractReceipt, providers, Wallet } from "ethers";
 import { NZCOVIDBadge__factory } from "./contracts/types";
 import { CONTRACT_ADDRESS } from "./config";
 import { EIP1193Provider } from "@web3-onboard/core";
@@ -24,10 +24,32 @@ export function PublicIdentity(props: {pubIdentity: PubIdentity}) {
   const {pubIdentity} = props
   return (
     <code>
-      <div>nullifierHashPart: {toHexString(pubIdentity.nullifierHashPart)}</div>
-      <div>toBeSignedHash: {toHexString(pubIdentity.toBeSignedHash)}</div>
-      <div>address: {toHexString(pubIdentity.data)}</div>
+      <div>nullifierHashPart: 0x{toHexString(pubIdentity.nullifierHashPart)}</div>
+      <div>toBeSignedHash: 0x{toHexString(pubIdentity.toBeSignedHash)}</div>
+      <div>address: 0x{toHexString(pubIdentity.data)}</div>
       <div>exp: {Number(pubIdentity.exp)}</div>
+    </code>
+  )
+}
+
+export function Signature(props: {rs: [r: Uint8Array, s: Uint8Array]}) {
+  const {rs} = props
+  return (
+    <code>
+      <div>r: 0x{toHexString(rs[0])}</div>
+      <div>s: 0x{toHexString(rs[1])}</div>
+    </code>
+  )
+}
+
+export function ProofComponent(props: {proof: Proof}) {
+  const {proof} = props
+  const {pi_a, pi_b, pi_c} = proof
+  return (
+    <code>
+      <div>a: [{BigNumber.from(pi_a[0]).toHexString()}, {BigNumber.from(pi_a[1]).toHexString()}]</div>
+      <div>b: [[{BigNumber.from(pi_b[0][1]).toHexString()}, {BigNumber.from(pi_b[0][0]).toHexString()}], [{BigNumber.from(pi_b[1][1]).toHexString()}, {BigNumber.from(pi_b[1][0]).toHexString()}]]</div>
+      <div>c: [{BigNumber.from(pi_c[0]).toHexString()}, {BigNumber.from(pi_c[1]).toHexString()}]</div>
     </code>
   )
 }
@@ -77,9 +99,14 @@ export function Prover(props: Props) {
     <div>
       <div>{proving ? "Proving, this may take a while..." : ""}</div>
       <div>{provingError ? "Error while proving:  " + provingError.message : ""}</div>
+      <b>Anonimized identity:</b>
       {expectedPubIdentity ? <PublicIdentity pubIdentity={expectedPubIdentity}/> : null}
+      <b>Pass signature:</b>
+      <Signature rs={getRS(passURI)} />
+      <b>Proof:</b>
+      {proof ? <ProofComponent proof={proof}/> : null }
       {proof && publicSignals ? 
-        <button type="button" onClick={() => mint(proof, publicSignals)} disabled={true}>Mint</button> : 
+        <button type="button" onClick={() => mint(proof, publicSignals)} disabled={false}>Mint</button> : 
         <button type="button" disabled={true}>Loading...</button>}
     </div>
   );
