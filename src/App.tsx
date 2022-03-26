@@ -39,10 +39,15 @@ function reducer(state: State, action: Action) {
         route: action.payload,
       };
     case 'back':
-      return {
-        history: state.history.slice(0, -1),
-        route: state.history[state.history.length - 1],
-      };
+      if (state.history.length > 0) {
+        return {
+          history: state.history.slice(0, -1),
+          route: state.history[state.history.length - 1],
+        };
+      }
+      else {
+        return state;
+      }
     default:
       throw new Error();
   }
