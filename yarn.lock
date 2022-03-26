@@ -2800,7 +2800,7 @@
   dependencies:
     "@walletconnect/window-getters" "^1.0.0"
 
-"@web3-onboard/common@^2.0.0", "@web3-onboard/common@^2.0.2":
+"@web3-onboard/common@^2.0.0", "@web3-onboard/common@^2.0.2", "@web3-onboard/common@^2.0.3":
   version "2.0.4"
   resolved "https://registry.yarnpkg.com/@web3-onboard/common/-/common-2.0.4.tgz#468227fe864bb8465db38e8534adc0c7f6583884"
   integrity sha512-oxkcMIsLERBsKo5hieoZ44ok9JE81v3q4YYrz53g9P2bXhW+r0sFtHc6b2kh6S2ue2rCbT1yW8cIYMM/EKwUsw==
@@ -2833,6 +2833,14 @@
     "@web3-onboard/common" "^2.0.2"
     joi "^17.4.2"
     lodash.uniqby "^4.7.0"
+
+"@web3-onboard/react@^2.0.5":
+  version "2.0.5"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/react/-/react-2.0.5.tgz#c778482c09fd1b7533dab3fcbb82715141534584"
+  integrity sha512-HkWE45dQlYQgLIsZBLfH1ldC1AxZUq9gvwP2Mf9X8B624Ht2ysSBBo3S6PIvHpTI29pUyCLaLyQ0aIAOHuNtnA==
+  dependencies:
+    "@web3-onboard/common" "^2.0.3"
+    "@web3-onboard/core" "^2.0.11"
 
 "@web3-onboard/walletconnect@^2.0.1":
   version "2.0.1"
