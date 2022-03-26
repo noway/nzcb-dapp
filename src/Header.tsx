@@ -10,10 +10,11 @@ export const Navigation = styled("div", {
 
 type Props = Readonly<{
   showWallet: boolean;
+  showBack: boolean;
 }>
 export function Header(props: Props) {
 
-  const { showWallet } = props
+  const { showWallet, showBack } = props
   const routeContext = useContext(RouteContext);
 
   function back() {
@@ -23,7 +24,7 @@ export function Header(props: Props) {
   return (
     <header>
       <Navigation>
-        <button type="button" onClick={back}>Back</button>
+        {showBack ? <button type="button" onClick={back}>Back</button> : null}
         {showWallet ? <Wallet /> : null}
       </Navigation>
       <h1>NZ COVID Badge</h1>

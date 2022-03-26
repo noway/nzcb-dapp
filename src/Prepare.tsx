@@ -19,7 +19,7 @@ export function Prepare(props: Props) {
 
   return (
     <div>
-      <Header showWallet={true} />
+      <Header showWallet={true} showBack={true} />
       {eip1193Provider && address ? 
         <Prover
           eip1193Provider={eip1193Provider}

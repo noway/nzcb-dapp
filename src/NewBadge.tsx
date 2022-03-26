@@ -18,7 +18,7 @@ export function NewBadge(props: Props) {
 
   return (
     <div>
-      <Header showWallet={true} />
+      <Header showWallet={true} showBack={true} />
       <div>
         <textarea
           onChange={(e) => setPassURI(e.target.value)}
