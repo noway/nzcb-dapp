@@ -1,6 +1,7 @@
 import Onboard, { EIP1193Provider } from "@web3-onboard/core";
 import { Account } from "@web3-onboard/core/dist/types";
 import injectedModule from "@web3-onboard/injected-wallets";
+import { init, useConnectWallet, useSetChain, useWallets } from "@web3-onboard/react";
 import walletConnectModule from "@web3-onboard/walletconnect";
 import { useState } from "react";
 import { styled } from "./styles";
@@ -12,7 +13,7 @@ const MAINNET_RPC_URL = `https://eth-mainnet.alchemyapi.io/v2/...`;
 const RINKEBY_RPC_URL = `https://eth-rinkeby.alchemyapi.io/v2/...`;
 const GANACHE_RPC_URL = `http://localhost:7545`;
 
-const onboard = Onboard({
+init({
   wallets: [walletConnect, injected],
   chains: [
     {
@@ -66,62 +67,59 @@ const allowedChainIds = ["0x1", "0x539"];
 
 
 export function Header() {
-  const [loading, setLoading] = useState(false); 
-  const [account, setAccount] = useState<Account | null>(null);
-  const [chainId, setChainId] = useState<string | null>(null);
-  const [provier, setProvider] = useState<null | EIP1193Provider>(null);
-  const [error, setError] = useState<null | Error>(null);
-  const [icon, setIcon] = useState("")
+  const [{ chains, connectedChain, settingChain }, setChain] = useSetChain()
+  const [{ wallet, connecting }, connect, disconnect] = useConnectWallet()
+  const connectedWallets = useWallets()
+
+
   function back() {
   }
 
-  async function connect() {
-    setLoading(true);
-    try {
-      const wallets = await onboard.connectWallet();
-      console.log('wallets',wallets)
-      if (wallets.length > 0) {
-        const { accounts, chains, provider, icon } = wallets[0];
-        setIcon(icon);
-        const account = accounts[0]
-        const chainId = chains[0].id
-        if (!allowedChainIds.includes(chainId)) {
-          throw new Error("This chain is not allowed")
-        }
-        setAccount(account);
-        setChainId(chainId);
-        setProvider(provider);
-      }
-    } catch (error) {
-      setError(error as Error);
-    }
-    setLoading(false);
-  }
-  async function disconnect() {
-    const [primaryWallet] = await onboard.state.get().wallets;
-    if (!primaryWallet) return;
-    await onboard.disconnectWallet({ label: primaryWallet.label });
-    refreshState();
-  }
-
-  const refreshState = () => {
-    setAccount(null);
-    setChainId("");
-    setProvider(null);
-  };
 
   return (
     <header>
       <Navigation>
         <button type="button" onClick={back}>Back</button>
-        {loading ? <span>Loading...</span> : null}
-        {!loading && error ? <span>Error: {error.message}</span> : null}
-        {!loading && !error && !account ? <button type="button" onClick={connect}>Connect Wallet</button> : null}
-        {!loading && !error && account ? <div>
-          <img src={`data:image/svg+xml,${encodeURIComponent(icon)}`} alt="wallet software" width={16} />
-          <span>{`Account: ${truncateAddress(account.address)}`}</span> <span>{chainId}</span>
-          <button type="button" onClick={disconnect}>Disconnect</button>
-        </div> : null}
+
+        <button onClick={() => connect({})}>
+          {connecting ? 'connecting' : 'connect'}
+        </button>
+        {wallet && (
+          <div>
+            <label>Switch Chain</label>
+            {settingChain ? (
+              <span>Switching chain...</span>
+            ) : (
+              <select
+                onChange={({ target: { value } }) =>
+                  {
+                    console.log('onChange called')
+                    setChain({ chainId: value })
+                  }
+                }
+                value={connectedChain ? connectedChain.id : undefined}
+              >
+                {chains.map(({ id, label }) => {
+                  return <option key={id} value={id}>{label}</option>
+                })}
+              </select>
+            )}
+            <button onClick={() => disconnect(wallet)}>
+              Disconnect Wallet
+            </button>
+          </div>
+        )}
+
+        {connectedWallets.map(({ label, accounts }) => {
+          return (
+            <div key={label}>
+              <div>{label}</div>
+              <div>Accounts: {JSON.stringify(accounts, null, 2)}</div>
+            </div>
+          )
+        })}
+
+
       </Navigation>
       <h1>NZ COVID Badge</h1>
     </header>
