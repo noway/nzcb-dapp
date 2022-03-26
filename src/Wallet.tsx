@@ -1,5 +1,7 @@
 import { Account } from "@web3-onboard/core/dist/types";
 import { useConnectWallet, useSetChain, useWallets } from "@web3-onboard/react";
+import { useContext, useEffect } from "react";
+import { RouteContext } from "./contexts";
 
 type Props = Readonly<{}>;
 
@@ -29,9 +31,18 @@ function AccountComponent(props: AccountProps) {
 }
 
 export function Wallet(props: Props) {
+  const routeContext = useContext(RouteContext);
   const [{ chains, connectedChain, settingChain }, setChain] = useSetChain()
   const [{ wallet, connecting }, connect, disconnect] = useConnectWallet()
   const connectedWallets = useWallets()
+
+  useEffect(() => {
+    console.log('wallet changed', wallet, connecting)
+    if (!wallet && !connecting) {
+      routeContext.navigate(["landing", null]);
+    }
+  }, [wallet, connecting])
+
 
   return (
     <div>
