@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { groth16 } from 'snarkjs'
 import { compare } from "./utils";
 import { getNZCPPubIdentity,  getNZCPCircuitInput, signalsToPubIdentity, getProofArgs, getRS } from "./nzcpCircom";
@@ -21,8 +21,11 @@ export function Prepare(props: Props) {
   const [circuitResultMatches, setCircuitResultMatches] = useState<boolean>(false);
   const [verifierResult, setVerifierResult] = useState<ContractReceipt | null>(null);
 
-  const prove = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
+  useEffect(() => {
+    prove(passURI)
+  }, [passURI])
+
+  const prove = async (passURI: string) => {
     setProving(true)
     try {
       const rs = getRS(passURI);
@@ -73,9 +76,9 @@ export function Prepare(props: Props) {
         {provingError ? "Error while proving:  " + provingError.message : ""}
         <p>Circuit result matches: {circuitResultMatches ? "yes" : "no"}</p>
         <p>Verifier result: {JSON.stringify(verifierResult, null, 2)}</p>
-        <form onSubmit={prove}>
+        {/* <form onSubmit={prove}>
           <button type="submit">Mint</button>
-        </form>
+        </form> */}
       </div>
     </div>
   );

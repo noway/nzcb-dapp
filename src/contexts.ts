@@ -6,6 +6,6 @@ type RouteContext = {
   setRoute: (_route: Route) => void;
 }
 export const RouteContext = createContext<RouteContext>({
-  route: "landing" as Route,
+  route: ["landing", null],
   setRoute: (_route: Route) => {} ,
 })

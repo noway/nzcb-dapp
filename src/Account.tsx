@@ -10,7 +10,7 @@ type Props = Readonly<{
 export function Account(props: Props) {
   const routeContext = useContext(RouteContext);
   function newBadge() {
-    routeContext.setRoute("newbadge");
+    routeContext.setRoute(["newbadge", null]);
   }
   return (
     <div>
