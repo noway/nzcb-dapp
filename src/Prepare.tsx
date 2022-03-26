@@ -70,7 +70,7 @@ export function Prepare(props: Props) {
 
   return (
     <div>
-      <Header />
+      <Header showWallet={true} />
       <div>
         {proving ? "Proving, this may take a while..." : ""}
         {provingError ? "Error while proving:  " + provingError.message : ""}

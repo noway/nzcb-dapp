@@ -7,17 +7,18 @@ type Props = Readonly<{}>
 
 export function ConnectWallet(props: Props) {
   const routeContext = useContext(RouteContext);
-  const [{ wallet, connecting }, connect, disconnect] = useConnectWallet()
+  const [{ wallet, connecting }, connect ] = useConnectWallet()
   useEffect(() => {
-    if (wallet) {
+    console.log('wallet changed', wallet, connecting)
+    if (wallet && !connecting) {
       routeContext.setRoute(["account", null]);
     }
-  }, [wallet])
+  }, [wallet, connecting])
 
   function connectWallet() {
     connect({})
   }
   return (
-    <button type="button" onClick={connectWallet}>Connect Wallet</button>
+    <button type="button" onClick={connectWallet}>{connecting ? "Connecting..." : "Connect Wallet"}</button>
   )
 }

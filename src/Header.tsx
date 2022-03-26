@@ -14,9 +14,12 @@ export const Navigation = styled("div", {
 
 const allowedChainIds = ["0x1", "0x539"];
 
+type Props = Readonly<{
+  showWallet: boolean;
+}>
+export function Header(props: Props) {
 
-export function Header() {
-
+  const { showWallet } = props
 
   function back() {
   }
@@ -26,7 +29,7 @@ export function Header() {
     <header>
       <Navigation>
         <button type="button" onClick={back}>Back</button>
-        <Wallet />
+        {showWallet ? <Wallet /> : null}
       </Navigation>
       <h1>NZ COVID Badge</h1>
     </header>

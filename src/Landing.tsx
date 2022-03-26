@@ -14,7 +14,7 @@ export const Lead = styled("p", {
 export function Landing(props: Props) {
   return (
     <div>
-      <Header />
+      <Header showWallet={false} />
       <Lead>An ERC721 project which lets you mint your NZ COVID vaccination status on the Ethereum blockchain.</Lead>
       <Sample />
       <ConnectWallet />

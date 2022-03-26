@@ -14,7 +14,7 @@ export function Account(props: Props) {
   }
   return (
     <div>
-      <Header />
+      <Header showWallet={true} />
       <h1>Account</h1>
       <button type="button" onClick={newBadge}>New Badge</button>
     </div>
