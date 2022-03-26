@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import "./App.css";
 import { groth16 } from 'snarkjs'
 import { compare } from "./utils";
 import { getNZCPPubIdentity,  getNZCPCircuitInput, signalsToPubIdentity, getProofArgs, getRS } from "./nzcpCircom";
