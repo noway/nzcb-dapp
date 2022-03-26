@@ -1,13 +1,20 @@
 import { ConnectWallet } from "./ConnectWallet"
 import { Sample } from "./Sample"
+import { styled } from "./styles";
 
 type Props = Readonly<{}>
+
+
+export const Lead = styled("p", {
+  fontSize: "1.5rem",
+});
+
 
 export function Landing(props: Props) {
   return (
     <div>
       <h1>NZ COVID Badge</h1>
-      <p className="lead">An ERC721 project which lets you mint your NZ COVID vaccination status on the Ethereum blockchain.</p>
+      <Lead>An ERC721 project which lets you mint your NZ COVID vaccination status on the Ethereum blockchain.</Lead>
       <Sample />
       <ConnectWallet />
       <h3>How does it work?</h3>
