@@ -1,5 +1,5 @@
 import { providers, Wallet } from "ethers";
-import { useState } from "react";
+import { useReducer, useState } from "react";
 import { Account } from "./Account";
 import { RouteContext } from "./contexts";
 import { Landing } from "./Landing";
@@ -9,17 +9,62 @@ import { Route } from "./types";
 
 type Props = Readonly<{}>;
 
+type State = Readonly<{
+  route: Route;
+  history: Route[];
+}>
+
+type NavigateAction = Readonly<{
+  type: "navigate";
+  payload: Route;
+}>
+
+type BackAction = Readonly<{
+  type: "back";
+  payload: null;
+}>
+
+type Action = NavigateAction | BackAction;
+
+const initialState: State = {
+  route: ["landing", null],
+  history: [],
+}
+
+function reducer(state: State, action: Action) {
+  switch (action.type) {
+    case 'navigate':
+      return {
+        history: [...state.history, state.route],
+        route: action.payload,
+      };
+    case 'back':
+      return {
+        history: state.history.slice(0, -1),
+        route: state.history[state.history.length - 1],
+      };
+    default:
+      throw new Error();
+  }
+}
+
 export function App(props: Props) {
-  const [route, setRoute] = useState<Route>(["landing", null])
-  const provider = new providers.JsonRpcProvider("http://127.0.0.1:7545");
-  const signer = new Wallet("ac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80", provider);
+  const [state, dispatch] = useReducer(reducer, initialState);
+
+  function setRoute(route: Route) {
+    dispatch({ type: "navigate", payload: route });
+  }
+
+  function goBack() {
+    dispatch({ type: "back", payload: null });
+  }
 
   return (
-    <RouteContext.Provider value={{ route, setRoute }}>
-      {route[0] === "landing" ? <Landing /> : null}
-      {route[0] === "account" ? <Account /> : null}
-      {route[0] === "newbadge" ? <NewBadge /> : null}
-      {route[0] === "prepare" ? <Prepare passURI={route[1].passURI} /> : null}
+    <RouteContext.Provider value={{ route: state.route, setRoute, goBack }}>
+      {state.route[0] === "landing" ? <Landing /> : null}
+      {state.route[0] === "account" ? <Account /> : null}
+      {state.route[0] === "newbadge" ? <NewBadge /> : null}
+      {state.route[0] === "prepare" ? <Prepare passURI={state.route[1].passURI} /> : null}
     </RouteContext.Provider>
   )
 }

@@ -3,7 +3,8 @@ import { Account } from "@web3-onboard/core/dist/types";
 import injectedModule from "@web3-onboard/injected-wallets";
 import { init, useConnectWallet, useSetChain, useWallets } from "@web3-onboard/react";
 import walletConnectModule from "@web3-onboard/walletconnect";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { RouteContext } from "./contexts";
 import { styled } from "./styles";
 import { Wallet } from "./Wallet";
 
@@ -20,8 +21,10 @@ type Props = Readonly<{
 export function Header(props: Props) {
 
   const { showWallet } = props
+  const routeContext = useContext(RouteContext);
 
   function back() {
+    routeContext.goBack();
   }
 
 
