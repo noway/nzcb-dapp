@@ -1,5 +1,5 @@
 import { providers, Wallet } from "ethers";
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { Account } from "./Account";
 import { RouteContext } from "./contexts";
 import { Landing } from "./Landing";

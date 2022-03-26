@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { groth16 } from 'snarkjs'
 import { compare } from "./utils";
 import { getNZCPPubIdentity,  getNZCPCircuitInput, signalsToPubIdentity, getProofArgs, getRS } from "./nzcpCircom";
-import { ContractReceipt, providers, Wallet } from "ethers";
+import { ContractReceipt, Wallet } from "ethers";
 import { NZCOVIDBadge__factory } from "./contracts/types";
 import { CONTRACT_ADDRESS } from "./config";
 import { Header } from "./Header";
