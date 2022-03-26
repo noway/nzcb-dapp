@@ -105,6 +105,8 @@ export function Prover(props: Props) {
       <Signature rs={getRS(passURI)} />
       <b>Proof:</b>
       {proof ? <ProofComponent proof={proof}/> : null }
+      {expectedPubIdentity && publicSignals && comparePubIdentities(expectedPubIdentity, signalsToPubIdentity(publicSignals)) ? <div>Pre-flight check: OK</div> : null}
+      {expectedPubIdentity && publicSignals && !comparePubIdentities(expectedPubIdentity, signalsToPubIdentity(publicSignals)) ? <div>Pre-flight check: ERROR</div> : null}
       {proof && publicSignals ? 
         <button type="button" onClick={() => mint(proof, publicSignals)} disabled={false}>Mint</button> : 
         <button type="button" disabled={true}>Loading...</button>}
