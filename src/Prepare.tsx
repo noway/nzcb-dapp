@@ -1,8 +1,3 @@
-import React, { useEffect, useState } from "react";
-import { groth16 } from 'snarkjs'
-import { compare } from "./utils";
-import { getNZCPPubIdentity,  getNZCPCircuitInput, signalsToPubIdentity, getProofArgs, getRS } from "./nzcpCircom";
-import { ContractReceipt, providers, Wallet } from "ethers";
 import { Header } from "./Header";
 import { useConnectWallet } from "@web3-onboard/react";
 import { Prover } from "./Prover";
