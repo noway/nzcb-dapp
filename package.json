@@ -4,7 +4,6 @@
   "private": true,
   "dependencies": {
     "@stitches/react": "^1.2.7",
-    "@types/jest": "^27.0.1",
     "@types/node": "^16.7.13",
     "@types/react": "^17.0.20",
     "@types/react-dom": "^17.0.9",
@@ -47,8 +46,7 @@
       "es2020": true
     },
     "extends": [
-      "react-app",
-      "react-app/jest"
+      "react-app"
     ]
   },
   "browserslist": {
