@@ -89,3 +89,9 @@ export function evmBytesToNum(bytes: Uint8Array) {
 export function evmRearrangeBytes(bytes: Uint8Array) {
   return bitArrayToBuffer(evmRearrangeBits(bufferToBitArray(bytes)))   
 }
+
+export function toHexString(byteArray: Uint8Array) {
+  return Array.from(byteArray, function(byte) {
+    return ('0' + (byte & 0xFF).toString(16)).slice(-2);
+  }).join('')
+}

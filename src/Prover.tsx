@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { groth16 } from 'snarkjs'
-import { compare } from "./utils";
+import { compare, toHexString } from "./utils";
 import { getNZCPPubIdentity,  getNZCPCircuitInput, signalsToPubIdentity, getProofArgs, getRS, PubIdentity, Proof, PublicSignals } from "./nzcpCircom";
 import { ContractReceipt, providers, Wallet } from "ethers";
 import { NZCOVIDBadge__factory } from "./contracts/types";
@@ -18,6 +18,18 @@ function comparePubIdentities(a: PubIdentity, b: PubIdentity) {
     && compare(a.toBeSignedHash, b.toBeSignedHash)
     && compare(a.data, b.data)
     && a.exp === b.exp
+}
+
+export function PublicIdentity(props: {pubIdentity: PubIdentity}) {
+  const {pubIdentity} = props
+  return (
+    <code>
+      <div>nullifierHashPart: {toHexString(pubIdentity.nullifierHashPart)}</div>
+      <div>toBeSignedHash: {toHexString(pubIdentity.toBeSignedHash)}</div>
+      <div>address: {toHexString(pubIdentity.data)}</div>
+      <div>exp: {Number(pubIdentity.exp)}</div>
+    </code>
+  )
 }
 
 export function Prover(props: Props) {
@@ -65,7 +77,7 @@ export function Prover(props: Props) {
     <div>
       <div>{proving ? "Proving, this may take a while..." : ""}</div>
       <div>{provingError ? "Error while proving:  " + provingError.message : ""}</div>
-      <div>{expectedPubIdentity+""}</div>
+      {expectedPubIdentity ? <PublicIdentity pubIdentity={expectedPubIdentity}/> : null}
       {proof && publicSignals ? 
         <button type="button" onClick={() => mint(proof, publicSignals)} disabled={true}>Mint</button> : 
         <button type="button" disabled={true}>Loading...</button>}
