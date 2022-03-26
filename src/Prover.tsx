@@ -32,6 +32,7 @@ export function Prover(props: Props) {
   const address = props.address
   const provider = new providers.Web3Provider(eip1193Provider);
   const nzCovidBadge = NZCOVIDBadge__factory.connect(CONTRACT_ADDRESS, provider.getSigner())
+  const [expectedPubIdentity, setExpectedPubIdentity] = useState<PubIdentity | null>(null);
 
   useEffect(() => {
     prove(passURI)
@@ -41,13 +42,9 @@ export function Prover(props: Props) {
   const prove = async (passURI: string) => {
     setProving(true)
     try {
-
       const expectedPubIdentity = await getNZCPPubIdentity(passURI, address);
-      console.log('expectedPubIdentity',expectedPubIdentity)
-
+      setExpectedPubIdentity(expectedPubIdentity)
       const circuitInput = getNZCPCircuitInput(passURI, address);
-      console.log('proving...', circuitInput)
-
       const { proof, publicSignals } = await groth16.fullProve(circuitInput, "nzcp_example.wasm", "nzcp_example_0001.zkey")
       setProof(proof)
       setPublicSignals(publicSignals)
