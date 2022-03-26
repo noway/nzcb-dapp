@@ -4,7 +4,6 @@ import { RouteContext } from "./contexts";
 import { Header } from "./Header";
 
 type Props = Readonly<{
-  signer: Wallet
 }>;
 
 export function Account(props: Props) {

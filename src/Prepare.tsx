@@ -2,20 +2,21 @@ import React, { useEffect, useState } from "react";
 import { groth16 } from 'snarkjs'
 import { compare } from "./utils";
 import { getNZCPPubIdentity,  getNZCPCircuitInput, signalsToPubIdentity, getProofArgs, getRS } from "./nzcpCircom";
-import { ContractReceipt, Wallet } from "ethers";
+import { ContractReceipt, providers, Wallet } from "ethers";
 import { NZCOVIDBadge__factory } from "./contracts/types";
 import { CONTRACT_ADDRESS } from "./config";
 import { Header } from "./Header";
+import { useConnectWallet } from "@web3-onboard/react";
 
 type Props = Readonly<{
   passURI: string
-  signer: Wallet
 }>;
 
 export function Prepare(props: Props) {
-  const signer = props.signer
+  const [{ wallet, connecting }, connect, disconnect] = useConnectWallet()
+  const eip1193Provider = wallet?.provider
+  const address = wallet?.accounts[0]?.address
   const passURI = props.passURI
-  const nzCovidBadge = NZCOVIDBadge__factory.connect(CONTRACT_ADDRESS, signer)
   const [proving, setProving] = useState(false);
   const [provingError, setProvingError] = useState<Error | null>(null);
   const [circuitResultMatches, setCircuitResultMatches] = useState<boolean>(false);
@@ -25,15 +26,21 @@ export function Prepare(props: Props) {
     prove(passURI)
   }, [passURI])
 
+  if (!eip1193Provider || !address) {
+    return <div>please connect wallet</div>
+  }
+  const provider = new providers.Web3Provider(eip1193Provider);
+  const nzCovidBadge = NZCOVIDBadge__factory.connect(CONTRACT_ADDRESS, provider.getSigner())
+
   const prove = async (passURI: string) => {
     setProving(true)
     try {
       const rs = getRS(passURI);
 
-      const expectedPubIdentity = await getNZCPPubIdentity(passURI, signer.address);
+      const expectedPubIdentity = await getNZCPPubIdentity(passURI, address);
       console.log('expectedPubIdentity',expectedPubIdentity)
 
-      const circuitInput = getNZCPCircuitInput(passURI, signer.address);
+      const circuitInput = getNZCPCircuitInput(passURI, address);
       console.log('proving...', circuitInput)
 
       const { proof, publicSignals } = await groth16.fullProve(circuitInput, "nzcp_example.wasm", "nzcp_example_0001.zkey")

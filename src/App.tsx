@@ -17,9 +17,9 @@ export function App(props: Props) {
   return (
     <RouteContext.Provider value={{ route, setRoute }}>
       {route[0] === "landing" ? <Landing /> : null}
-      {route[0] === "account" ? <Account signer={signer} /> : null}
-      {route[0] === "newbadge" ? <NewBadge signer={signer} /> : null}
-      {route[0] === "prepare" ? <Prepare signer={signer} passURI={route[1].passURI} /> : null}
+      {route[0] === "account" ? <Account /> : null}
+      {route[0] === "newbadge" ? <NewBadge /> : null}
+      {route[0] === "prepare" ? <Prepare passURI={route[1].passURI} /> : null}
     </RouteContext.Provider>
   )
 }
