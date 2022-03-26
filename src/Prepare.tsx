@@ -6,17 +6,14 @@ import { ContractReceipt, providers, Wallet } from "ethers";
 import { NZCOVIDBadge__factory } from "./contracts/types";
 import { CONTRACT_ADDRESS } from "./config";
 
-
-const provider = new providers.JsonRpcProvider("http://127.0.0.1:7545");
-const signer = new Wallet("ac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80", provider);
-
-const nzCovidBadge = NZCOVIDBadge__factory.connect(CONTRACT_ADDRESS, signer)
-
 type Props = Readonly<{
   passURI: string
+  signer: Wallet
 }>;
 
 export function Prepare(props: Props) {
+  const signer = props.signer
+  const nzCovidBadge = NZCOVIDBadge__factory.connect(CONTRACT_ADDRESS, signer)
   const [passURI, setPassURI] = useState(props.passURI);
   const [proving, setProving] = useState(false);
   const [provingError, setProvingError] = useState<Error | null>(null);

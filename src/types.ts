@@ -1,1 +1,1 @@
-export type Route = "landing" | "prepare"
+export type Route = "landing" | "account" | "prepare"

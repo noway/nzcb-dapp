@@ -6,7 +6,7 @@ type Props = Readonly<{}>
 export function ConnectWallet(props: Props) {
   const routeContext = useContext(RouteContext);
   function connect() {
-    routeContext.setRoute("prepare");
+    routeContext.setRoute("account");
   }
   return (
     <button type="button" onClick={connect}>Connect Wallet</button>
