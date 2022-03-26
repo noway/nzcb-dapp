@@ -1,4 +1,5 @@
 import Onboard, { EIP1193Provider } from "@web3-onboard/core";
+import { Account } from "@web3-onboard/core/dist/types";
 import injectedModule from "@web3-onboard/injected-wallets";
 import walletConnectModule from "@web3-onboard/walletconnect";
 import { useState } from "react";
@@ -15,8 +16,8 @@ const onboard = Onboard({
   wallets: [walletConnect, injected],
   chains: [
     {
-      id: "0x1", // chain ID must be in hexadecimel
-      token: "ETH", // main chain token
+      id: "0x1",
+      token: "ETH",
       namespace: "evm",
       label: "Ethereum Mainnet",
       rpcUrl: MAINNET_RPC_URL
@@ -61,28 +62,40 @@ export const Navigation = styled("div", {
   justifyContent: "space-between"
 });
 
+const allowedChainIds = ["0x1", "0x539"];
+
 
 export function Header() {
   const [loading, setLoading] = useState(false); 
-  const [account, setAccount] = useState<string | null>(null);
+  const [account, setAccount] = useState<Account | null>(null);
   const [chainId, setChainId] = useState<string | null>(null);
   const [provier, setProvider] = useState<null | EIP1193Provider>(null);
   const [error, setError] = useState<null | Error>(null);
+  const [icon, setIcon] = useState("")
   function back() {
   }
 
   async function connect() {
+    setLoading(true);
     try {
       const wallets = await onboard.connectWallet();
-      setLoading(true);
-      const { accounts, chains, provider } = wallets[0];
-      setAccount(accounts[0].address);
-      setChainId(chains[0].id);
-      setProvider(provider);
-      setLoading(false);
+      console.log('wallets',wallets)
+      if (wallets.length > 0) {
+        const { accounts, chains, provider, icon } = wallets[0];
+        setIcon(icon);
+        const account = accounts[0]
+        const chainId = chains[0].id
+        if (!allowedChainIds.includes(chainId)) {
+          throw new Error("This chain is not allowed")
+        }
+        setAccount(account);
+        setChainId(chainId);
+        setProvider(provider);
+      }
     } catch (error) {
       setError(error as Error);
     }
+    setLoading(false);
   }
   async function disconnect() {
     const [primaryWallet] = await onboard.state.get().wallets;
@@ -92,7 +105,7 @@ export function Header() {
   }
 
   const refreshState = () => {
-    setAccount("");
+    setAccount(null);
     setChainId("");
     setProvider(null);
   };
@@ -101,13 +114,14 @@ export function Header() {
     <header>
       <Navigation>
         <button type="button" onClick={back}>Back</button>
-        {!account ? 
-          <button type="button" onClick={connect}>Connect Wallet</button> :
-          <div>
-            <span>{`Account: ${truncateAddress(account)}`}</span>
-            <button type="button" onClick={disconnect}>Disconnect</button>
-          </div>
-        }
+        {loading ? <span>Loading...</span> : null}
+        {!loading && error ? <span>Error: {error.message}</span> : null}
+        {!loading && !error && !account ? <button type="button" onClick={connect}>Connect Wallet</button> : null}
+        {!loading && !error && account ? <div>
+          <img src={`data:image/svg+xml,${encodeURIComponent(icon)}`} alt="wallet software" width={16} />
+          <span>{`Account: ${truncateAddress(account.address)}`}</span> <span>{chainId}</span>
+          <button type="button" onClick={disconnect}>Disconnect</button>
+        </div> : null}
       </Navigation>
       <h1>NZ COVID Badge</h1>
     </header>
