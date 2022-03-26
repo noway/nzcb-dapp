@@ -21,10 +21,8 @@ function comparePubIdentities(a: PubIdentity, b: PubIdentity) {
 }
 
 export function Prover(props: Props) {
-
   const [proving, setProving] = useState(false);
   const [provingError, setProvingError] = useState<Error | null>(null);
-
   const [proof, setProof] = useState<Proof | null>(null);
   const [publicSignals, setPublicSignals] = useState<PublicSignals | null>(null);
   const passURI = props.passURI
@@ -38,8 +36,7 @@ export function Prover(props: Props) {
     prove(passURI)
   }, [passURI])
 
-
-  const prove = async (passURI: string) => {
+  async function prove(passURI: string) {
     setProving(true)
     try {
       const expectedPubIdentity = await getNZCPPubIdentity(passURI, address);
@@ -66,10 +63,11 @@ export function Prover(props: Props) {
 
   return (
     <div>
-      {proving ? "Proving, this may take a while..." : ""}
-      {provingError ? "Error while proving:  " + provingError.message : ""}
+      <div>{proving ? "Proving, this may take a while..." : ""}</div>
+      <div>{provingError ? "Error while proving:  " + provingError.message : ""}</div>
+      <div>{expectedPubIdentity+""}</div>
       {proof && publicSignals ? 
-        <button type="button" onClick={() => mint(proof, publicSignals)} disabled={proving}>Mint</button> : 
+        <button type="button" onClick={() => mint(proof, publicSignals)} disabled={true}>Mint</button> : 
         <button type="button" disabled={true}>Loading...</button>}
     </div>
   );
