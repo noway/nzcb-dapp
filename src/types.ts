@@ -1,1 +1,1 @@
-export type Route = "landing" | "account" | "prepare"
+export type Route = "landing" | "account" | "newbadge" | "prepare"

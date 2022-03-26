@@ -3,6 +3,7 @@ import { useContext, useState } from "react";
 import { Account } from "./Account";
 import { RouteContext } from "./contexts";
 import { Landing } from "./Landing";
+import { NewBadge } from "./NewBadge";
 import { Prepare } from "./Prepare";
 import { Route } from "./types";
 
@@ -22,6 +23,7 @@ export function App(props: Props) {
     <RouteContext.Provider value={{ route, setRoute }}>
       {route === "landing" ? <Landing /> : null}
       {route === "account" ? <Account signer={signer} /> : null}
+      {route === "newbadge" ? <NewBadge signer={signer} /> : null}
       {route === "prepare" ? <Prepare signer={signer} passURI={EXAMPLE_PASS_URI} /> : null}
     </RouteContext.Provider>
   )

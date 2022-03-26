@@ -14,14 +14,15 @@ type Props = Readonly<{
 
 export function Prepare(props: Props) {
   const signer = props.signer
+  const passURI = props.passURI
   const nzCovidBadge = NZCOVIDBadge__factory.connect(CONTRACT_ADDRESS, signer)
-  const [passURI, setPassURI] = useState(props.passURI);
   const [proving, setProving] = useState(false);
   const [provingError, setProvingError] = useState<Error | null>(null);
   const [circuitResultMatches, setCircuitResultMatches] = useState<boolean>(false);
   const [verifierResult, setVerifierResult] = useState<ContractReceipt | null>(null);
 
-  const prove = async (passURI: string) => {
+  const prove = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
     setProving(true)
     try {
       const rs = getRS(passURI);
@@ -64,13 +65,6 @@ export function Prepare(props: Props) {
     setProving(false);
   }
 
-  const mint = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    if (passURI.length > 0) {
-      prove(passURI);
-    }
-  };
-
   return (
     <div>
       <Header />
@@ -79,15 +73,7 @@ export function Prepare(props: Props) {
         {provingError ? "Error while proving:  " + provingError.message : ""}
         <p>Circuit result matches: {circuitResultMatches ? "yes" : "no"}</p>
         <p>Verifier result: {JSON.stringify(verifierResult, null, 2)}</p>
-        <form onSubmit={mint}>
-          <div>
-            <textarea
-              onChange={(e) => setPassURI(e.target.value)}
-              value={passURI}
-              cols={50}
-              rows={12}
-            />
-          </div>
+        <form onSubmit={prove}>
           <button type="submit">Mint</button>
         </form>
       </div>
