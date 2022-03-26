@@ -5,6 +5,7 @@ import { getNZCPPubIdentity,  getNZCPCircuitInput, signalsToPubIdentity, getProo
 import { ContractReceipt, providers, Wallet } from "ethers";
 import { NZCOVIDBadge__factory } from "./contracts/types";
 import { CONTRACT_ADDRESS } from "./config";
+import { Header } from "./Header";
 
 type Props = Readonly<{
   passURI: string
@@ -71,8 +72,9 @@ export function Prepare(props: Props) {
   };
 
   return (
-    <div className="App">
-      <header className="App-header">
+    <div>
+      <Header />
+      <div>
         {proving ? "Proving, this may take a while..." : ""}
         {provingError ? "Error while proving:  " + provingError.message : ""}
         <p>Circuit result matches: {circuitResultMatches ? "yes" : "no"}</p>
@@ -88,7 +90,7 @@ export function Prepare(props: Props) {
           </div>
           <button type="submit">Mint</button>
         </form>
-      </header>
+      </div>
     </div>
   );
 }

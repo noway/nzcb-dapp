@@ -1,4 +1,5 @@
 import { ConnectWallet } from "./ConnectWallet"
+import { Header } from "./Header";
 import { Sample } from "./Sample"
 import { styled } from "./styles";
 
@@ -13,7 +14,7 @@ export const Lead = styled("p", {
 export function Landing(props: Props) {
   return (
     <div>
-      <h1>NZ COVID Badge</h1>
+      <Header />
       <Lead>An ERC721 project which lets you mint your NZ COVID vaccination status on the Ethereum blockchain.</Lead>
       <Sample />
       <ConnectWallet />
