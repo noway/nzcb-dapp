@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { groth16 } from 'snarkjs'
 import { compare } from "./utils";
-import { getNZCPPubIdentity,  getNZCPCircuitInput, signalsToPubIdentity, getProofArgs, getRS } from "./nzcpCircom";
+import { getNZCPPubIdentity,  getNZCPCircuitInput, signalsToPubIdentity, getProofArgs, getRS, PubIdentity, Proof, PublicSignals } from "./nzcpCircom";
 import { ContractReceipt, providers, Wallet } from "ethers";
 import { NZCOVIDBadge__factory } from "./contracts/types";
 import { CONTRACT_ADDRESS } from "./config";
@@ -13,13 +13,20 @@ type Props = Readonly<{
   address: string
 }>;
 
+function comparePubIdentities(a: PubIdentity, b: PubIdentity) {
+  return compare(a.nullifierHashPart, b.nullifierHashPart)
+    && compare(a.toBeSignedHash, b.toBeSignedHash)
+    && compare(a.data, b.data)
+    && a.exp === b.exp
+}
 
 export function Prover(props: Props) {
 
   const [proving, setProving] = useState(false);
   const [provingError, setProvingError] = useState<Error | null>(null);
-  const [circuitResultMatches, setCircuitResultMatches] = useState<boolean>(false);
-  const [verifierResult, setVerifierResult] = useState<ContractReceipt | null>(null);
+
+  const [proof, setProof] = useState<Proof | null>(null);
+  const [publicSignals, setPublicSignals] = useState<PublicSignals | null>(null);
   const passURI = props.passURI
   const eip1193Provider = props.eip1193Provider
   const address = props.address
@@ -34,7 +41,6 @@ export function Prover(props: Props) {
   const prove = async (passURI: string) => {
     setProving(true)
     try {
-      const rs = getRS(passURI);
 
       const expectedPubIdentity = await getNZCPPubIdentity(passURI, address);
       console.log('expectedPubIdentity',expectedPubIdentity)
@@ -43,29 +49,8 @@ export function Prover(props: Props) {
       console.log('proving...', circuitInput)
 
       const { proof, publicSignals } = await groth16.fullProve(circuitInput, "nzcp_example.wasm", "nzcp_example_0001.zkey")
-
-      const actualPubIdentity = signalsToPubIdentity(publicSignals as string[]);
-      console.log('proof', proof, publicSignals, actualPubIdentity)
-
-      const { a, b, c, input } = getProofArgs(proof, publicSignals);
-      console.log(a, b, c, input)
-      const tx = await nzCovidBadge.mint(a, b, c, input, rs)
-      const receipt = await tx.wait()
-      
-      setVerifierResult(receipt)
-      console.log('receipt', receipt)
-
-
-      if (
-        compare(actualPubIdentity.nullifierHashPart, expectedPubIdentity.nullifierHashPart)
-          && compare(actualPubIdentity.toBeSignedHash, expectedPubIdentity.toBeSignedHash)
-          && compare(actualPubIdentity.data, expectedPubIdentity.data)
-          && actualPubIdentity.exp === expectedPubIdentity.exp
-      ) {
-        setCircuitResultMatches(true)
-      } else {
-        setCircuitResultMatches(false)
-      }
+      setProof(proof)
+      setPublicSignals(publicSignals)
     }
     catch (e) {
       setProvingError(e as Error);
@@ -74,13 +59,21 @@ export function Prover(props: Props) {
     setProving(false);
   }
 
+  async function mint(proof: Proof, publicSignals: PublicSignals) {
+    const rs = getRS(passURI);
+    const { a, b, c, input } = getProofArgs(proof, publicSignals);
+
+    const tx = await nzCovidBadge.mint(a, b, c, input, rs)
+    const receipt = await tx.wait()
+  }
+
   return (
     <div>
       {proving ? "Proving, this may take a while..." : ""}
       {provingError ? "Error while proving:  " + provingError.message : ""}
-      <p>Circuit result matches: {circuitResultMatches ? "yes" : "no"}</p>
-      <p>Verifier result: {JSON.stringify(verifierResult, null, 2)}</p>
+      {proof && publicSignals ? 
+        <button type="button" onClick={() => mint(proof, publicSignals)} disabled={proving}>Mint</button> : 
+        <button type="button" disabled={true}>Loading...</button>}
     </div>
-
   );
 }

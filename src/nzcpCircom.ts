@@ -103,13 +103,13 @@ interface ProofArgs {
   input: [bigint, bigint, bigint];
 }
 
-interface Proof {
+export interface Proof {
   pi_a: [string, string]
   pi_b: [[string, string], [string, string]]
   pi_c: [string, string]
 }
 
-type PublicSignals = [string, string, string]; 
+export type PublicSignals = [string, string, string]; 
 
 export function getProofArgs(proof: Proof, publicSignals: PublicSignals): ProofArgs {
   const { pi_a, pi_b, pi_c } = proof;
