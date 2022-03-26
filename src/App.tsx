@@ -9,10 +9,6 @@ import { Route } from "./types";
 
 type Props = Readonly<{}>;
 
-
-
-
-
 export function App(props: Props) {
   const [route, setRoute] = useState<Route>(["landing", null])
   const provider = new providers.JsonRpcProvider("http://127.0.0.1:7545");
