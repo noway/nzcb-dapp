@@ -23,7 +23,7 @@ export function Landing(props: Props) {
       <p><b>No.</b> We only take a few key parts of your NZ COVID Pass, pass them through a custom ZK-SNARK, then verify the zero knowledge proof of you holding the said pass on the blockchain. An attacker can’t reconstruct your NZ COVID Pass based on the blockchain logs.</p>
       <h3>Does my name gets written onto the blockchain?</h3>
       <p><b>No.</b> We send an anonimized identity of your NZ COVID Pass to the blockchain. To be precise, we send 2<sup>256</sup> hashes of random identities, one of which is yours. An attacker can’t figure out your name without reversing the hash function.</p>
-      <h3>Do you save my NZ COVID Pass on the backend?</h3>
+      <h3>Do you save my NZ COVID Pass to the backend?</h3>
       <p><b>No.</b> NZ COVID Badge is a stateless decentralized application (dApp) and doesn’t have a backend.</p>
       <h3>Does this website have analytics or telemetry?</h3>
       <p><b>No.</b> This website collects no analytics, telemetry or any other data derived from user actions. The website only communicates with an Ethereum node RPC endpoint to send and recieve information from the blockchain.</p>
@@ -40,7 +40,7 @@ export function Landing(props: Props) {
       <h3>How many badges can ever be minted?</h3>
       <p>The contract’s total supply doesn’t have a hard limit but since there’s only 1 badge per person, the total supply is effectively limited by the New Zealand total population of about 5 million.</p>
       <h3>What do I get after mint?</h3>
-      <p>You get an ERC721 NZ COVID Badge. Nothing less, nothing more.</p>
+      <p>You get an ERC721 NZ COVID Badge. Nothing more, nothing less.</p>
       <h2>Links</h2>
       <h3>Collection</h3>
       <p>OpenSea</p>
