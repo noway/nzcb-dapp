@@ -51,7 +51,7 @@ function reducer(state: State, action: Action) {
 export function App(props: Props) {
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  function setRoute(route: Route) {
+  function navigate(route: Route) {
     dispatch({ type: "navigate", payload: route });
   }
 
@@ -60,7 +60,7 @@ export function App(props: Props) {
   }
 
   return (
-    <RouteContext.Provider value={{ route: state.route, setRoute, goBack }}>
+    <RouteContext.Provider value={{ route: state.route, navigate, goBack }}>
       {state.route[0] === "landing" ? <Landing /> : null}
       {state.route[0] === "account" ? <Account /> : null}
       {state.route[0] === "newbadge" ? <NewBadge /> : null}

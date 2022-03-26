@@ -11,7 +11,7 @@ export function ConnectWallet(props: Props) {
   useEffect(() => {
     console.log('wallet changed', wallet, connecting)
     if (wallet && !connecting) {
-      routeContext.setRoute(["account", null]);
+      routeContext.navigate(["account", null]);
     }
   }, [wallet, connecting])
 

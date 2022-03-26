@@ -13,7 +13,7 @@ export function NewBadge(props: Props) {
   const [passURI, setPassURI] = useState("NZCP://...");
   const routeContext = useContext(RouteContext);
   function prepare() {
-    routeContext.setRoute(["prepare", { passURI: EXAMPLE_PASS_URI }]);
+    routeContext.navigate(["prepare", { passURI: EXAMPLE_PASS_URI }]);
   }
 
   return (
