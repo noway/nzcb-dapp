@@ -10,8 +10,8 @@ import { init } from "@web3-onboard/react";
 const injected = injectedModule();
 const walletConnect = walletConnectModule();
 
-const MAINNET_RPC_URL = `https://eth-mainnet.alchemyapi.io/v2/...`;
-const RINKEBY_RPC_URL = `https://eth-rinkeby.alchemyapi.io/v2/...`;
+const MAINNET_RPC_URL = `https://eth-mainnet.alchemyapi.io/v2/${process.env.REACT_APP_ALCHEMY_API_KEY}`;
+const RINKEBY_RPC_URL = `https://eth-rinkeby.alchemyapi.io/v2/${process.env.REACT_APP_ALCHEMY_API_KEY}`;
 const GANACHE_RPC_URL = `http://localhost:7545`;
 
 init({
