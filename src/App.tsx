@@ -2,11 +2,10 @@ import { useReducer } from "react";
 import { Account } from "./Account";
 import { RouteContext } from "./contexts";
 import { Landing } from "./Landing";
+import { Mint } from "./Mint";
 import { NewBadge } from "./NewBadge";
 import { Prepare } from "./Prepare";
 import { Route } from "./types";
-
-type Props = Readonly<{}>;
 
 type State = Readonly<{
   route: Route;
@@ -52,8 +51,9 @@ function reducer(state: State, action: Action) {
   }
 }
 
-export function App(props: Props) {
+export function App() {
   const [state, dispatch] = useReducer(reducer, initialState);
+  const route = state.route;
 
   function navigate(route: Route) {
     dispatch({ type: "navigate", payload: route });
@@ -62,13 +62,20 @@ export function App(props: Props) {
   function goBack() {
     dispatch({ type: "back", payload: null });
   }
-
+  
   return (
-    <RouteContext.Provider value={{ route: state.route, navigate, goBack }}>
-      {state.route[0] === "landing" ? <Landing /> : null}
-      {state.route[0] === "account" ? <Account /> : null}
-      {state.route[0] === "newbadge" ? <NewBadge /> : null}
-      {state.route[0] === "prepare" ? <Prepare passURI={state.route[1].passURI} /> : null}
+    <RouteContext.Provider value={{ route: route, navigate, goBack }}>
+      {route[0] === "landing" ? <Landing /> : null}
+      {route[0] === "account" ? <Account /> : null}
+      {route[0] === "newbadge" ? <NewBadge /> : null}
+      {route[0] === "prepare" ? <Prepare passURI={route[1].passURI} /> : null}
+      {route[0] === "mint" ? 
+        <Mint
+          passURI={route[1].passURI}
+          proof={route[1].proof}
+          publicSignals={route[1].publicSignals}
+          pubIdentity={route[1].pubIdentity}
+        /> : null}
     </RouteContext.Provider>
   )
 }
