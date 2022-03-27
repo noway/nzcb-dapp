@@ -1,8 +1,9 @@
 import { EIP1193Provider } from "@web3-onboard/core";
 import { useConnectWallet } from "@web3-onboard/react";
-import { BigNumber, providers } from "ethers";
-import { useState } from "react";
+import { BigNumber, ContractReceipt, providers } from "ethers";
+import { useContext, useState } from "react";
 import { CONTRACT_ADDRESS } from "./config";
+import { RouteContext } from "./contexts";
 import { NZCOVIDBadge__factory } from "./contracts/types";
 import { Header } from "./Header";
 import { getProofArgs, getRS, Proof, PubIdentity, PublicSignals, signalsToPubIdentity } from "./nzcpCircom";
@@ -53,6 +54,25 @@ export function ProofComponent(props: {proof: Proof}) {
   )
 }
 
+type SuccessProps = Readonly<{
+  receipt: ContractReceipt
+}>
+function Success(props: SuccessProps) {
+  const {receipt} = props
+  const {transactionHash} = receipt
+  const events = receipt.events || []
+  const event = events.find(e => e.transactionHash === transactionHash)
+  const id = event?.args?.id as BigNumber
+  return (
+    <div>
+      <h3>Success</h3>
+      <div>Transaction Hash: {receipt.transactionHash}</div>
+      <div>NZ COVID Badge #{id.toString()}</div>
+    </div>
+  )
+}
+
+
 type MintContentsProps = Readonly<{
   eip1193Provider: EIP1193Provider
   passURI: string
@@ -70,6 +90,8 @@ function MintContents(props: MintContentsProps) {
   const nzCovidBadge = NZCOVIDBadge__factory.connect(CONTRACT_ADDRESS, provider.getSigner())
   const [minting, setMinting] = useState(false)
   const [mintingError, setMintingError] = useState<Error | null>(null)
+  const [receipt, setReceipt] = useState<ContractReceipt | null>(null)
+  const routeContext = useContext(RouteContext);
 
   async function mint() {
     setMinting(true)
@@ -80,6 +102,7 @@ function MintContents(props: MintContentsProps) {
 
       const tx = await nzCovidBadge.mint(a, b, c, input, rs)
       const receipt = await tx.wait()
+      setReceipt(receipt)
       console.log('receipt',receipt)
     }
     catch (e) {
@@ -94,6 +117,10 @@ function MintContents(props: MintContentsProps) {
     setMinting(false)
   }
   const pubIdentityMatches = comparePubIdentities(pubIdentity, signalsToPubIdentity(publicSignals));
+
+  function done() {
+    routeContext.navigate(["account", null]);
+  }
   return (
     <>
       <h3>To be sent to the blockhain</h3>
@@ -109,7 +136,11 @@ function MintContents(props: MintContentsProps) {
       </div>
       <div>{minting ? "Minting, this may take a while..." : ""}</div>
       <div>{mintingError ? "Error while minting:  " + mintingError.message : ""}</div>
-      <button type="button" onClick={() => mint()} disabled={minting}>Mint</button>
+      {receipt ? <Success receipt={receipt} /> : null}
+      {!receipt ? 
+        <button type="button" onClick={() => mint()} disabled={minting}>Mint</button> :
+        <button type="button" onClick={() => done()}>Done</button>
+      }
     </>
   )
 }
