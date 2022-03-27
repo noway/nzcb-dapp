@@ -1,5 +1,4 @@
-import { providers, Wallet } from "ethers";
-import { useReducer, useState } from "react";
+import { useReducer } from "react";
 import { Account } from "./Account";
 import { RouteContext } from "./contexts";
 import { Landing } from "./Landing";
