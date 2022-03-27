@@ -17,8 +17,7 @@ type AccountProps = Readonly<{
   account: Account
 }>
 
-// TODO: better name
-function AccountComponent(props: AccountProps) {
+function AccountContent(props: AccountProps) {
   const {account} = props
   return (
     <div>
@@ -69,7 +68,7 @@ export function Wallet() {
               <div>
                 {accounts.map(account => {
                   return (
-                    <AccountComponent account={account} key={account.address} />
+                    <AccountContent account={account} key={account.address} />
                   )
                 })}
               </div>
