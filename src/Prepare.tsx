@@ -7,7 +7,7 @@ type Props = Readonly<{
 }>;
 
 export function Prepare(props: Props) {
-  const [{ wallet, connecting }, connect, disconnect] = useConnectWallet()
+  const [{ wallet }] = useConnectWallet()
   const eip1193Provider = wallet?.provider
   const address = wallet?.accounts[0]?.address
   const passURI = props.passURI
@@ -21,7 +21,7 @@ export function Prepare(props: Props) {
           address={address}
           passURI={passURI} 
         /> : 
-        <div>please connect wallet</div>}
+        <div>Please connect wallet</div>}
     </div>
   );
 }

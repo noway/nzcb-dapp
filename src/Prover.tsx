@@ -99,6 +99,7 @@ export function Prover(props: Props) {
     <div>
       <div>{proving ? "Proving, this may take a while..." : ""}</div>
       <div>{provingError ? "Error while proving:  " + provingError.message : ""}</div>
+      <h3>To be sent to the blockhain</h3>
       <div>
         <b>Anonimized identity:</b>
         {expectedPubIdentity ? <PublicIdentity pubIdentity={expectedPubIdentity}/> : null}
@@ -106,8 +107,8 @@ export function Prover(props: Props) {
         <Signature rs={getRS(passURI)} />
         <b>Proof:</b>
         {proof ? <ProofComponent proof={proof}/> : null }
-        {expectedPubIdentity && publicSignals && comparePubIdentities(expectedPubIdentity, signalsToPubIdentity(publicSignals)) ? <div>Pre-flight check: OK</div> : null}
-        {expectedPubIdentity && publicSignals && !comparePubIdentities(expectedPubIdentity, signalsToPubIdentity(publicSignals)) ? <div>Pre-flight check: ERROR</div> : null}
+        {expectedPubIdentity && publicSignals && comparePubIdentities(expectedPubIdentity, signalsToPubIdentity(publicSignals)) ? <div><b>Pre-flight check</b>: OK</div> : null}
+        {expectedPubIdentity && publicSignals && !comparePubIdentities(expectedPubIdentity, signalsToPubIdentity(publicSignals)) ? <div><b>Pre-flight check</b>: ERROR</div> : null}
       </div>
       {proof && publicSignals ? 
         <button type="button" onClick={() => mint(proof, publicSignals)} disabled={false}>Mint</button> : 
