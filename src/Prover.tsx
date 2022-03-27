@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { groth16 } from 'snarkjs'
 import { getNZCPPubIdentity,  getNZCPCircuitInput, PubIdentity, Proof, PublicSignals } from "./nzcpCircom";
 import { RouteContext } from "./contexts";
@@ -9,20 +9,16 @@ type Props = Readonly<{
 }>;
 
 export function Prover(props: Props) {
+  const passURI = props.passURI
+  const address = props.address
   const routeContext = useContext(RouteContext);
   const [proving, setProving] = useState(false);
   const [provingError, setProvingError] = useState<Error | null>(null);
   const [proof, setProof] = useState<Proof | null>(null);
   const [publicSignals, setPublicSignals] = useState<PublicSignals | null>(null);
-  const passURI = props.passURI
-  const address = props.address
   const [pubIdentity, setPubIdentity] = useState<PubIdentity | null>(null);
 
-  useEffect(() => {
-    prove(passURI)
-  }, [passURI])
-
-  async function prove(passURI: string) {
+  const prove = useCallback(async function(passURI: string) {
     setProving(true)
     setProvingError(null)
     try {
@@ -38,10 +34,14 @@ export function Prover(props: Props) {
       console.log('proof error', e)
     }
     setProving(false);
-  }
+  }, [address])
+
+  useEffect(() => {
+    prove(passURI)
+  }, [passURI, prove])
 
   function proceed(proof: Proof, publicSignals: PublicSignals, pubIdentity: PubIdentity) {
-      routeContext.navigate(["mint", { passURI, proof, publicSignals, pubIdentity }])
+    routeContext.navigate(["mint", { passURI, proof, publicSignals, pubIdentity }])
   }
 
   return (
