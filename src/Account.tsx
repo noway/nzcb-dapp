@@ -2,10 +2,7 @@ import { useContext } from "react";
 import { RouteContext } from "./contexts";
 import { Header } from "./Header";
 
-type Props = Readonly<{
-}>;
-
-export function Account(props: Props) {
+export function Account() {
   const routeContext = useContext(RouteContext);
   function newBadge() {
     routeContext.navigate(["newbadge", null]);
