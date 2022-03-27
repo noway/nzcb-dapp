@@ -80,6 +80,7 @@ function MintContents(props: MintContentsProps) {
 
       const tx = await nzCovidBadge.mint(a, b, c, input, rs)
       const receipt = await tx.wait()
+      console.log('receipt',receipt)
     }
     catch (e) {
       const error = e as MintingError
