@@ -10,10 +10,10 @@ const EXAMPLE_PASS_URI = "NZCP:/1/2KCEVIQEIVVWK6JNGEASNICZAEP2KALYDZSGSZB2O5SWEO
 
 
 export function NewBadge(props: Props) {
-  const [passURI, setPassURI] = useState("NZCP://...");
+  const [passURI, setPassURI] = useState(EXAMPLE_PASS_URI);
   const routeContext = useContext(RouteContext);
   function prepare() {
-    routeContext.navigate(["prepare", { passURI: EXAMPLE_PASS_URI }]);
+    routeContext.navigate(["prepare", { passURI }]);
   }
 
   return (
