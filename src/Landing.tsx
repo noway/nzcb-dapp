@@ -20,13 +20,13 @@ export function Landing() {
       <h3>Does my NZ COVID Pass gets written onto the blockchain?</h3>
       <p><b>No.</b> We only take a few key parts of your NZ COVID Pass, pass them through a custom ZK-SNARK, then verify the zero knowledge proof of you holding the said pass on the blockchain. An attacker can’t reconstruct your NZ COVID Pass based on the blockchain logs.</p>
       <h3>Does my name gets written onto the blockchain?</h3>
-      <p><b>No.</b> We send an anonimized identity of your NZ COVID Pass to the blockchain. To be precise, we send 2<sup>256</sup> hashes of random identities, one of which is yours. An attacker can’t figure out your name without reversing the hash function.</p>
+      <p><b>No.</b> We send an anonymized identity of your NZ COVID Pass to the blockchain. To be precise, we send 2<sup>256</sup> hashes of random identities, one of which is yours. An attacker can’t figure out your name without reversing the hash function.</p>
       <h3>Do you save my NZ COVID Pass to the backend?</h3>
       <p><b>No.</b> NZ COVID Badge is a stateless decentralized application (dApp) and doesn’t have a backend.</p>
       <h3>Does this website have analytics or telemetry?</h3>
-      <p><b>No.</b> This website collects no analytics, telemetry or any other data derived from user actions. The website only communicates with an Ethereum node RPC endpoint to send and recieve information from the blockchain.</p>
+      <p><b>No.</b> This website collects no analytics, telemetry or any other data derived from user actions. The website only communicates with an Ethereum node RPC endpoint to send and receive information from the blockchain.</p>
       <h3>How many badges can I mint?</h3>
-      <p>You can only mint <b>1 badge per person</b>. Even if you request a new NZ COVID Pass from <a href="https://mycovidrecord.nz" rel="nofollow noopener noreferrer">mycovidrecord.nz</a>, your anonimized identity will match against the list of spent anonimized identities and prevent you from minting again.</p>
+      <p>You can only mint <b>1 badge per person</b>. Even if you request a new NZ COVID Pass from <a href="https://mycovidrecord.nz" rel="nofollow noopener noreferrer">mycovidrecord.nz</a>, your anonymized identity will match against the list of spent anonymized identities and prevent you from minting again.</p>
       <h3>Can I sell my NZ COVID Badge?</h3>
       <p>Yes. Although the chance that anyone will buy is infinite small. Don’t expect to recoup the ether you spent. </p>
       <h3>What’s the mint price?</h3>

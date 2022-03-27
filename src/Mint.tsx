@@ -123,9 +123,9 @@ function MintContents(props: MintContentsProps) {
   }
   return (
     <>
-      <h3>To be sent to the blockhain</h3>
+      <h3>To be sent to the blockchain</h3>
       <div>
-        <h4>Anonimized identity</h4>
+        <h4>Anonymized identity</h4>
         <PublicIdentity pubIdentity={pubIdentity}/>
         <h4>Pass signature</h4>
         <Signature rs={getRS(passURI)} />
