@@ -129,6 +129,7 @@ function MintContents(props: MintContentsProps) {
       <div>{minting ? "Minting..." : ""}</div>
       <div>{mintingError ? "Error while minting:  " + mintingError.message : ""}</div>
       {receipt ? <Success receipt={receipt} /> : null}
+      {/* TODO: add disclaimers */}
       {!receipt ? 
         <button type="button" onClick={() => mint()} disabled={minting}>Mint</button> :
         <button type="button" onClick={() => done()}>Done</button>
