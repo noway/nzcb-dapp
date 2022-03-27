@@ -1,13 +1,8 @@
 import { createContext } from "react";
 import { Route } from "./types";
 
-type RouteContext = {
-  route: Route;
-  navigate: (_route: Route) => void;
-  goBack: () => void;
-}
-export const RouteContext = createContext<RouteContext>({
-  route: ["landing", null],
+export const RouteContext = createContext({
+  route: ["landing", null] as Route,
   navigate: (_route: Route) => {},
   goBack: () => {},
 })
