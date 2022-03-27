@@ -124,9 +124,7 @@ function MintContents(props: MintContentsProps) {
         <h4>Proof</h4>
         <ProofComponent proof={proof}/>
         <h4>Pre-flight check</h4>
-        {/* TODO: make a component */}
-        {pubIdentityMatches ? <span>OK</span> : null}
-        {!pubIdentityMatches ? <span>ERROR</span> : null}
+        <span>{pubIdentityMatches ? "OK" : "Error"}</span>
       </div>
       <div>{minting ? "Minting..." : ""}</div>
       <div>{mintingError ? "Error while minting:  " + mintingError.message : ""}</div>
