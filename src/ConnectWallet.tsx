@@ -5,6 +5,7 @@ import { RouteContext } from "./contexts";
 export function ConnectWallet() {
   const routeContext = useContext(RouteContext);
   const [{ wallet, connecting }, connect ] = useConnectWallet()
+
   useEffect(() => {
     if (wallet && !connecting) {
       routeContext.navigate(["account", null]);
@@ -14,8 +15,8 @@ export function ConnectWallet() {
   function connectWallet() {
     connect({})
   }
-  return (
-    // TODO: ternarize
-    <button type="button" disabled={connecting} onClick={connectWallet}>{connecting ? "Connecting..." : "Connect Wallet"}</button>
-  )
+
+  return connecting ? 
+    <button type="button" disabled={true}>Connecting...</button> :
+    <button type="button" onClick={connectWallet}>Connect Wallet</button>  
 }

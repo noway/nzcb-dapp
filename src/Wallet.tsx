@@ -34,20 +34,22 @@ export function Wallet() {
 
   return (
     <div>
-      {!wallet ? <button onClick={() => connect({})}>{connecting ? 'connecting' : 'connect'}</button> : null}
+      {!wallet ? (
+        connecting ?
+          <button disabled={true}>Connecting</button> :
+          <button onClick={() => connect({})}>Connect</button>
+      ) : null}
 
-      {wallet && (
+      {wallet ? (
         <div>
           {settingChain ? (
             <span>Switching chain...</span>
           ) : (
             <span>{chains.find(({ id }) => id === connectedChain?.id)?.label}</span>
           )}
-          <button onClick={() => disconnect(wallet)}>
-            Disconnect Wallet
-          </button>
+          <button onClick={() => disconnect(wallet)}>Disconnect Wallet</button>
         </div>
-      )}
+      ) : null}
 
       {connectedWallets.map(({ label, accounts }) => {
         return (
