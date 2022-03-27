@@ -2,16 +2,7 @@ import { Account } from "@web3-onboard/core/dist/types";
 import { useConnectWallet, useSetChain, useWallets } from "@web3-onboard/react";
 import { useContext, useEffect } from "react";
 import { RouteContext } from "./contexts";
-
-// TODO: put into utils
-const truncateAddress = (address: string) => {
-  if (!address) return "No Account";
-  const match = address.match(
-    /^(0x[a-zA-Z0-9]{3})[a-zA-Z0-9]+([a-zA-Z0-9]{4})$/
-  );
-  if (!match) return address;
-  return `${match[1]}…${match[2]}`;
-};
+import { truncateAddress } from "./utils";
 
 type AccountProps = Readonly<{
   account: Account

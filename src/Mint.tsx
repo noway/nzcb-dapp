@@ -6,16 +6,8 @@ import { CONTRACT_ADDRESS } from "./config";
 import { RouteContext } from "./contexts";
 import { NZCOVIDBadge__factory } from "./contracts/types";
 import { Header } from "./Header";
-import { getProofArgs, getRS, Proof, PubIdentity, PublicSignals, signalsToPubIdentity } from "./nzcpCircom";
-import { compare, toHexString } from "./utils";
-
-// TODO: put in nzcpCircom
-function comparePubIdentities(a: PubIdentity, b: PubIdentity) {
-  return compare(a.nullifierHashPart, b.nullifierHashPart)
-    && compare(a.toBeSignedHash, b.toBeSignedHash)
-    && compare(a.data, b.data)
-    && a.exp === b.exp
-}
+import { comparePubIdentities, getProofArgs, getRS, Proof, PubIdentity, PublicSignals, signalsToPubIdentity } from "./nzcpCircom";
+import { toHexString } from "./utils";
 
 export function PublicIdentity(props: {pubIdentity: PubIdentity}) {
   const {pubIdentity} = props

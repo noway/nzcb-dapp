@@ -1,9 +1,7 @@
 import { utils } from "ethers";
+import { TO_BE_SIGNED_MAX_LEN } from "./config";
 import { Data, decodeBytes, decodeCBOR, decodeCOSE, decodeRS, encodeToBeSigned } from "./nzcpTools";
-import { bitArrayToBuffer, bufferToBitArray, chunkToBits, evmBytesToNum, evmRearrangeBits, evmRearrangeBytes, fitBytes } from "./utils";
-
-// TODO: put into config
-const TO_BE_SIGNED_MAX_LEN = 314;
+import { bitArrayToBuffer, bufferToBitArray, chunkToBits, compare, evmBytesToNum, evmRearrangeBits, evmRearrangeBytes, fitBytes } from "./utils";
 
 export interface PubIdentity {
   nullifierHashPart: Uint8Array;
@@ -106,3 +104,9 @@ export function getProofArgs(proof: Proof, publicSignals: PublicSignals): ProofA
   return { a, b, c, input };
 }
 
+export function comparePubIdentities(a: PubIdentity, b: PubIdentity) {
+  return compare(a.nullifierHashPart, b.nullifierHashPart)
+    && compare(a.toBeSignedHash, b.toBeSignedHash)
+    && compare(a.data, b.data)
+    && a.exp === b.exp
+}

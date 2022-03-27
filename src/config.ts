@@ -1,4 +1,5 @@
 export const CONTRACT_ADDRESS = "0x02320A779F70Dd3075a6E451AaAdd4956F524D2b"
+export const TO_BE_SIGNED_MAX_LEN = 314
 
 export const EXAMPLE_PUBLIC_KEY_JWK = {
   "kty": "EC",
