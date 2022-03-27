@@ -1,6 +1,4 @@
-type Props = Readonly<{}>
-
-export function Sample(props: Props) {
+export function Sample() {
   return (
     <div>
       <div>

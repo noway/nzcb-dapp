@@ -3,15 +3,12 @@ import { Header } from "./Header";
 import { Sample } from "./Sample"
 import { styled } from "./styles";
 
-type Props = Readonly<{}>
-
-
 export const Lead = styled("p", {
   fontSize: "1.5rem",
 });
 
 
-export function Landing(props: Props) {
+export function Landing() {
   return (
     <div>
       <Header showWallet={false} showBack={false} />

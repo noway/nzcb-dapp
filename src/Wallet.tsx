@@ -3,8 +3,6 @@ import { useConnectWallet, useSetChain, useWallets } from "@web3-onboard/react";
 import { useContext, useEffect } from "react";
 import { RouteContext } from "./contexts";
 
-type Props = Readonly<{}>;
-
 
 const truncateAddress = (address: string) => {
   if (!address) return "No Account";
@@ -31,7 +29,7 @@ function AccountComponent(props: AccountProps) {
   )
 }
 
-export function Wallet(props: Props) {
+export function Wallet() {
   const routeContext = useContext(RouteContext);
   const [{ chains, connectedChain, settingChain }] = useSetChain()
   const [{ wallet, connecting }, connect, disconnect] = useConnectWallet()

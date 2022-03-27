@@ -2,9 +2,7 @@ import { useConnectWallet } from "@web3-onboard/react";
 import { useContext, useEffect } from "react";
 import { RouteContext } from "./contexts";
 
-type Props = Readonly<{}>
-
-export function ConnectWallet(props: Props) {
+export function ConnectWallet() {
   const routeContext = useContext(RouteContext);
   const [{ wallet, connecting }, connect ] = useConnectWallet()
   useEffect(() => {
@@ -18,6 +16,6 @@ export function ConnectWallet(props: Props) {
     connect({})
   }
   return (
-    <button type="button" onClick={connectWallet}>{connecting ? "Connecting..." : "Connect Wallet"}</button>
+    <button type="button" disabled={connecting} onClick={connectWallet}>{connecting ? "Connecting..." : "Connect Wallet"}</button>
   )
 }
