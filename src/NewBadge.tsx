@@ -1,6 +1,8 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { EXAMPLE_PUBLIC_KEY_JWK } from "./config";
 import { RouteContext } from "./contexts";
 import { Header } from "./Header";
+import { decodeBytes, decodeCOSE, encodeToBeSigned } from "./nzcpTools";
 
 type Props = Readonly<{
 }>;
@@ -11,8 +13,27 @@ const EXAMPLE_PASS_URI = "NZCP:/1/2KCEVIQEIVVWK6JNGEASNICZAEP2KALYDZSGSZB2O5SWEO
 export function NewBadge(props: Props) {
   const [passURI, setPassURI] = useState(EXAMPLE_PASS_URI);
   const routeContext = useContext(RouteContext);
+  const [validStatus, setValidStatus] = useState<string>("N/A");
   function prepare() {
     routeContext.navigate(["prepare", { passURI }]);
+  }
+
+  useEffect(() => {
+    checkValid(passURI)
+  }, [passURI]);
+
+  async function checkValid(passURI: string) {
+    try {
+      const bytes = decodeBytes(passURI);
+      const data = decodeCOSE(bytes);
+      const toBeSigned = encodeToBeSigned(data.bodyProtected, data.payload)
+      const key = await crypto.subtle.importKey('jwk', EXAMPLE_PUBLIC_KEY_JWK, {name: 'ECDSA', namedCurve: 'P-256'}, false, ['verify']);
+      const ret = await crypto.subtle.verify({name: 'ECDSA', hash: 'SHA-256'}, key, data.signature, toBeSigned);
+      setValidStatus(ret ? "Yes" : "No");
+    }
+    catch (e) {
+      setValidStatus((e as Error).message);
+    }
   }
 
   return (
@@ -26,6 +47,7 @@ export function NewBadge(props: Props) {
           rows={12}
         />
       </div>
+      <div>Valid: {validStatus}</div>
       <button type="button" onClick={prepare}>Prepare</button>
     </div>
   );
