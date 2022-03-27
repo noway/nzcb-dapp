@@ -10,8 +10,7 @@ type Props = Readonly<{
 }>;
 
 export function Prover(props: Props) {
-  const passURI = props.passURI
-  const address = props.address
+  const {passURI, address} = props
   const routeContext = useContext(RouteContext);
   const [proving, setProving] = useState(false);
   const [provingError, setProvingError] = useState<Error | null>(null);
@@ -32,7 +31,6 @@ export function Prover(props: Props) {
     }
     catch (e) {
       setProvingError(e as Error);
-      console.log('proof error', e)
     }
     setProving(false);
   }, [address])
@@ -47,6 +45,7 @@ export function Prover(props: Props) {
 
   return (
     <div>
+      {/* TODO: make this into generic status messages */}
       <div>{proving ? "Proving, this may take a while..." : ""}</div>
       <div>{provingError ? "Error while proving:  " + provingError.message : ""}</div>
       {proof && publicSignals && pubIdentity ? 

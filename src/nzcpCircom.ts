@@ -2,6 +2,7 @@ import { utils } from "ethers";
 import { Data, decodeBytes, decodeCBOR, decodeCOSE, decodeRS, encodeToBeSigned } from "./nzcpTools";
 import { bitArrayToBuffer, bufferToBitArray, chunkToBits, evmBytesToNum, evmRearrangeBits, evmRearrangeBytes, fitBytes } from "./utils";
 
+// TODO: put into config
 const TO_BE_SIGNED_MAX_LEN = 314;
 
 export interface PubIdentity {
@@ -32,8 +33,6 @@ export async function getNZCPPubIdentity(passURI: string, signerAddress: string)
   const signedAddressBytes = utils.arrayify(signerAddress)
   const data = fitBytes(signedAddressBytes, 21);
   const pubIdentity = { nullifierHashPart, toBeSignedHash, exp, nbf, data };
-  console.log('exp', exp);
-  console.log('nullifer', nullifier);
   return pubIdentity;
 }
 
@@ -75,6 +74,7 @@ export function getRS(passURI: string): [Uint8Array, Uint8Array] {
   return decodeRS(decodeBytes(passURI))
 }
 
+// TODO: readonly
 interface ProofArgs {
   a: [bigint, bigint];
   b: [[bigint, bigint], [bigint, bigint]];

@@ -3,7 +3,7 @@ import { useConnectWallet, useSetChain, useWallets } from "@web3-onboard/react";
 import { useContext, useEffect } from "react";
 import { RouteContext } from "./contexts";
 
-
+// TODO: put into utils
 const truncateAddress = (address: string) => {
   if (!address) return "No Account";
   const match = address.match(
@@ -35,7 +35,6 @@ export function Wallet() {
   const connectedWallets = useWallets()
 
   useEffect(() => {
-    console.log('wallet changed', wallet, connecting)
     if (!wallet && !connecting) {
       routeContext.navigate(["landing", null]);
     }

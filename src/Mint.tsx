@@ -9,7 +9,7 @@ import { Header } from "./Header";
 import { getProofArgs, getRS, Proof, PubIdentity, PublicSignals, signalsToPubIdentity } from "./nzcpCircom";
 import { compare, toHexString } from "./utils";
 
-
+// TODO: put in nzcpCircom
 function comparePubIdentities(a: PubIdentity, b: PubIdentity) {
   return compare(a.nullifierHashPart, b.nullifierHashPart)
     && compare(a.toBeSignedHash, b.toBeSignedHash)
@@ -66,6 +66,7 @@ function Success(props: SuccessProps) {
   return (
     <div>
       <h3>Success</h3>
+      {/* TODO: block explorer links */}
       <div>Transaction Hash: {receipt.transactionHash}</div>
       <div>NZ COVID Badge #{id.toString()}</div>
     </div>
@@ -103,7 +104,6 @@ function MintContents(props: MintContentsProps) {
       const tx = await nzCovidBadge.mint(a, b, c, input, rs)
       const receipt = await tx.wait()
       setReceipt(receipt)
-      console.log('receipt',receipt)
     }
     catch (e) {
       const error = e as MintingError
@@ -131,8 +131,10 @@ function MintContents(props: MintContentsProps) {
         <Signature rs={getRS(passURI)} />
         <h4>Proof</h4>
         <ProofComponent proof={proof}/>
-        {pubIdentityMatches ? <div><h4>Pre-flight check</h4>OK</div> : null}
-        {!pubIdentityMatches ? <div><h4>Pre-flight check</h4>ERROR</div> : null}
+        <h4>Pre-flight check</h4>
+        {/* TODO: make a component */}
+        {pubIdentityMatches ? <span>OK</span> : null}
+        {!pubIdentityMatches ? <span>ERROR</span> : null}
       </div>
       <div>{minting ? "Minting..." : ""}</div>
       <div>{mintingError ? "Error while minting:  " + mintingError.message : ""}</div>

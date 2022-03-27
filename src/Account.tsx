@@ -27,10 +27,7 @@ export function Account() {
       const supply = await nzCovidBadge.totalSupply()
       for (let i = 0n; i < supply.toBigInt(); i++) {
         const owner = await nzCovidBadge.getOwner(i)
-        console.log('owner',owner)
-        console.log('address',address)
         if (owner.toLowerCase() === `${address}`.toLowerCase()) {
-          console.log('here')
           myBadgeIds.push(i)
         }
       }
