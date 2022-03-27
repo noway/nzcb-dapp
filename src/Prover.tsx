@@ -2,6 +2,7 @@ import { useCallback, useContext, useEffect, useState } from "react";
 import { groth16 } from 'snarkjs'
 import { getNZCPPubIdentity,  getNZCPCircuitInput, PubIdentity, Proof, PublicSignals } from "./nzcpCircom";
 import { RouteContext } from "./contexts";
+import { EXAMPLE_WASM_FILE, EXAMPLE_ZKEY_FILE } from "./config";
 
 type Props = Readonly<{
   passURI: string
@@ -25,7 +26,7 @@ export function Prover(props: Props) {
       const pubIdentity = await getNZCPPubIdentity(passURI, address);
       setPubIdentity(pubIdentity)
       const circuitInput = getNZCPCircuitInput(passURI, address);
-      const { proof, publicSignals } = await groth16.fullProve(circuitInput, "nzcp_example.wasm", "nzcp_example_0001.zkey")
+      const { proof, publicSignals } = await groth16.fullProve(circuitInput, EXAMPLE_WASM_FILE, EXAMPLE_ZKEY_FILE)
       setProof(proof)
       setPublicSignals(publicSignals)
     }
