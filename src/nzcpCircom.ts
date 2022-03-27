@@ -3,13 +3,13 @@ import { TO_BE_SIGNED_MAX_LEN } from "./config";
 import { Data, decodeBytes, decodeCBOR, decodeCOSE, decodeRS, encodeToBeSigned } from "./nzcpTools";
 import { bitArrayToBuffer, bufferToBitArray, chunkToBits, compare, evmBytesToNum, evmRearrangeBits, evmRearrangeBytes, fitBytes } from "./utils";
 
-export interface PubIdentity {
+export type PubIdentity = Readonly<{
   nullifierHashPart: Uint8Array;
   toBeSignedHash: Uint8Array;
   nbf: bigint;
   exp: bigint;
   data: Uint8Array;
-}
+}>
 
 export async function getNZCPPubIdentity(passURI: string, signerAddress: string): Promise<PubIdentity> {
   const bytes = decodeBytes(passURI);
@@ -72,19 +72,18 @@ export function getRS(passURI: string): [Uint8Array, Uint8Array] {
   return decodeRS(decodeBytes(passURI))
 }
 
-// TODO: readonly
-interface ProofArgs {
+type ProofArgs = Readonly<{
   a: [bigint, bigint];
   b: [[bigint, bigint], [bigint, bigint]];
   c: [bigint, bigint];
   input: [bigint, bigint, bigint];
-}
+}>
 
-export interface Proof {
+export type Proof = Readonly<{
   pi_a: [string, string]
   pi_b: [[string, string], [string, string]]
   pi_c: [string, string]
-}
+}>
 
 export type PublicSignals = [string, string, string]; 
 
