@@ -1,4 +1,3 @@
-import { Wallet } from "ethers";
 import { useContext } from "react";
 import { RouteContext } from "./contexts";
 import { Header } from "./Header";

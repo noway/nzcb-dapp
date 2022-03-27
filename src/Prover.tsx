@@ -1,11 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { groth16 } from 'snarkjs'
-import { compare, toHexString } from "./utils";
-import { getNZCPPubIdentity,  getNZCPCircuitInput, signalsToPubIdentity, getProofArgs, getRS, PubIdentity, Proof, PublicSignals } from "./nzcpCircom";
-import { BigNumber, providers } from "ethers";
-import { NZCOVIDBadge__factory } from "./contracts/types";
-import { CONTRACT_ADDRESS } from "./config";
-import { EIP1193Provider } from "@web3-onboard/core";
+import { getNZCPPubIdentity,  getNZCPCircuitInput, PubIdentity, Proof, PublicSignals } from "./nzcpCircom";
 import { RouteContext } from "./contexts";
 
 type Props = Readonly<{

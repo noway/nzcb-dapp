@@ -1,5 +1,4 @@
 import { useConnectWallet } from "@web3-onboard/react";
-import { providers, Wallet } from "ethers";
 import { useContext, useEffect } from "react";
 import { RouteContext } from "./contexts";
 
@@ -13,7 +12,7 @@ export function ConnectWallet(props: Props) {
     if (wallet && !connecting) {
       routeContext.navigate(["account", null]);
     }
-  }, [wallet, connecting])
+  }, [wallet, connecting, routeContext])
 
   function connectWallet() {
     connect({})

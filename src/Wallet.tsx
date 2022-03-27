@@ -6,7 +6,7 @@ import { RouteContext } from "./contexts";
 type Props = Readonly<{}>;
 
 
-export const truncateAddress = (address: string) => {
+const truncateAddress = (address: string) => {
   if (!address) return "No Account";
   const match = address.match(
     /^(0x[a-zA-Z0-9]{3})[a-zA-Z0-9]+([a-zA-Z0-9]{4})$/
@@ -33,7 +33,7 @@ function AccountComponent(props: AccountProps) {
 
 export function Wallet(props: Props) {
   const routeContext = useContext(RouteContext);
-  const [{ chains, connectedChain, settingChain }, setChain] = useSetChain()
+  const [{ chains, connectedChain, settingChain }] = useSetChain()
   const [{ wallet, connecting }, connect, disconnect] = useConnectWallet()
   const connectedWallets = useWallets()
 
@@ -42,7 +42,7 @@ export function Wallet(props: Props) {
     if (!wallet && !connecting) {
       routeContext.navigate(["landing", null]);
     }
-  }, [wallet, connecting])
+  }, [wallet, connecting, routeContext])
 
 
   return (

@@ -1,6 +1,6 @@
 import { utils } from "ethers";
 import { Data, decodeBytes, decodeCBOR, decodeCOSE, decodeRS, encodeToBeSigned } from "./nzcpTools";
-import { bitArrayToBuffer, bitArrayToNum, bufferToBitArray, chunksToBits, chunkToBits, evmBytesToNum, evmRearrangeBits, evmRearrangeBytes, fitBytes, numToBitArray } from "./utils";
+import { bitArrayToBuffer, bufferToBitArray, chunkToBits, evmBytesToNum, evmRearrangeBits, evmRearrangeBytes, fitBytes } from "./utils";
 
 const TO_BE_SIGNED_MAX_LEN = 314;
 
@@ -38,12 +38,7 @@ export async function getNZCPPubIdentity(passURI: string, signerAddress: string)
 }
 
 export function signalsToPubIdentity(publicSignals: string[]): PubIdentity {
-  const SHA512_BITS = 512;
-  const SHA256_BITS = 256;
-  const TIMESTAMP_BITS = 8 * 4;
-
   const bigintSignals = publicSignals.map(s => BigInt(s));
-
 
   const out0 = bitArrayToBuffer(evmRearrangeBits(chunkToBits(bigintSignals[0], 248)));
   const out1 = bitArrayToBuffer(evmRearrangeBits(chunkToBits(bigintSignals[1], 248)));
@@ -56,21 +51,6 @@ export function signalsToPubIdentity(publicSignals: string[]): PubIdentity {
   const data = out2.slice(10)
   const nbf = evmBytesToNum(nbfBytes);
   const exp = evmBytesToNum(expBytes);
-
-
-  // const bits = chunksToBits(bigintSignals, 248);
-
-  // const nullifierRangeBits = bits.slice(0, SHA512_BITS);
-  // const toBeSignedHashBits = bits.slice(SHA512_BITS, SHA512_BITS + SHA256_BITS);
-  // const nbfBits = bits.slice(SHA512_BITS + SHA256_BITS, SHA512_BITS + SHA256_BITS + TIMESTAMP_BITS);
-  // const expBits = bits.slice(SHA512_BITS + SHA256_BITS + TIMESTAMP_BITS, SHA512_BITS + SHA256_BITS + 2 * TIMESTAMP_BITS);
-  // const dataBits = bits.slice(SHA512_BITS + SHA256_BITS + 2 * TIMESTAMP_BITS);
-
-  // const nullifierRange = bitArrayToBuffer(nullifierRangeBits)
-  // const toBeSignedHash = bitArrayToBuffer(toBeSignedHashBits)
-  // const nbf = bitArrayToNum(nbfBits);
-  // const exp = bitArrayToNum(expBits);
-  // const data = bitArrayToBuffer(dataBits)
 
   const pubIdentity = { nullifierHashPart, toBeSignedHash, nbf, exp, data };
   return pubIdentity;
