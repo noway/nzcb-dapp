@@ -44,6 +44,7 @@ export function NewBadge() {
           rows={12}
         />
       </div>
+      {/* TODO: same data bit style as in mint */}
       <div>Valid: {validStatus}</div>
       <button type="button" disabled={validStatus !== "Yes"} onClick={prepare}>Prepare</button>
     </div>
