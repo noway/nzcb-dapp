@@ -134,7 +134,7 @@ function MintContents(props: MintContentsProps) {
         {pubIdentityMatches ? <div><h4>Pre-flight check</h4>OK</div> : null}
         {!pubIdentityMatches ? <div><h4>Pre-flight check</h4>ERROR</div> : null}
       </div>
-      <div>{minting ? "Minting, this may take a while..." : ""}</div>
+      <div>{minting ? "Minting..." : ""}</div>
       <div>{mintingError ? "Error while minting:  " + mintingError.message : ""}</div>
       {receipt ? <Success receipt={receipt} /> : null}
       {!receipt ? 
