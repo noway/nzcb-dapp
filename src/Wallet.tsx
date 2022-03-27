@@ -19,6 +19,7 @@ type AccountProps = Readonly<{
   account: Account
 }>
 
+// TODO: better name
 function AccountComponent(props: AccountProps) {
   const {account} = props
   return (
