@@ -48,7 +48,7 @@ export function NewBadge(props: Props) {
         />
       </div>
       <div>Valid: {validStatus}</div>
-      <button type="button" onClick={prepare}>Prepare</button>
+      <button type="button" disabled={validStatus !== "Yes"} onClick={prepare}>Prepare</button>
     </div>
   );
 }

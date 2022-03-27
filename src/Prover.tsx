@@ -5,7 +5,6 @@ import { RouteContext } from "./contexts";
 
 type Props = Readonly<{
   passURI: string
-  // eip1193Provider: EIP1193Provider
   address: string
 }>;
 
@@ -51,7 +50,7 @@ export function Prover(props: Props) {
       <div>{provingError ? "Error while proving:  " + provingError.message : ""}</div>
       {proof && publicSignals && pubIdentity ? 
         <button type="button" onClick={() => proceed(proof, publicSignals, pubIdentity)} disabled={false}>Proceed</button> : 
-        <button type="button" disabled={true}>Loading...</button>}
+        <button type="button" disabled={true}>Proving...</button>}
     </div>
   );
 }
