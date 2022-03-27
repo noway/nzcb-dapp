@@ -92,8 +92,7 @@ export function getNZCPCircuitInput(passURI: string, signerAddress: string) {
 }
 
 export function getRS(passURI: string): [Uint8Array, Uint8Array] {
-  const bytes = decodeBytes(passURI);
-  return decodeRS(bytes) as [Uint8Array, Uint8Array]
+  return decodeRS(decodeBytes(passURI))
 }
 
 interface ProofArgs {

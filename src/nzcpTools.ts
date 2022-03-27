@@ -214,5 +214,5 @@ export function decodeRS(bytes: Uint8Array) {
   const data = decodeCOSE(bytes);
   const r = data.signature.slice(0, 32);
   const s = data.signature.slice(32, 64);
-  return [r, s];
+  return [r, s] as [Uint8Array, Uint8Array];
 }
