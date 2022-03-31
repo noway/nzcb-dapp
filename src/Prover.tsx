@@ -3,6 +3,7 @@ import { groth16 } from 'snarkjs'
 import { getNZCPPubIdentity,  getNZCPCircuitInput, PubIdentity, Proof, PublicSignals } from "./nzcpCircom";
 import { RouteContext } from "./contexts";
 import { EXAMPLE_WASM_FILE, EXAMPLE_ZKEY_FILE } from "./config";
+import { Cta } from "./styles";
 
 type Props = Readonly<{
   passURI: string
@@ -48,9 +49,12 @@ export function Prover(props: Props) {
       {/* TODO: make this into generic status messages */}
       <div>{proving ? "Proving, this may take a while..." : ""}</div>
       <div>{provingError ? "Error while proving:  " + provingError.message : ""}</div>
-      {proof && publicSignals && pubIdentity ? 
-        <button type="button" onClick={() => proceed(proof, publicSignals, pubIdentity)} disabled={false}>Proceed</button> : 
-        <button type="button" disabled={true}>Proving...</button>}
+      {proof && publicSignals && pubIdentity ? <div>Proof is ready</div> : null}
+      <Cta>
+        {proof && publicSignals && pubIdentity ? 
+          <button type="button" onClick={() => proceed(proof, publicSignals, pubIdentity)} disabled={false}>Proceed</button> : 
+          <button type="button" disabled={true}>Proving...</button>}
+      </Cta>
     </div>
   );
 }

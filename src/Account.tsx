@@ -7,7 +7,7 @@ import { RouteContext } from "./contexts";
 import { NZCOVIDBadge__factory } from "./contracts/types";
 import { Header } from "./Header";
 import { Sample } from "./Sample";
-import { Body } from "./styles";
+import { Body, Cta } from "./styles";
 
 export function Account() {
   const routeContext = useContext(RouteContext);
@@ -64,9 +64,9 @@ export function Account() {
             </div>
           ))}
         </div>
-        <div style={{marginTop:20}}>
+        <Cta>
           <button type="button" onClick={newBadge}>New Badge</button>
-        </div>
+        </Cta>
       </Body>
     </>
   );

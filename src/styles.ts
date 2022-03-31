@@ -28,3 +28,8 @@ export const Body = styled("div", {
   border: "1px solid lightgray",
   padding: 20,
 });
+
+// TODO: rename to CtaContainer
+export const Cta = styled("div", {
+  marginTop: 20,
+});
