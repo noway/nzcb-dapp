@@ -13,18 +13,23 @@ const Body = styled("div", {
   margin: "0 auto",
 });
 
+const Section = styled("div", {
+  justifyContent: "center",
+  display: "flex",
+  marginTop: 20
+});
 
 export function Landing() {
   return (
     <Body>
       <Header showWallet={false} showBack={false} />
       <Lead>An ERC721 project which lets you mint your NZ&nbsp;COVID&nbsp;vaccination&nbsp;status on the Ethereum network.</Lead>
-      <div style={{justifyContent:"center",display:"flex"}}>
+      <Section>
         <Sample />
-      </div>
-      <div style={{justifyContent:"center",display:"flex",marginTop:20}}>
-      <ConnectWallet />
-      </div>
+      </Section>
+      <Section>
+        <ConnectWallet />
+      </Section>
       <h3>How does it work?</h3>
       <p>We take your NZ COVID Pass, deconstruct it, pass it through a custom ZK-SNARK and send it off to the smart contract for minting.</p>
       <h3>Does my NZ COVID Pass get saved in the calldata?</h3>
