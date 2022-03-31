@@ -65,6 +65,7 @@ export function App() {
   
   return (
     <RouteContext.Provider value={{ route: route, navigate, goBack }}>
+      <div style={{display:"flex",flexDirection:"column",alignItems:"center",padding:20}}>
       {route[0] === "landing" ? <Landing /> : null}
       {route[0] === "account" ? <Account /> : null}
       {route[0] === "newbadge" ? <NewBadge /> : null}
@@ -76,6 +77,7 @@ export function App() {
           publicSignals={route[1].publicSignals}
           pubIdentity={route[1].pubIdentity}
         /> : null}
+        </div>
     </RouteContext.Provider>
   )
 }

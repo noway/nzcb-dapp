@@ -22,7 +22,7 @@ export function Header(props: Props) {
   }
 
   return (
-    <header style={{ marginLeft: 20, marginRight: 20, marginTop: 20 ,border: "1px solid lightgrey"}}>
+    <header style={{ marginLeft: 20, marginRight: 20, border: "1px solid lightgrey",width:'100%'}}>
       <Navigation>
         {showBack ? <div style={{alignItems: "center",display:"flex",margin: 10}}>
           <button type="button" onClick={back}>Back</button>
