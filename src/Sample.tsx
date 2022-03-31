@@ -1,9 +1,20 @@
+import { styled } from "./styles";
+
+const Container = styled("div", {
+  display: 'flex',
+});
+
+const Frame = styled("div", {
+  padding: 20,
+  border: '1px solid lightgray',
+});
+
 export function Sample() {
   return (
-    <div>
-      <div>
-        <img src="https://i.imgur.com/QYKQsql.jpg" alt="NZ COVID Badge" />
-      </div>
-    </div>
+    <Container>
+      <Frame>
+        <img src="badge.svg" alt="NZ COVID Badge" width={256} height={256} />
+      </Frame>
+    </Container>
   )
 }

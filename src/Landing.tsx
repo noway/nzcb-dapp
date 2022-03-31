@@ -3,7 +3,7 @@ import { Header } from "./Header";
 import { Sample } from "./Sample"
 import { styled } from "./styles";
 
-export const Lead = styled("p", {
+const Lead = styled("p", {
   fontSize: "1.5rem",
 });
 
