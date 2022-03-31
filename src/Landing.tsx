@@ -5,6 +5,7 @@ import { styled } from "./styles";
 
 const Lead = styled("p", {
   fontSize: "1.5rem",
+  textAlign: "center",
 });
 
 const Body = styled("div", {
@@ -17,9 +18,13 @@ export function Landing() {
   return (
     <Body>
       <Header showWallet={false} showBack={false} />
-      <Lead>An ERC721 project which lets you mint your NZ COVID vaccination status on the Ethereum network.</Lead>
-      <Sample />
+      <Lead>An ERC721 project which lets you mint your NZ&nbsp;COVID&nbsp;vaccination&nbsp;status on the Ethereum network.</Lead>
+      <div style={{justifyContent:"center",display:"flex"}}>
+        <Sample />
+      </div>
+      <div style={{justifyContent:"center",display:"flex",marginTop:20}}>
       <ConnectWallet />
+      </div>
       <h3>How does it work?</h3>
       <p>We take your NZ COVID Pass, deconstruct it, pass it through a custom ZK-SNARK and send it off to the smart contract for minting.</p>
       <h3>Does my NZ COVID Pass get saved in the calldata?</h3>
@@ -43,7 +48,7 @@ export function Landing() {
       <h3>How many badges can ever be minted?</h3>
       <p>The contract’s total supply does not have a hard limit but since there’s only 1 badge per person, the total supply is effectively limited by the New Zealand total population of about 5 million.</p>
       <h3>What do I get after mint?</h3>
-      <p>You get an ERC721 NZ COVID Badge. Nothing more, nothing less.</p>
+      <p>You get an ERC721 NZ COVID Badge, nothing more.</p>
       <h3>How is this project licensed?</h3>
       <p>The badge asset is released as CC0 (public domain) while the code is licensed under MIT unless specified otherwise.</p>
       <h2>Links</h2>

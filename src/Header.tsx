@@ -27,7 +27,7 @@ export function Header(props: Props) {
         {showBack ? <button type="button" onClick={back}>Back</button> : null}
         {showWallet ? <Wallet /> : null}
       </Navigation>
-      <h1>NZ COVID Badge</h1>
+      <h1 style={{textAlign:"center"}}>NZ COVID Badge</h1>
     </header>
   );
 }
