@@ -51,6 +51,9 @@ export function Landing() {
       <p>Contract GitHub rpeo</p>
       <p>dApp GitHub repo</p>
       <p>ZK-SNARK GitHub repo</p>
+      <h3>Badge assets</h3>
+      <p>svg file</p>
+      <p>figma file</p>
     </div>
   )
 }
