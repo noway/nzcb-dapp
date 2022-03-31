@@ -7,10 +7,15 @@ const Lead = styled("p", {
   fontSize: "1.5rem",
 });
 
+const Body = styled("div", {
+  maxWidth: 600,
+  margin: "0 auto",
+});
+
 
 export function Landing() {
   return (
-    <div>
+    <Body>
       <Header showWallet={false} showBack={false} />
       <Lead>An ERC721 project which lets you mint your NZ COVID vaccination status on the Ethereum blockchain.</Lead>
       <Sample />
@@ -54,6 +59,6 @@ export function Landing() {
       <h3>Badge assets</h3>
       <p>svg file</p>
       <p>figma file</p>
-    </div>
+    </Body>
   )
 }
