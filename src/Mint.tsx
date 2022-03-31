@@ -7,6 +7,7 @@ import { RouteContext } from "./contexts";
 import { NZCOVIDBadge__factory } from "./contracts/types";
 import { Header } from "./Header";
 import { comparePubIdentities, getProofArgs, getRS, Proof, PubIdentity, PublicSignals, signalsToPubIdentity } from "./nzcpCircom";
+import { Body } from "./styles";
 import { toHexString } from "./utils";
 
 export function PublicIdentity(props: {pubIdentity: PubIdentity}) {
@@ -149,9 +150,9 @@ export function Mint(props: Props) {
   const { passURI, publicSignals, proof, pubIdentity } = props
   const [{ wallet }] = useConnectWallet()
   const eip1193Provider = wallet?.provider
-  return (
-    <div>
-      <Header showWallet={true} showBack={true} />
+  return <>
+    <Header showWallet={true} showBack={true} />
+    <Body>
       {eip1193Provider ? 
         <MintContents
           eip1193Provider={eip1193Provider}
@@ -161,6 +162,6 @@ export function Mint(props: Props) {
           pubIdentity={pubIdentity}
         /> : 
         <div>Please connect wallet</div>}
-    </div>
-  );
+    </Body>
+  </>;
 }
