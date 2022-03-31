@@ -18,7 +18,13 @@ export const globalStyles = globalCss({
   },
   h1: {
     margin:0,
-  }
+  },
+  h2: {
+    margin:0,
+  },
+  h3: {
+    margin:0,
+  },
 });
 
 
