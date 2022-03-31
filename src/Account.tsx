@@ -15,6 +15,8 @@ export function Account() {
     routeContext.navigate(["newbadge", null]);
   }
 
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<Error | null>(null);
   const [myBadgeIds, setMyBadgeIds] = useState<bigint[]>([]);
   const [{ wallet }] = useConnectWallet()
   const address = wallet?.accounts[0]?.address // TODO: only ever show 1 account
@@ -22,17 +24,25 @@ export function Account() {
 
   useEffect(() => {
     async function scanBadges(eip1193Provider: EIP1193Provider) {
-      const myBadgeIds: bigint[] = []
-      const provider = new providers.Web3Provider(eip1193Provider);
-      const nzCovidBadge = NZCOVIDBadge__factory.connect(CONTRACT_ADDRESS, provider.getSigner())
-      const supply = await nzCovidBadge.totalSupply()
-      for (let i = 0n; i < supply.toBigInt(); i++) {
-        const owner = await nzCovidBadge.getOwner(i)
-        if (owner.toLowerCase() === `${address}`.toLowerCase()) {
-          myBadgeIds.push(i)
+      setLoading(true);
+      setError(null)
+      try {
+        const myBadgeIds: bigint[] = []
+        const provider = new providers.Web3Provider(eip1193Provider);
+        const nzCovidBadge = NZCOVIDBadge__factory.connect(CONTRACT_ADDRESS, provider.getSigner())
+        const supply = await nzCovidBadge.totalSupply()
+        for (let i = 0n; i < supply.toBigInt(); i++) {
+          const owner = await nzCovidBadge.getOwner(i)
+          if (owner.toLowerCase() === `${address}`.toLowerCase()) {
+            myBadgeIds.push(i)
+          }
         }
+        setMyBadgeIds(myBadgeIds);
       }
-      setMyBadgeIds(myBadgeIds)
+      catch (e) {
+        setError(e as Error)
+      }
+      setLoading(false);
     }
 
     if (eip1193Provider) {
@@ -44,13 +54,15 @@ export function Account() {
     <>
       <Header showWallet={true} showBack={false} />
       <Body>
+        {loading && <div>Searching for your badges...</div>}
+        {error && <div>Error: {error.message}</div>}
         <div style={{display:"flex", flexWrap: "wrap", gap: 20 }}>
-        {[...myBadgeIds,...myBadgeIds,...myBadgeIds].map(id => (
-          <div key={id.toString()} style={{border: "1px solid lightgrey", padding:"10px 10px 10px 10px"}}>
-            <Sample/>
-            <h3>NZ COVID Badge #{id.toString()}</h3>
-          </div>
-        ))}
+          {myBadgeIds.map(id => (
+            <div key={id.toString()} style={{border: "1px solid lightgrey", padding:"10px 10px 10px 10px"}}>
+              <Sample/>
+              <h3>NZ COVID Badge #{id.toString()}</h3>
+            </div>
+          ))}
         </div>
         <div style={{marginTop:20}}>
           <button type="button" onClick={newBadge}>New Badge</button>
