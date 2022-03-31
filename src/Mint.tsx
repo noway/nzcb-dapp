@@ -7,7 +7,7 @@ import { RouteContext } from "./contexts";
 import { NZCOVIDBadge__factory } from "./contracts/types";
 import { Header } from "./Header";
 import { comparePubIdentities, getProofArgs, getRS, Proof, PubIdentity, PublicSignals, signalsToPubIdentity } from "./nzcpCircom";
-import { Body, Cta } from "./styles";
+import { Body, CtaContainer } from "./styles";
 import { toHexString } from "./utils";
 
 export function PublicIdentity(props: {pubIdentity: PubIdentity}) {
@@ -131,12 +131,12 @@ function MintContents(props: MintContentsProps) {
       <div>{mintingError ? "Error while minting:  " + mintingError.message : ""}</div>
       {receipt ? <Success receipt={receipt} /> : null}
       {/* TODO: add disclaimers */}
-      <Cta>
+      <CtaContainer>
         {!receipt ? 
           <button type="button" onClick={() => mint()} disabled={minting}>Mint</button> :
           <button type="button" onClick={() => done()}>Done</button>
         }
-      </Cta>
+      </CtaContainer>
     </>
   )
 }

@@ -32,15 +32,13 @@ export const Body = styled("div", {
   maxWidth: 900,
   width: '100%',
   margin: "20px",
-  // alignSelf: "center",
   flex: 1,
-  // display: "flex",
   border: "1px solid lightgray",
   padding: 20,
   boxSizing: 'border-box'
 });
 
 // TODO: rename to CtaContainer
-export const Cta = styled("div", {
+export const CtaContainer = styled("div", {
   marginTop: 20,
 });
