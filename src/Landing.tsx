@@ -1,16 +1,11 @@
 import { ConnectWallet } from "./ConnectWallet"
 import { Header } from "./Header";
 import { Sample } from "./Sample"
-import { styled } from "./styles";
+import { Body, styled } from "./styles";
 
 const Lead = styled("p", {
   fontSize: "1.5rem",
   textAlign: "center",
-});
-
-const Body = styled("div", {
-  maxWidth: 600,
-  margin: "0 auto",
 });
 
 const Section = styled("div", {
@@ -20,9 +15,9 @@ const Section = styled("div", {
 });
 
 export function Landing() {
-  return (
+  return <>
+    <Header showWallet={false} showBack={false} />
     <Body>
-      <Header showWallet={false} showBack={false} />
       <Lead>An ERC721 project which lets you mint your NZ&nbsp;COVID&nbsp;vaccination&nbsp;status on the Ethereum network.</Lead>
       <Section>
         <Sample />
@@ -72,5 +67,5 @@ export function Landing() {
       <p>svg file</p>
       <p>figma file</p>
     </Body>
-  )
+  </>
 }

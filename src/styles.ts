@@ -16,4 +16,15 @@ export const globalStyles = globalCss({
     '-webkit-font-smoothing': 'antialiased',
     '-moz-osx-font-smoothing': 'grayscale',
   },
+  h1: {
+    margin:0,
+  }
+});
+
+
+export const Body = styled("div", {
+  maxWidth: 900,
+  margin: "20px auto",
+  border: "1px solid lightgray",
+  padding: 20,
 });

@@ -22,10 +22,10 @@ export function Header(props: Props) {
   }
 
   return (
-    <header>
+    <header style={{ marginLeft: 20, marginRight: 20, marginTop: 20 ,border: "1px solid lightgrey"}}>
       <Navigation>
-        {showBack ? <button type="button" onClick={back}>Back</button> : null}
-        {showWallet ? <Wallet /> : null}
+        {showBack ? <button type="button" onClick={back}>Back</button> : <span />}
+        {showWallet ? <Wallet /> : <span />}
       </Navigation>
       <h1 style={{textAlign:"center"}}>NZ COVID Badge</h1>
     </header>

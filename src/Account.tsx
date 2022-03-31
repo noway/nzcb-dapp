@@ -7,6 +7,7 @@ import { RouteContext } from "./contexts";
 import { NZCOVIDBadge__factory } from "./contracts/types";
 import { Header } from "./Header";
 import { Sample } from "./Sample";
+import { Body } from "./styles";
 
 export function Account() {
   const routeContext = useContext(RouteContext);
@@ -40,16 +41,21 @@ export function Account() {
   }, [address, eip1193Provider])
 
   return (
-    <div>
+    <>
       <Header showWallet={true} showBack={false} />
-      <h1>Account</h1>
-      {myBadgeIds.map(id => (
-        <div key={id.toString()}>
-          <h3>NZ COVID Badge #{id.toString()}</h3>
-          <Sample/>
+      <Body>
+        <div style={{display:"flex", flexWrap: "wrap", gap: 20 }}>
+        {[...myBadgeIds,...myBadgeIds,...myBadgeIds].map(id => (
+          <div key={id.toString()} style={{border: "1px solid lightgrey", padding:"10px 10px 10px 10px"}}>
+            <Sample/>
+            <h3>NZ COVID Badge #{id.toString()}</h3>
+          </div>
+        ))}
         </div>
-      ))}
-      <button type="button" onClick={newBadge}>New Badge</button>
-    </div>
+        <div style={{marginTop:20}}>
+          <button type="button" onClick={newBadge}>New Badge</button>
+        </div>
+      </Body>
+    </>
   );
 }
