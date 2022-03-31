@@ -18,7 +18,7 @@ export function Landing() {
   return <>
     <Header showWallet={false} showBack={false} />
     <Body>
-      <Lead>An ERC721 project which lets you mint your NZ&nbsp;COVID&nbsp;vaccination&nbsp;status on the Ethereum network.</Lead>
+      <Lead>An ERC721 project that lets you mint your NZ&nbsp;COVID&nbsp;vaccination&nbsp;status on the Ethereum network.</Lead>
       <Section>
         <Sample />
       </Section>
