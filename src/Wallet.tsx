@@ -23,7 +23,6 @@ export function Wallet() {
   const routeContext = useContext(RouteContext);
   const [{ chains, connectedChain, settingChain }] = useSetChain()
   const [{ wallet, connecting }, connect, disconnect] = useConnectWallet()
-  const connectedWallets = useWallets()
 
   useEffect(() => {
     if (!wallet && !connecting) {
@@ -51,7 +50,7 @@ export function Wallet() {
         </div>
       ) : null}
 
-      {connectedWallets.map(({ label, accounts }) => {
+      {(wallet ? [wallet] : []).map(({ label, accounts }) => {
         return (
           <div key={label}>
             <div>{label}</div>
