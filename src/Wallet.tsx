@@ -24,6 +24,7 @@ export function Wallet() {
   const [{ chains, connectedChain, settingChain }] = useSetChain()
   const [{ wallet, connecting }, connect, disconnect] = useConnectWallet()
   const [open, setOpen] = useState(false)
+  const account = getFirstAccount(wallet)
 
   useEffect(() => {
     if (!wallet && !connecting) {
@@ -44,10 +45,9 @@ export function Wallet() {
           <button onClick={() => connect({})}>Connect</button>
       ) : null}
 
-      {wallet ? (
+      {wallet && account ? (
         <div onClick={toggleDropdown}>
-          {/* TODO */}
-          <AccountContent account={getFirstAccount(wallet)!} />
+          <AccountContent account={account} />
         </div>
       ) : null}
 
