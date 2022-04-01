@@ -1,8 +1,8 @@
 import { Account } from "@web3-onboard/core/dist/types";
-import { useConnectWallet, useSetChain, useWallets } from "@web3-onboard/react";
-import { useContext, useEffect } from "react";
+import { useConnectWallet, useSetChain } from "@web3-onboard/react";
+import { useContext, useEffect, useState } from "react";
 import { RouteContext } from "./contexts";
-import { truncateAddress } from "./utils";
+import { getFirstAccount, truncateAddress } from "./utils";
 
 type AccountProps = Readonly<{
   account: Account
@@ -23,12 +23,17 @@ export function Wallet() {
   const routeContext = useContext(RouteContext);
   const [{ chains, connectedChain, settingChain }] = useSetChain()
   const [{ wallet, connecting }, connect, disconnect] = useConnectWallet()
+  const [open, setOpen] = useState(false)
 
   useEffect(() => {
     if (!wallet && !connecting) {
       routeContext.navigate(["landing", null]);
     }
   }, [wallet, connecting, routeContext])
+
+  function toggleDropdown() {
+    setOpen(!open)
+  }
 
 
   return (
@@ -40,33 +45,48 @@ export function Wallet() {
       ) : null}
 
       {wallet ? (
-        <div>
-          {settingChain ? (
-            <span>Switching chain...</span>
-          ) : (
-            <span>{chains.find(({ id }) => id === connectedChain?.id)?.label}</span>
-          )}
-          <button onClick={() => disconnect(wallet)}>Disconnect Wallet</button>
+        <div onClick={toggleDropdown}>
+          <AccountContent account={getFirstAccount(wallet)!}  />
         </div>
       ) : null}
-
-      {(wallet ? [wallet] : []).map(({ label, accounts }) => {
-        return (
-          <div key={label}>
-            <div>{label}</div>
+      
+      {open ? (
+        <>
+          {wallet ? (
             <div>
-              Accounts: 
-              <div>
-                {accounts.map(account => {
-                  return (
-                    <AccountContent account={account} key={account.address} />
-                  )
-                })}
-              </div>
+              <button onClick={() => disconnect(wallet)}>Disconnect Wallet</button>
             </div>
-          </div>
-        )
-      })}
+          ) : null}
+
+          {wallet ? (
+            <div>
+              {settingChain ? (
+                <span>Switching chain...</span>
+              ) : (
+                <span>{chains.find(({ id }) => id === connectedChain?.id)?.label}</span>
+              )}
+            </div>
+          ) : null}
+
+          {(wallet ? [wallet] : []).map(({ label, accounts }) => {
+            return (
+              <div key={label}>
+                <div>{label}</div>
+                <div>
+                  Accounts: 
+                  <div>
+                    {accounts.map(account => {
+                      return (
+                        <AccountContent account={account} key={account.address} />
+                      )
+                    })}
+                  </div>
+                </div>
+              </div>
+            )
+          })}
+        </>
+      ) : null}
     </div>
 
   )
