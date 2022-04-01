@@ -46,6 +46,7 @@ export function Wallet() {
 
       {wallet ? (
         <div onClick={toggleDropdown}>
+          {/* TODO */}
           <AccountContent account={getFirstAccount(wallet)!} />
         </div>
       ) : null}
