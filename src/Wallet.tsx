@@ -36,7 +36,6 @@ export function Wallet() {
     setOpen(!open)
   }
 
-
   return (
     <div style={{ border: '1px solid lightgrey', padding: 10, display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
       {!(wallet && account) ? (
@@ -46,13 +45,16 @@ export function Wallet() {
       ) : null}
 
       {(wallet && account) ? (
-        <div onClick={toggleDropdown}>
+        <div onClick={toggleDropdown} style={{ userSelect: "none", cursor: "pointer" }} role="button">
           <AccountContent account={account} />
         </div>
       ) : null}
 
       {(wallet && account && open) ? (
-        <>
+        <div style={{ position: 'absolute', top: 70, right: 30, display: 'flex', flexDirection: 'column', alignItems: 'flex-end', background: 'white', border: '1px solid lightgrey', padding: 10 }}>
+          <div style={{}}>
+            {account.address}
+          </div>
           <div style={{ marginTop: 10 }}>
             {settingChain ? (
               <span>Switching chain...</span>
@@ -63,7 +65,7 @@ export function Wallet() {
           <div style={{ marginTop: 10 }}>
             <button onClick={() => disconnect(wallet)}>Disconnect Wallet</button>
           </div>
-        </>
+        </div>
       ) : null}
     </div>
 
