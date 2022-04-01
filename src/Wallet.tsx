@@ -38,35 +38,31 @@ export function Wallet() {
 
 
   return (
-    <div>
-      {!wallet ? (
+    <div style={{ border: '1px solid lightgrey', padding: 10, display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
+      {!(wallet && account) ? (
         connecting ?
           <button disabled={true}>Connecting</button> :
           <button onClick={() => connect({})}>Connect</button>
       ) : null}
 
-      {wallet && account ? (
+      {(wallet && account) ? (
         <div onClick={toggleDropdown}>
           <AccountContent account={account} />
         </div>
       ) : null}
 
-      {open ? (
+      {(wallet && account && open) ? (
         <>
-          {wallet ? (
-            <div>
-              {settingChain ? (
-                <span>Switching chain...</span>
-              ) : (
-                <span>{chains.find(({ id }) => id === connectedChain?.id)?.label}</span>
-              )}
-            </div>
-          ) : null}
-          {wallet ? (
-            <div>
-              <button onClick={() => disconnect(wallet)}>Disconnect Wallet</button>
-            </div>
-          ) : null}
+          <div style={{ marginTop: 10 }}>
+            {settingChain ? (
+              <span>Switching chain...</span>
+            ) : (
+              <span>{chains.find(({ id }) => id === connectedChain?.id)?.label}</span>
+            )}
+          </div>
+          <div style={{ marginTop: 10 }}>
+            <button onClick={() => disconnect(wallet)}>Disconnect Wallet</button>
+          </div>
         </>
       ) : null}
     </div>
