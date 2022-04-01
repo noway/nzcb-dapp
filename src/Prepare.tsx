@@ -18,11 +18,11 @@ export function Prepare(props: Props) {
   return <>
     <Header showWallet={true} showBack={true} />
     <Body>
-      {address ? 
+      {address ?
         <Prover
           address={address}
-          passURI={passURI} 
-        /> : 
+          passURI={passURI}
+        /> :
         <div>Please connect wallet</div>}
     </Body>
   </>;

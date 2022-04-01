@@ -70,7 +70,7 @@ export function App() {
   function goBack() {
     dispatch({ type: "back", payload: null });
   }
-  
+
   return (
     <RouteContext.Provider value={{ route: route, navigate, goBack }}>
       <AppContainer>
@@ -78,7 +78,7 @@ export function App() {
         {route[0] === "account" ? <Account /> : null}
         {route[0] === "newbadge" ? <NewBadge /> : null}
         {route[0] === "prepare" ? <Prepare passURI={route[1].passURI} /> : null}
-        {route[0] === "mint" ? 
+        {route[0] === "mint" ?
           <Mint
             passURI={route[1].passURI}
             proof={route[1].proof}

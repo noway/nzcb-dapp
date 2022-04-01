@@ -22,16 +22,16 @@ export function Header(props: Props) {
   }
 
   return (
-    <header style={{ marginLeft: 20, marginRight: 20, border: "1px solid lightgrey",width:'100%'}}>
+    <header style={{ marginLeft: 20, marginRight: 20, border: "1px solid lightgrey", width: '100%' }}>
       <Navigation>
-        {showBack ? <div style={{alignItems: "center",display:"flex",margin: 10}}>
+        {showBack ? <div style={{ alignItems: "center", display: "flex", margin: 10 }}>
           <button type="button" onClick={back}>Back</button>
         </div> : <span />}
-        {showWallet ? <div style={{alignItems: "center",display:"flex",margin: 10}}>
+        {showWallet ? <div style={{ alignItems: "center", display: "flex", margin: 10 }}>
           <Wallet />
         </div> : <span />}
       </Navigation>
-      <h1 style={{textAlign:"center"}}>NZ COVID Badge</h1>
+      <h1 style={{ textAlign: "center" }}>NZ COVID Badge</h1>
     </header>
   );
 }

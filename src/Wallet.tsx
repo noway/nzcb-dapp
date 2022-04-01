@@ -9,11 +9,11 @@ type AccountProps = Readonly<{
 }>
 
 function AccountContent(props: AccountProps) {
-  const {account} = props
+  const { account } = props
   return (
     <div>
-      {account.ens ? 
-        <div>{account.ens.name}</div> : 
+      {account.ens ?
+        <div>{account.ens.name}</div> :
         <div>{truncateAddress(account.address)}</div>}
     </div>
   )
@@ -46,10 +46,10 @@ export function Wallet() {
 
       {wallet ? (
         <div onClick={toggleDropdown}>
-          <AccountContent account={getFirstAccount(wallet)!}  />
+          <AccountContent account={getFirstAccount(wallet)!} />
         </div>
       ) : null}
-      
+
       {open ? (
         <>
           {wallet ? (

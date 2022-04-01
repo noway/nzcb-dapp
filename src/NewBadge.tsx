@@ -25,8 +25,8 @@ export function NewBadge() {
       const bytes = decodeBytes(passURI);
       const data = decodeCOSE(bytes);
       const toBeSigned = encodeToBeSigned(data.bodyProtected, data.payload)
-      const key = await crypto.subtle.importKey('jwk', EXAMPLE_PUBLIC_KEY_JWK, {name: 'ECDSA', namedCurve: 'P-256'}, false, ['verify']);
-      const ret = await crypto.subtle.verify({name: 'ECDSA', hash: 'SHA-256'}, key, data.signature, toBeSigned);
+      const key = await crypto.subtle.importKey('jwk', EXAMPLE_PUBLIC_KEY_JWK, { name: 'ECDSA', namedCurve: 'P-256' }, false, ['verify']);
+      const ret = await crypto.subtle.verify({ name: 'ECDSA', hash: 'SHA-256' }, key, data.signature, toBeSigned);
       setValidStatus(ret ? "Yes" : "No");
     }
     catch (e) {

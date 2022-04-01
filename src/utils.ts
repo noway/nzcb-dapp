@@ -15,8 +15,8 @@ export function bitArrayToBuffer(a: number[]) {
   const b = new Uint8Array(len);
 
   for (let i = 0; i < a.length; i++) {
-      const p = Math.floor(i / 8);
-      b[p] = b[p] | (Number(a[i]) << (7 - (i % 8)));
+    const p = Math.floor(i / 8);
+    b[p] = b[p] | (Number(a[i]) << (7 - (i % 8)));
   }
   return b;
 }
@@ -39,8 +39,8 @@ export function fitBytes(input: Uint8Array, maxLen: number) {
 export function chunksToBits(chunks: bigint[], chunkSize: number) {
   let bits: number[] = [];
   for (let i = 0; i < chunks.length; i++) {
-      const chunk = chunks[i];
-      bits = [...bits, ...chunkToBits(chunk, chunkSize)]
+    const chunk = chunks[i];
+    bits = [...bits, ...chunkToBits(chunk, chunkSize)];
   }
   return bits;
 }
@@ -48,54 +48,56 @@ export function chunksToBits(chunks: bigint[], chunkSize: number) {
 export function chunkToBits(chunk: bigint, chunkSize: number) {
   const bits = [];
   for (let j = 0; j < chunkSize; j++) {
-      const byte = (chunk >> BigInt(j)) & 1n;
-      bits.push(Number(byte));
+    const byte = (chunk >> BigInt(j)) & 1n;
+    bits.push(Number(byte));
   }
-  return bits
+  return bits;
 }
-
 
 export function bitArrayToNum(a: number[]) {
   let num = 0n;
-  for(let i = 0; i < a.length; i++) {
-      num |= BigInt(a[i]) << BigInt(i);
+  for (let i = 0; i < a.length; i++) {
+    num |= BigInt(a[i]) << BigInt(i);
   }
-  return num
+  return num;
 }
 
 export function numToBitArray(n: bigint, len: number) {
   const res: number[] = new Array(len);
   for (let i = 0; i < len; i++) {
-      res[i] = Number((n >> BigInt(i)) & 1n);
+    res[i] = Number((n >> BigInt(i)) & 1n);
   }
   return res;
 }
 
-
 export function evmRearrangeBits(bitArray: number[]) {
-  const res = []
+  const res = [];
   const BYTE_LEN = 8;
   for (let k = 0; k < bitArray.length / BYTE_LEN; k++) {
-      const b = bitArray.length / BYTE_LEN - 1 - k;
-      for (let i = 0; i < BYTE_LEN; i++) {
-          res[b * BYTE_LEN + (7 - i)] = bitArray[k * BYTE_LEN + i];
-      }
+    const b = bitArray.length / BYTE_LEN - 1 - k;
+    for (let i = 0; i < BYTE_LEN; i++) {
+      res[b * BYTE_LEN + (7 - i)] = bitArray[k * BYTE_LEN + i];
+    }
   }
   return res;
 }
 
 export function evmBytesToNum(bytes: Uint8Array) {
-  return bitArrayToNum(bufferToBitArray(bitArrayToBuffer(evmRearrangeBits(bufferToBitArray(bytes)))))
+  return bitArrayToNum(
+    bufferToBitArray(
+      bitArrayToBuffer(evmRearrangeBits(bufferToBitArray(bytes)))
+    )
+  );
 }
 
 export function evmRearrangeBytes(bytes: Uint8Array) {
-  return bitArrayToBuffer(evmRearrangeBits(bufferToBitArray(bytes)))   
+  return bitArrayToBuffer(evmRearrangeBits(bufferToBitArray(bytes)));
 }
 
 export function toHexString(byteArray: Uint8Array) {
-  return Array.from(byteArray, function(byte) {
-    return ('0' + (byte & 0xFF).toString(16)).slice(-2);
-  }).join('')
+  return Array.from(byteArray, function (byte) {
+    return ("0" + (byte & 0xff).toString(16)).slice(-2);
+  }).join("");
 }
 
 export const truncateAddress = (address: string) => {

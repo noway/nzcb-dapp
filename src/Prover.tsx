@@ -1,6 +1,6 @@
 import { useCallback, useContext, useEffect, useState } from "react";
 import { groth16 } from 'snarkjs'
-import { getNZCPPubIdentity,  getNZCPCircuitInput, PubIdentity, Proof, PublicSignals } from "./nzcpCircom";
+import { getNZCPPubIdentity, getNZCPCircuitInput, PubIdentity, Proof, PublicSignals } from "./nzcpCircom";
 import { RouteContext } from "./contexts";
 import { EXAMPLE_WASM_FILE, EXAMPLE_ZKEY_FILE } from "./config";
 import { CtaContainer } from "./styles";
@@ -11,7 +11,7 @@ type Props = Readonly<{
 }>;
 
 export function Prover(props: Props) {
-  const {passURI, address} = props
+  const { passURI, address } = props
   const routeContext = useContext(RouteContext);
   const [proving, setProving] = useState(false);
   const [provingError, setProvingError] = useState<Error | null>(null);
@@ -19,7 +19,7 @@ export function Prover(props: Props) {
   const [publicSignals, setPublicSignals] = useState<PublicSignals | null>(null);
   const [pubIdentity, setPubIdentity] = useState<PubIdentity | null>(null);
 
-  const prove = useCallback(async function(passURI: string) {
+  const prove = useCallback(async function (passURI: string) {
     setProving(true)
     setProvingError(null)
     try {
@@ -51,8 +51,8 @@ export function Prover(props: Props) {
       <div>{provingError ? "Error while proving:  " + provingError.message : ""}</div>
       {proof && publicSignals && pubIdentity ? <div>Proof is ready</div> : null}
       <CtaContainer>
-        {proof && publicSignals && pubIdentity ? 
-          <button type="button" onClick={() => proceed(proof, publicSignals, pubIdentity)} disabled={false}>Proceed</button> : 
+        {proof && publicSignals && pubIdentity ?
+          <button type="button" onClick={() => proceed(proof, publicSignals, pubIdentity)} disabled={false}>Proceed</button> :
           <button type="button" disabled={true}>Proving...</button>}
       </CtaContainer>
     </div>

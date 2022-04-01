@@ -5,4 +5,4 @@ export const RouteContext = createContext({
   route: ["landing", null] as Route,
   navigate: (_route: Route) => {},
   goBack: () => {},
-})
+});

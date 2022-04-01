@@ -4,7 +4,7 @@ import { RouteContext } from "./contexts";
 
 export function ConnectWallet() {
   const routeContext = useContext(RouteContext);
-  const [{ wallet, connecting }, connect ] = useConnectWallet()
+  const [{ wallet, connecting }, connect] = useConnectWallet()
 
   useEffect(() => {
     if (wallet && !connecting) {
@@ -17,7 +17,7 @@ export function ConnectWallet() {
     connect({})
   }
 
-  return connecting ? 
+  return connecting ?
     <button type="button" disabled={true}>Connecting...</button> :
-    <button type="button" onClick={connectWallet}>Connect Wallet</button>  
+    <button type="button" onClick={connectWallet}>Connect Wallet</button>
 }

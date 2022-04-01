@@ -10,7 +10,7 @@ function base32ToBytes(input: string) {
     val;
   for (let inp = 0, outp = 0; inp < input.length; inp++) {
     if ((val = "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567".indexOf(input[inp])) < 0) {
-      throw new Error('invalid data');
+      throw new Error("invalid data");
     }
     buff = (buff << 5) | val;
     if ((bits += 5) >= 8) {
@@ -19,7 +19,6 @@ function base32ToBytes(input: string) {
   }
   return output;
 }
-
 
 class Stream {
   data: Uint8Array;
@@ -125,7 +124,7 @@ function decodeCBORStream(stream: Stream) {
       return dMap;
     }
     // return null
-    throw new Error('invalid data');
+    throw new Error("invalid data");
   }
   return decode(stream);
 }
@@ -139,7 +138,7 @@ export function decodeCBOR(bytes: Uint8Array) {
 export function decodeCOSE(bytes: Uint8Array) {
   const stream = new Stream(bytes);
   if (stream.getc() !== 0xd2) {
-    throw new Error('invalid data');
+    throw new Error("invalid data");
   }
   const data = decodeCBORStream(stream);
   if (
@@ -151,7 +150,7 @@ export function decodeCOSE(bytes: Uint8Array) {
     !(data[2] instanceof Uint8Array) ||
     !(data[3] instanceof Uint8Array)
   ) {
-    throw new Error('invalid data');
+    throw new Error("invalid data");
   }
   return {
     bodyProtected: data[0],
@@ -179,10 +178,13 @@ const encodeBytes = (data: Uint8Array | never[]) => {
 
 export function decodeBytes(passURI: string): Uint8Array {
   // not verifying version-identifier or the prefix
-  return base32ToBytes(passURI.substring(8))
+  return base32ToBytes(passURI.substring(8));
 }
 
-export function encodeToBeSigned(bodyProtected: Uint8Array, payload: Uint8Array) {
+export function encodeToBeSigned(
+  bodyProtected: Uint8Array,
+  payload: Uint8Array
+) {
   // const data = decodeCOSE(bytes);
   const sig_structure = new Uint8Array([
     // array w/ 4 items

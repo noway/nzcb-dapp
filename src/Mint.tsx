@@ -10,8 +10,8 @@ import { comparePubIdentities, getProofArgs, getRS, Proof, PubIdentity, PublicSi
 import { Body, CtaContainer } from "./styles";
 import { toHexString } from "./utils";
 
-export function PublicIdentity(props: {pubIdentity: PubIdentity}) {
-  const {pubIdentity} = props
+export function PublicIdentity(props: { pubIdentity: PubIdentity }) {
+  const { pubIdentity } = props
   return (
     <code>
       <div>nullifierHashPart: 0x{toHexString(pubIdentity.nullifierHashPart)}</div>
@@ -22,8 +22,8 @@ export function PublicIdentity(props: {pubIdentity: PubIdentity}) {
   )
 }
 
-export function Signature(props: {rs: [r: Uint8Array, s: Uint8Array]}) {
-  const {rs} = props
+export function Signature(props: { rs: [r: Uint8Array, s: Uint8Array] }) {
+  const { rs } = props
   return (
     <code>
       <div>r: 0x{toHexString(rs[0])}</div>
@@ -32,9 +32,9 @@ export function Signature(props: {rs: [r: Uint8Array, s: Uint8Array]}) {
   )
 }
 
-export function ProofComponent(props: {proof: Proof}) {
-  const {proof} = props
-  const {pi_a, pi_b, pi_c} = proof
+export function ProofComponent(props: { proof: Proof }) {
+  const { proof } = props
+  const { pi_a, pi_b, pi_c } = proof
   function toHex(n: string) {
     return BigNumber.from(n).toHexString()
   }
@@ -51,8 +51,8 @@ type SuccessProps = Readonly<{
   receipt: ContractReceipt
 }>
 function Success(props: SuccessProps) {
-  const {receipt} = props
-  const {transactionHash} = receipt
+  const { receipt } = props
+  const { transactionHash } = receipt
   const events = receipt.events || []
   const event = events.find(e => e.transactionHash === transactionHash)
   const id = event?.args?.id as BigNumber
@@ -75,11 +75,11 @@ type MintContentsProps = Readonly<{
   pubIdentity: PubIdentity
 }>
 
-type ProviderError = {code: number, data: {code: number, message: string, data: {name: string, stack: string}}, message: string}
+type ProviderError = { code: number, data: { code: number, message: string, data: { name: string, stack: string } }, message: string }
 type MintingError = Error | ProviderError
 
 function MintContents(props: MintContentsProps) {
-  const { eip1193Provider, passURI, publicSignals, proof, pubIdentity } = props 
+  const { eip1193Provider, passURI, publicSignals, proof, pubIdentity } = props
   const provider = new providers.Web3Provider(eip1193Provider);
   const nzCovidBadge = NZCOVIDBadge__factory.connect(CONTRACT_ADDRESS, provider.getSigner())
   const [minting, setMinting] = useState(false)
@@ -119,11 +119,11 @@ function MintContents(props: MintContentsProps) {
       <h3>To be sent to the blockchain</h3>
       <div>
         <h4>Anonymized identity</h4>
-        <PublicIdentity pubIdentity={pubIdentity}/>
+        <PublicIdentity pubIdentity={pubIdentity} />
         <h4>Pass signature</h4>
         <Signature rs={getRS(passURI)} />
         <h4>Proof</h4>
-        <ProofComponent proof={proof}/>
+        <ProofComponent proof={proof} />
         <h4>Pre-flight check</h4>
         <span>{pubIdentityMatches ? "OK" : "Error"}</span>
       </div>
@@ -132,7 +132,7 @@ function MintContents(props: MintContentsProps) {
       {receipt ? <Success receipt={receipt} /> : null}
       {/* TODO: add disclaimers */}
       <CtaContainer>
-        {!receipt ? 
+        {!receipt ?
           <button type="button" onClick={() => mint()} disabled={minting}>Mint</button> :
           <button type="button" onClick={() => done()}>Done</button>
         }
@@ -155,14 +155,14 @@ export function Mint(props: Props) {
   return <>
     <Header showWallet={true} showBack={true} />
     <Body>
-      {eip1193Provider ? 
+      {eip1193Provider ?
         <MintContents
           eip1193Provider={eip1193Provider}
-          passURI={passURI} 
+          passURI={passURI}
           publicSignals={publicSignals}
           proof={proof}
           pubIdentity={pubIdentity}
-        /> : 
+        /> :
         <div>Please connect wallet</div>}
     </Body>
   </>;
