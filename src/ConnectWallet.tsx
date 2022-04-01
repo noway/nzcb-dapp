@@ -13,6 +13,7 @@ export function ConnectWallet() {
   }, [wallet, connecting, routeContext])
 
   function connectWallet() {
+    window.scrollTo(0, 0)
     connect({})
   }
 
