@@ -54,12 +54,6 @@ export function Wallet() {
         <>
           {wallet ? (
             <div>
-              <button onClick={() => disconnect(wallet)}>Disconnect Wallet</button>
-            </div>
-          ) : null}
-
-          {wallet ? (
-            <div>
               {settingChain ? (
                 <span>Switching chain...</span>
               ) : (
@@ -67,24 +61,11 @@ export function Wallet() {
               )}
             </div>
           ) : null}
-
-          {(wallet ? [wallet] : []).map(({ label, accounts }) => {
-            return (
-              <div key={label}>
-                <div>{label}</div>
-                <div>
-                  Accounts: 
-                  <div>
-                    {accounts.map(account => {
-                      return (
-                        <AccountContent account={account} key={account.address} />
-                      )
-                    })}
-                  </div>
-                </div>
-              </div>
-            )
-          })}
+          {wallet ? (
+            <div>
+              <button onClick={() => disconnect(wallet)}>Disconnect Wallet</button>
+            </div>
+          ) : null}
         </>
       ) : null}
     </div>
