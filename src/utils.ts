@@ -1,3 +1,5 @@
+import { WalletState } from "@web3-onboard/core";
+
 export function bufferToBitArray(b: Uint8Array) {
   const res = [];
   for (let i = 0; i < b.length; i++) {
@@ -104,3 +106,7 @@ export const truncateAddress = (address: string) => {
   if (!match) return address;
   return `${match[1]}…${match[2]}`;
 };
+
+export function getFirstAccount(wallet: WalletState | null) {
+  return wallet?.accounts[0];
+}

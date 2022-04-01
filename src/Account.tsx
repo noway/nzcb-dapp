@@ -8,6 +8,7 @@ import { NZCOVIDBadge__factory } from "./contracts/types";
 import { Header } from "./Header";
 import { Sample } from "./Sample";
 import { Body, CtaContainer } from "./styles";
+import { getFirstAccount } from "./utils";
 
 export function Account() {
   const routeContext = useContext(RouteContext);
@@ -19,7 +20,8 @@ export function Account() {
   const [error, setError] = useState<Error | null>(null);
   const [myBadgeIds, setMyBadgeIds] = useState<bigint[]>([]);
   const [{ wallet }] = useConnectWallet()
-  const address = wallet?.accounts[0]?.address // TODO: only ever show 1 account
+  const account = getFirstAccount(wallet)
+  const address = account?.address
   const eip1193Provider = wallet?.provider
 
   useEffect(() => {
