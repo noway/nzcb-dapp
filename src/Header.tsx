@@ -3,11 +3,39 @@ import { RouteContext } from "./contexts";
 import { styled } from "./styles";
 import { Wallet } from "./Wallet";
 
-export const Navigation = styled("div", {
+const Navigation = styled("div", {
   display: "flex",
   justifyContent: "space-between",
   alignItems: "center",
+  height: 65,
 });
+
+const HeaderContainer = styled("div", {
+  marginLeft: 20,
+  marginRight: 20,
+  border: "1px solid lightgrey",
+  width: '100%'
+})
+
+const Back = styled("div", {
+  alignItems: "center",
+  display: "flex",
+  margin: 10,
+  flex: 1
+})
+
+const Title = styled("h1", {
+  textAlign: "center",
+  flex: 3
+})
+
+const WalletContainer = styled("div", {
+  alignItems: "center",
+  display: "flex",
+  margin: 10,
+  flex: 1,
+  justifyContent: "flex-end"
+})
 
 type Props = Readonly<{
   showWallet: boolean;
@@ -23,16 +51,16 @@ export function Header(props: Props) {
   }
 
   return (
-    <header style={{ marginLeft: 20, marginRight: 20, border: "1px solid lightgrey", width: '100%' }}>
+    <HeaderContainer>
       <Navigation>
-        <div style={{ alignItems: "center", display: "flex", margin: 10, flex: 1 }}>
+        <Back>
           {showBack ? <button type="button" onClick={back}>Back</button> : <span />}
-        </div>
-        <h1 style={{ textAlign: "center", flex: 3 }}>NZ COVID Badge</h1>
-        <div style={{ alignItems: "center", display: "flex", margin: 10, flex: 1, justifyContent: "flex-end" }}>
+        </Back>
+        <Title>NZ COVID Badge</Title>
+        <WalletContainer>
           {showWallet ? <Wallet /> : <span />}
-        </div>
+        </WalletContainer>
       </Navigation>
-    </header>
+    </HeaderContainer>
   );
 }
