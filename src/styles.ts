@@ -38,7 +38,6 @@ export const Body = styled("div", {
   boxSizing: 'border-box'
 });
 
-// TODO: rename to CtaContainer
 export const CtaContainer = styled("div", {
   marginTop: 20,
 });
