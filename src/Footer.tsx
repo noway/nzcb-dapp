@@ -1,6 +1,7 @@
 import { AddressLinks } from "./AddressLinks";
 import { CollectionLinks } from "./CollectionLinks";
 import { CONTRACT_ADDRESS } from "./config";
+import { ExternalLink } from "./ExternalLink";
 import { styled } from "./styles";
 
 const FooterSection = styled("div", {
@@ -36,7 +37,7 @@ export function Footer() {
         </FooterList>
       </FooterSection>
       <FooterSection>
-        <FooterTitle>Contract Address</FooterTitle>
+        <FooterTitle>Contract address</FooterTitle>
         <FooterList>
           <AddressLinks address={CONTRACT_ADDRESS} title="NZ COVID Badge contract address" />
         </FooterList>
@@ -52,8 +53,8 @@ export function Footer() {
       <FooterSection>
         <FooterTitle>Badge assets</FooterTitle>
         <FooterList>
-          <div>.svg file</div>
-          <div>Figma file</div>
+          <div><ExternalLink href="live_badge.svg" title="Live .svg file">Live .svg file</ExternalLink></div>
+          <div><ExternalLink href="example_badge.svg" title="Example .svg file">Example .svg file</ExternalLink></div>
         </FooterList>
       </FooterSection>
     </div>
