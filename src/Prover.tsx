@@ -50,7 +50,6 @@ export function Prover(props: Props) {
   return (
     <div>
       <PassInfo passURI={passURI} />
-      {/* TODO: make this into generic status messages */}
       {proving ? <Status status="Proving, this may take a while..." /> : null}
       {provingError ? <StatusError error={provingError} /> : null}
       {proof && publicSignals && pubIdentity ? <Status status="Proof is ready" /> : null}

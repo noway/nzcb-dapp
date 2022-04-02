@@ -22,7 +22,7 @@ export function NewBadge() {
     checkValid(passURI)
   }, [passURI]);
 
-  // TODO: should this be in jti tools?
+  // TODO: should this be in nzcp tools?
   async function checkValid(passURI: string) {
     try {
       const bytes = decodeBytes(passURI);
@@ -49,7 +49,6 @@ export function NewBadge() {
           rows={12}
         />
       </div>
-      {/* TODO: same data bit style as in mint */}
       <PassInfo passURI={passURI} />
       <DataSection title="Pass signature">
         <DataBit title="valid" value={validStatus} />

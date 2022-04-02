@@ -158,7 +158,6 @@ function MintContents(props: MintContentsProps) {
       {minting ? <Status status="Minting..." /> : null}
       {mintingError ? <StatusError error={mintingError} /> : null}
       {receipt ? <Success receipt={receipt} /> : null}
-      {/* TODO: add disclaimers */}
       <CtaContainer>
         {!receipt ?
           <button type="button" onClick={() => mint()} disabled={minting || !pubIdentityMatches}>Mint</button> :
