@@ -71,7 +71,6 @@ function Success(props: SuccessProps) {
   return (
     <div>
       <h3>Success</h3>
-      {/* TODO: block explorer links */}
       <div style={{ marginTop: 10 }}>
         <div>Congratulations! You have successfully minted <b>NZ COVID Badge #{id.toString()}</b></div>
         <DataSection title="Transaction">
