@@ -10,6 +10,16 @@ import { Sample } from "./Sample";
 import { Body, CtaContainer } from "./styles";
 import { getFirstAccount } from "./utils";
 
+function Status(props: Readonly<{ status: string }>) {
+  const { status } = props
+  return <div style={{ marginTop: 20 }}>{status}</div>
+}
+
+function StatusError(props: Readonly<{ error: Error }>) {
+  const { error } = props
+  return <div style={{ marginTop: 20 }}>Error: {error.message}</div>
+}
+
 export function Account() {
   const routeContext = useContext(RouteContext);
   function newBadge() {
@@ -25,9 +35,8 @@ export function Account() {
   useEffect(() => {
     async function scanBadges(eip1193Provider: EIP1193Provider) {
       const account = getFirstAccount(wallet)
-      const address = account?.address    
+      const address = account?.address
       setLoading(true);
-      setMyBadgeIds([])
       setError(null)
       try {
         const myBadgeIds: bigint[] = []
@@ -57,16 +66,17 @@ export function Account() {
     <>
       <Header showWallet={true} showBack={false} />
       <Body>
-        {loading && <div>Searching for your badges...</div>}
-        {error && <div>Error: {error.message}</div>}
-        <div style={{ display: "flex", flexWrap: "wrap", gap: 20 }}>
+        {loading ? <Status status="Searching for your badges..." /> : null}
+        {error ? <StatusError error={error} /> : null}
+        {!loading && myBadgeIds.length === 0 ? <Status status="You don't have any badges yet." /> : null}
+        {!loading && myBadgeIds.length > 0 ? <div style={{ display: "flex", flexWrap: "wrap", gap: 20 }}>
           {myBadgeIds.map(id => (
             <div key={id.toString()} style={{ border: "1px solid lightgrey", padding: "10px 10px 10px 10px" }}>
               <Sample />
               <h3 style={{ margin: "20px 0 10px 0" }}>NZ COVID Badge #{id.toString()}</h3>
             </div>
           ))}
-        </div>
+        </div> : null}
         <CtaContainer>
           <button type="button" onClick={newBadge}>New Badge</button>
         </CtaContainer>
