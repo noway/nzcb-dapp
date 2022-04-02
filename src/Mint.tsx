@@ -27,6 +27,15 @@ function PublicIdentity(props: Readonly<{ pubIdentity: PubIdentity }>) {
   )
 }
 
+function PublicSinals(props: Readonly<{ publicSignals: PublicSignals}>) {
+  const {publicSignals: signals} = props
+  return (
+    <DataSection title="Public signals">
+      <DataBit title="input" value={`[${signals[0]}n, ${signals[1]}n, ${signals[2]}n]`} />
+    </DataSection>
+  )
+}
+
 function Signature(props: Readonly<{ rs: [r: Uint8Array, s: Uint8Array] }>) {
   const { rs } = props
   return (
@@ -40,14 +49,11 @@ function Signature(props: Readonly<{ rs: [r: Uint8Array, s: Uint8Array] }>) {
 function ProofComponent(props: Readonly<{ proof: Proof }>) {
   const { proof } = props
   const { pi_a: a, pi_b: b, pi_c: c } = proof
-  function toHex(n: string) {
-    return BigNumber.from(n).toHexString()
-  }
   return (
     <DataSection title="Pairing points">
-      <DataBit title="a" value={`[${toHex(a[0])}, ${toHex(a[1])}]`} />
-      <DataBit title="b" value={`[[${toHex(b[0][1])}, ${toHex(b[0][0])}], [${toHex(b[1][1])}, ${toHex(b[1][0])}]]`} />
-      <DataBit title="c" value={`[${toHex(c[0])}, ${toHex(c[1])}]`} />
+      <DataBit title="a" value={`[${a[0]}n, ${a[1]}n]`} />
+      <DataBit title="b" value={`[[${b[0][1]}n, ${b[0][0]}n], [${b[1][1]}n, ${b[1][0]}n]]`} />
+      <DataBit title="c" value={`[${c[0]}n, ${c[1]}n]`} />
     </DataSection>
   )
 }
@@ -152,6 +158,7 @@ function MintContents(props: MintContentsProps) {
         <PublicIdentity pubIdentity={pubIdentity} />
         <Signature rs={getRS(passURI)} />
         <ProofComponent proof={proof} />
+        <PublicSinals publicSignals={publicSignals} />
       </> : null}
       <div style={{ marginTop: 20 }}>
         <h3>Disclaimer</h3>

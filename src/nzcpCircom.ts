@@ -22,7 +22,6 @@ import {
 export type PubIdentity = Readonly<{
   nullifierHashPart: Uint8Array;
   toBeSignedHash: Uint8Array;
-  nbf: bigint;
   exp: bigint;
   data: Uint8Array;
 }>;
@@ -34,7 +33,6 @@ export async function getNZCPPubIdentity(
   const bytes = decodeBytes(passURI);
   const cose = decodeCOSE(bytes);
   const claims = decodeCBOR(cose.payload) as Map<Data, Data>;
-  const nbf = BigInt(claims.get(5) as number);
   const exp = BigInt(claims.get(4) as number);
   const vc = claims.get("vc") as Map<string, Data>;
   const credentialSubject = vc.get("credentialSubject") as Map<string, string>;
@@ -55,8 +53,8 @@ export async function getNZCPPubIdentity(
     await crypto.subtle.digest("SHA-256", toBeSignedByteArray)
   );
   const signedAddressBytes = utils.arrayify(signerAddress);
-  const data = fitBytes(signedAddressBytes, 21);
-  const pubIdentity = { nullifierHashPart, toBeSignedHash, exp, nbf, data };
+  const data = fitBytes(signedAddressBytes, 25);
+  const pubIdentity = { nullifierHashPart, toBeSignedHash, exp, data };
   return pubIdentity;
 }
 
@@ -79,13 +77,11 @@ export function signalsToPubIdentity(publicSignals: string[]): PubIdentity {
     out2[0],
     out2[1],
   ]);
-  const nbfBytes = new Uint8Array([out2[2], out2[3], out2[4], out2[5]]);
-  const expBytes = new Uint8Array([out2[6], out2[7], out2[8], out2[9]]);
-  const data = out2.slice(10);
-  const nbf = evmBytesToNum(nbfBytes);
+  const expBytes = new Uint8Array([out2[2], out2[3], out2[4], out2[5]]);
+  const data = out2.slice(6);
   const exp = evmBytesToNum(expBytes);
 
-  const pubIdentity = { nullifierHashPart, toBeSignedHash, nbf, exp, data };
+  const pubIdentity = { nullifierHashPart, toBeSignedHash, exp, data };
   return pubIdentity;
 }
 
@@ -95,7 +91,7 @@ export function getNZCPCircuitInput(passURI: string, signerAddress: string) {
   const ToBeSigned = encodeToBeSigned(cose.bodyProtected, cose.payload);
   const fitToBeSigned = fitBytes(ToBeSigned, EXAMPLE_TOBESIGNED_MAX_LEN);
   const signedAddressBytes = utils.arrayify(signerAddress);
-  const data = evmRearrangeBytes(fitBytes(signedAddressBytes, 21));
+  const data = evmRearrangeBytes(fitBytes(signedAddressBytes, 25));
   const input = {
     toBeSigned: bufferToBitArray(fitToBeSigned),
     toBeSignedLen: ToBeSigned.length,
