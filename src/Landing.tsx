@@ -1,3 +1,4 @@
+import { ExternalLink } from "./Collection";
 import { ConnectWallet } from "./ConnectWallet"
 import { Footer } from "./Footer";
 import { Header } from "./Header";
@@ -37,7 +38,7 @@ export function Landing() {
       <h3>Does this website have analytics or telemetry?</h3>
       <p><b>No.</b> This website collects no analytics, telemetry or any other data derived from user actions. The website only communicates with an Ethereum node RPC endpoint to send and receive information from the blockchain.</p>
       <h3>How many badges I can mint?</h3>
-      <p>You can only mint <b>1 badge per person</b>. Even if you request a new NZ COVID Pass from <a href="https://mycovidrecord.nz" rel="nofollow noopener noreferrer">mycovidrecord.nz</a>, your anonymized identity will match against the list of spent anonymized identities and prevent you from minting again.</p>
+      <p>You can only mint <b>1 badge per person</b>. Even if you request a new NZ COVID Pass from <ExternalLink href="https://mycovidrecord.nz" title="mycovidrecord.nz">mycovidrecord.nz</ExternalLink>, your anonymized identity will match against the list of spent anonymized identities and prevent you from minting again.</p>
       <h3>Can I sell my NZ COVID Badge?</h3>
       <p>Yes. Although the chance that anyone will buy is infinite small. Don’t expect to recoup the Ether you spent. </p>
       <h3>What’s the mint price?</h3>

@@ -27,7 +27,7 @@ export function Footer() {
       <FooterSection>
         <b>Collection</b>
         <FooterList>
-          <Collection address="0x5af0d9827e0c53e4799bb226655a1de152a425a5" title="NZ COVID Badge collection" />
+          <Collection address={CONTRACT_ADDRESS} title="NZ COVID Badge collection" />
         </FooterList>
       </FooterSection>
       <FooterSection>
@@ -39,7 +39,7 @@ export function Footer() {
       <FooterSection>
         <b>Source code</b>
         <FooterList>
-          <div>Contract GitHub rpeo</div>
+          <div>Contract GitHub repo</div>
           <div>Dapp GitHub repo</div>
           <div>ZK-SNARK GitHub repo</div>
         </FooterList>
