@@ -11,6 +11,7 @@ import { comparePubIdentities, getProofArgs, getRS, Proof, PubIdentity, PublicSi
 import { bytesToHex } from "./nzcpTools";
 import { Status, StatusError } from "./Status";
 import { Body, CtaContainer } from "./styles";
+import { Transaction } from "./Transaction";
 
 function PublicIdentity(props: Readonly<{ pubIdentity: PubIdentity }>) {
   const { pubIdentity } = props
@@ -72,6 +73,7 @@ function Success(props: SuccessProps) {
       <h3>Success</h3>
       {/* TODO: block explorer links */}
       <div>Transaction Hash: {receipt.transactionHash}</div>
+      <Transaction txHash={receipt.transactionHash} title="Mint Transaction" />
       <div>NZ COVID Badge #{id.toString()}</div>
     </div>
   )
