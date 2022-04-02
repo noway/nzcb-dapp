@@ -3,6 +3,7 @@ import { useConnectWallet } from "@web3-onboard/react";
 import { Prover } from "./Prover";
 import { Body } from "./styles";
 import { getFirstAccount } from "./utils";
+import { Footer } from "./Footer";
 
 type Props = Readonly<{
   passURI: string
@@ -25,6 +26,7 @@ export function Prepare(props: Props) {
         /> :
         <div>Please connect wallet</div>}
     </Body>
+    <Footer />
   </>;
 }
 

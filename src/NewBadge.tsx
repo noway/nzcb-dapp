@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { EXAMPLE_PUBLIC_KEY_JWK } from "./config";
 import { RouteContext } from "./contexts";
 import { DataBit, DataSection } from "./DataSection";
+import { Footer } from "./Footer";
 import { Header } from "./Header";
 import { decodeBytes, decodeCOSE, encodeToBeSigned } from "./nzcpTools";
 import { PassInfo } from "./PassInfo";
@@ -56,5 +57,6 @@ export function NewBadge() {
         <button type="button" disabled={validStatus !== "yes"} onClick={prepare}>Prepare</button>
       </CtaContainer>
     </Body>
+    <Footer />
   </>;
 }

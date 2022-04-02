@@ -6,6 +6,7 @@ import { Asset } from "./Asset";
 import { CONTRACT_ADDRESS } from "./config";
 import { RouteContext } from "./contexts";
 import { NZCOVIDBadge__factory } from "./contracts/types";
+import { Footer } from "./Footer";
 import { Header } from "./Header";
 import { Status, StatusError } from "./Status";
 import { Body, CtaContainer } from "./styles";
@@ -69,6 +70,7 @@ export function Account() {
           <button type="button" onClick={newBadge}>New Badge</button>
         </CtaContainer>
       </Body>
+      <Footer />
     </>
   );
 }

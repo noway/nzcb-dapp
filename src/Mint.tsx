@@ -6,6 +6,7 @@ import { CONTRACT_ADDRESS } from "./config";
 import { RouteContext } from "./contexts";
 import { NZCOVIDBadge__factory } from "./contracts/types";
 import { DataBit, DataSection } from "./DataSection";
+import { Footer } from "./Footer";
 import { Header } from "./Header";
 import { comparePubIdentities, getProofArgs, getRS, Proof, PubIdentity, PublicSignals, signalsToPubIdentity } from "./nzcpCircom";
 import { bytesToHex } from "./nzcpTools";
@@ -199,5 +200,6 @@ export function Mint(props: Props) {
         /> :
         <div>Please connect wallet</div>}
     </Body>
+    <Footer />
   </>;
 }
