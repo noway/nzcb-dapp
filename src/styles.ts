@@ -26,6 +26,12 @@ export const globalStyles = globalCss({
   h3: {
     margin: 0,
   },
+  h4: {
+    margin: 0,
+  },
+  h5: {
+    margin: 0,
+  },
 });
 
 export const Body = styled("div", {
