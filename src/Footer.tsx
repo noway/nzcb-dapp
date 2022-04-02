@@ -11,6 +11,10 @@ const FooterSection = styled("div", {
 
 const FooterList = styled("div", {})
 
+const FooterTitle = styled("h4", {
+  color: 'grey'
+})
+
 export function Footer() {
   return (
     <div style={{
@@ -26,19 +30,19 @@ export function Footer() {
       gap: 20
     }}>
       <FooterSection>
-        <b>Collection</b>
+        <FooterTitle>Collection</FooterTitle>
         <FooterList>
           <CollectionLinks address={CONTRACT_ADDRESS} title="NZ COVID Badge collection" />
         </FooterList>
       </FooterSection>
       <FooterSection>
-        <b>Contract Address</b>
+        <FooterTitle>Contract Address</FooterTitle>
         <FooterList>
           <AddressLinks address={CONTRACT_ADDRESS} title="NZ COVID Badge contract address" />
         </FooterList>
       </FooterSection>
       <FooterSection>
-        <b>Source code</b>
+        <FooterTitle>Source code</FooterTitle>
         <FooterList>
           <div>Contract GitHub repo</div>
           <div>Dapp GitHub repo</div>
@@ -46,7 +50,7 @@ export function Footer() {
         </FooterList>
       </FooterSection>
       <FooterSection>
-        <b>Badge assets</b>
+        <FooterTitle>Badge assets</FooterTitle>
         <FooterList>
           <div>.svg file</div>
           <div>Figma file</div>
