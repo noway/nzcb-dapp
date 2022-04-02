@@ -39,7 +39,7 @@ export function Landing() {
       <h3>How many badges I can mint?</h3>
       <p>You can only mint <b>1 badge per person</b>. Even if you request a new NZ COVID Pass from <a href="https://mycovidrecord.nz" rel="nofollow noopener noreferrer">mycovidrecord.nz</a>, your anonymized identity will match against the list of spent anonymized identities and prevent you from minting again.</p>
       <h3>Can I sell my NZ COVID Badge?</h3>
-      <p>Yes. Although the chance that anyone will buy is infinite small. Don’t expect to recoup the ether you spent. </p>
+      <p>Yes. Although the chance that anyone will buy is infinite small. Don’t expect to recoup the Ether you spent. </p>
       <h3>What’s the mint price?</h3>
       <p>Mint is <b>free</b>, it only costs gas to mint. Although the gas price itself is on the higher side, due to the Elliptic Curve signature and ZK-SNARK verification that happens in the smart contract.</p>
       <h3>What’s the roadmap?</h3>
