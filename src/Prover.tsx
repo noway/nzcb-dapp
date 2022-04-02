@@ -6,7 +6,7 @@ import { EXAMPLE_WASM_FILE, EXAMPLE_ZKEY_FILE } from "./config";
 import { CtaContainer } from "./styles";
 import { DataSection } from "./DataSection";
 import { DataBit } from "./DataBit";
-import { Data, decodeBytes, decodeCBOR, decodeCOSE } from "./nzcpTools";
+import { Data, decodeAlg, decodeBytes, decodeCBOR, decodeCOSE } from "./nzcpTools";
 import { toHexString } from "./utils";
 
 function ctiToJti(cti: Uint8Array): string {
@@ -29,6 +29,9 @@ function PassInfo(props: Readonly<{ passURI: string }>) {
   const cose = decodeCOSE(bytes);
   const claims = decodeCBOR(cose.payload) as Map<Data, Data>;
   const headers = decodeCBOR(cose.bodyProtected) as Map<Data, Data>;
+  const kid = headers.get(4) as Uint8Array
+  const alg = headers.get(1) as number
+  const iss = claims.get(1) as string;
   const nbf = BigInt(claims.get(5) as number);
   const exp = BigInt(claims.get(4) as number);
   const cti = claims.get(7) as Uint8Array;
@@ -42,6 +45,9 @@ function PassInfo(props: Readonly<{ passURI: string }>) {
 
   return (
     <DataSection title="Pass info">
+      <DataBit title="kid" value={`${new TextDecoder("utf-8").decode(kid)}`} />
+      <DataBit title="alg" value={`${decodeAlg(alg)}`} />
+      <DataBit title="iss" value={`${iss}`} />
       <DataBit title="nbf" value={`${nbf}`} />
       <DataBit title="exp" value={`${exp}`} />
       <DataBit title="jti" value={`${ctiToJti(cti)}`} />

@@ -218,3 +218,11 @@ export function decodeRS(bytes: Uint8Array) {
   const s = data.signature.slice(32, 64);
   return [r, s] as [Uint8Array, Uint8Array];
 }
+
+export function decodeAlg(alg: number) {
+  if (alg === -7) {
+    return "ES256";
+  } else {
+    throw new Error("unknown alg");
+  }
+}
