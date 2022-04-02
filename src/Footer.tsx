@@ -1,4 +1,5 @@
 import { Address } from "./Address";
+import { Collection } from "./Collection";
 import { CONTRACT_ADDRESS } from "./config";
 
 export function Footer() {
@@ -15,9 +16,7 @@ export function Footer() {
     }}>
       <h2>Links</h2>
       <b>Collection</b>
-      <div>OpenSea</div>
-      <div>LooksRare</div>
-      <div>Zorb</div>
+      <Collection address="0x5af0d9827e0c53e4799bb226655a1de152a425a5" title="NZ COVID Badge collection"/>
       <b>Contract Address</b>
       <Address address={CONTRACT_ADDRESS} title="NZ COVID Badge contract address"/>
       <b>Source code</b>
