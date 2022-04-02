@@ -5,6 +5,7 @@ import { RouteContext } from "./contexts";
 import { EXAMPLE_WASM_FILE, EXAMPLE_ZKEY_FILE } from "./config";
 import { CtaContainer } from "./styles";
 import { PassInfo } from "./PassInfo";
+import { Status, StatusError } from "./Status";
 
 
 type Props = Readonly<{
@@ -50,9 +51,9 @@ export function Prover(props: Props) {
     <div>
       <PassInfo passURI={passURI} />
       {/* TODO: make this into generic status messages */}
-      <div>{proving ? "Proving, this may take a while..." : ""}</div>
-      <div>{provingError ? "Error while proving:  " + provingError.message : ""}</div>
-      {proof && publicSignals && pubIdentity ? <div>Proof is ready</div> : null}
+      {proving ? <Status status="Proving, this may take a while..." /> : null}
+      {provingError ? <StatusError error={provingError} /> : null}
+      {proof && publicSignals && pubIdentity ? <Status status="Proof is ready" /> : null}
       <CtaContainer>
         {proof && publicSignals && pubIdentity ?
           <button type="button" onClick={() => proceed(proof, publicSignals, pubIdentity)} disabled={false}>Proceed</button> :
