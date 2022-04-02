@@ -1,5 +1,5 @@
 import { EIP1193Provider } from "@web3-onboard/core";
-import { useConnectWallet } from "@web3-onboard/react";
+import { useConnectWallet, useSetChain } from "@web3-onboard/react";
 import { BigNumber, ContractReceipt, providers } from "ethers";
 import { useContext, useState } from "react";
 import { CONTRACT_ADDRESS } from "./config";
@@ -99,6 +99,7 @@ function MintContents(props: MintContentsProps) {
   const [receipt, setReceipt] = useState<ContractReceipt | null>(null)
   const routeContext = useContext(RouteContext);
   const [open, setOpen] = useState(false);
+  const [{ chains, connectedChain }] = useSetChain()
 
   function toggle() {
     setOpen(!open)
@@ -142,6 +143,18 @@ function MintContents(props: MintContentsProps) {
         <Signature rs={getRS(passURI)} />
         <ProofComponent proof={proof} />
       </> : null}
+      <div style={{ marginTop: 20 }}>
+        <h3>Disclaimer</h3>
+        <p>By minting you confirm that you understand the following:</p>
+        <ul>
+        <li>Minting may result in loss of ether</li>
+        <li>The smart contract was not audited</li>
+        <li>The smart contract may contain bugs</li>
+        <li>NZ COVID Badge is not an investment</li>
+        <li>There's no liquidity for your NZ COVID Badge</li>
+        <li>You're minting on {chains.find(({ id }) => id === connectedChain?.id)?.label}</li>
+        </ul>
+      </div>
       {minting ? <Status status="Minting..." /> : null}
       {mintingError ? <StatusError error={mintingError} /> : null}
       {receipt ? <Success receipt={receipt} /> : null}
