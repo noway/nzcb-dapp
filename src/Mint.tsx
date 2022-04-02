@@ -43,7 +43,7 @@ function ProofComponent(props: { proof: Proof }) {
     return BigNumber.from(n).toHexString()
   }
   return (
-    <DataSection title="Proof">
+    <DataSection title="Pairing points">
       <DataBit title="a" value={`[${toHex(a[0])}, ${toHex(a[1])}]`} />
       <DataBit title="b" value={`[[${toHex(b[0][1])}, ${toHex(b[0][0])}], [${toHex(b[1][1])}, ${toHex(b[1][0])}]]`} />
       <DataBit title="c" value={`[${toHex(c[0])}, ${toHex(c[1])}]`} />
