@@ -108,6 +108,11 @@ function MintContents(props: MintContentsProps) {
   const [mintingError, setMintingError] = useState<Error | null>(null)
   const [receipt, setReceipt] = useState<ContractReceipt | null>(null)
   const routeContext = useContext(RouteContext);
+  const [open, setOpen] = useState(false);
+
+  function toggle() {
+    setOpen(!open)
+  }
 
   async function mint() {
     setMinting(true)
@@ -140,10 +145,13 @@ function MintContents(props: MintContentsProps) {
     <>
       <h3 style={{ marginTop: 20 }}>Proof</h3>
       <PreFlightCheck pubIdentityMatches={pubIdentityMatches} />
-      <h3 style={{ marginTop: 20 }}>To be sent to the smart contract</h3>
-      <PublicIdentity pubIdentity={pubIdentity} />
-      <Signature rs={getRS(passURI)} />
-      <ProofComponent proof={proof} />
+      {/* TODO: better style here */}
+      <h3 style={{ marginTop: 20 }}>Advanced <span onClick={toggle}>[±]</span></h3>
+      {open ? <>
+        <PublicIdentity pubIdentity={pubIdentity} />
+        <Signature rs={getRS(passURI)} />
+        <ProofComponent proof={proof} />
+      </> : null}
       <div>{minting ? "Minting..." : ""}</div>
       <div>{mintingError ? "Error while minting:  " + mintingError.message : ""}</div>
       {receipt ? <Success receipt={receipt} /> : null}
