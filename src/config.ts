@@ -1,4 +1,4 @@
-export const CONTRACT_ADDRESS = "0x57F1fB3589befEeBedA95DAcdba72B11b3EBfcaC";
+export const CONTRACT_ADDRESS = "0xA94F97aAF991757b245F649707005aEA59b4Adc3";
 export const EXAMPLE_TOBESIGNED_MAX_LEN = 314;
 
 export const EXAMPLE_ASSET_URL = "example_badge.svg";
