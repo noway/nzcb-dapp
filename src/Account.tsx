@@ -2,11 +2,11 @@ import { EIP1193Provider } from "@web3-onboard/core";
 import { useConnectWallet } from "@web3-onboard/react";
 import { providers } from "ethers";
 import { useContext, useEffect, useState } from "react";
+import { Asset } from "./Asset";
 import { CONTRACT_ADDRESS } from "./config";
 import { RouteContext } from "./contexts";
 import { NZCOVIDBadge__factory } from "./contracts/types";
 import { Header } from "./Header";
-import { Sample } from "./Sample";
 import { Status, StatusError } from "./Status";
 import { Body, CtaContainer } from "./styles";
 import { getFirstAccount } from "./utils";
@@ -62,10 +62,7 @@ export function Account() {
         {!loading && !error && myBadgeIds.length === 0 ? <Status status="You don't have any badges yet." /> : null}
         {!loading && !error && myBadgeIds.length > 0 ? <div style={{ display: "flex", flexWrap: "wrap", gap: 20, marginTop: 20 }}>
           {myBadgeIds.map(id => (
-            <div key={id.toString()} style={{ border: "1px solid lightgrey", padding: "10px 10px 10px 10px" }}>
-              <Sample />
-              <h3 style={{ margin: "20px 0 10px 0" }}>NZ COVID Badge #{id.toString()}</h3>
-            </div>
+            <Asset id={id} key={id.toString()} />
           ))}
         </div> : null}
         <CtaContainer>
@@ -75,3 +72,5 @@ export function Account() {
     </>
   );
 }
+
+
