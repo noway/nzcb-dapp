@@ -23,7 +23,6 @@ export function Footer() {
       gridTemplateColumns: 'repeat(4, 1fr)',
       gap: 20
     }}>
-      {/* <h2>Links</h2> */}
       <FooterSection>
         <b>Collection</b>
         <FooterList>

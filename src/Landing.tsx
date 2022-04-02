@@ -1,4 +1,4 @@
-import { ExternalLink } from "./Collection";
+import { ExternalLink } from "./ExternalLink";
 import { ConnectWallet } from "./ConnectWallet"
 import { Footer } from "./Footer";
 import { Header } from "./Header";

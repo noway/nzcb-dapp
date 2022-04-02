@@ -1,4 +1,4 @@
-import { ExternalLink } from "./Collection";
+import { ExternalLink } from "./ExternalLink";
 
 export function Address(props: Readonly<{ address: string, title: string }>) {
   const { address, title } = props;
