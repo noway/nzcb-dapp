@@ -7,18 +7,9 @@ import { RouteContext } from "./contexts";
 import { NZCOVIDBadge__factory } from "./contracts/types";
 import { Header } from "./Header";
 import { Sample } from "./Sample";
+import { Status, StatusError } from "./Status";
 import { Body, CtaContainer } from "./styles";
 import { getFirstAccount } from "./utils";
-
-function Status(props: Readonly<{ status: string }>) {
-  const { status } = props
-  return <div style={{ marginTop: 20 }}>{status}</div>
-}
-
-function StatusError(props: Readonly<{ error: Error }>) {
-  const { error } = props
-  return <div style={{ marginTop: 20 }}>Error: {error.message}</div>
-}
 
 export function Account() {
   const routeContext = useContext(RouteContext);
