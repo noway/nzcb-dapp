@@ -10,6 +10,7 @@ import { DataSection } from "./DataSection";
 import { Header } from "./Header";
 import { comparePubIdentities, getProofArgs, getRS, Proof, PubIdentity, PublicSignals, signalsToPubIdentity } from "./nzcpCircom";
 import { bytesToHex } from "./nzcpTools";
+import { Status, StatusError } from "./Status";
 import { Body, CtaContainer } from "./styles";
 
 function PublicIdentity(props: { pubIdentity: PubIdentity }) {
@@ -141,8 +142,8 @@ function MintContents(props: MintContentsProps) {
         <Signature rs={getRS(passURI)} />
         <ProofComponent proof={proof} />
       </> : null}
-      <div>{minting ? "Minting..." : ""}</div>
-      <div>{mintingError ? "Error while minting:  " + mintingError.message : ""}</div>
+      {minting ? <Status status="Minting..." /> : null}
+      {mintingError ? <StatusError error={mintingError} /> : null}
       {receipt ? <Success receipt={receipt} /> : null}
       {/* TODO: add disclaimers */}
       <CtaContainer>

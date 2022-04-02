@@ -5,5 +5,5 @@ export function Status(props: Readonly<{ status: string; }>) {
 
 export function StatusError(props: Readonly<{ error: Error; }>) {
   const { error } = props;
-  return <div style={{ marginTop: 20 }}>Error: {error.message}</div>;
+  return <div style={{ marginTop: 20 }}><b>Error</b>: {error.message}</div>;
 }
