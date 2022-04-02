@@ -13,7 +13,7 @@ export function Sample() {
   return (
     <Container>
       <Frame>
-        <img src="badge.svg" alt="NZ COVID Badge" width={256} height={256} />
+        <img src="live_badge.svg" alt="NZ COVID Badge" width={256} height={256} />
       </Frame>
     </Container>
   )
