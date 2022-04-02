@@ -21,7 +21,6 @@ export function NewBadge() {
     checkValid(passURI)
   }, [passURI]);
 
-  // TODO: should this be in nzcp tools?
   async function checkValid(passURI: string) {
     try {
       const bytes = decodeBytes(passURI);
