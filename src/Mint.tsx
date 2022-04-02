@@ -1,7 +1,7 @@
 import { EIP1193Provider } from "@web3-onboard/core";
 import { useConnectWallet } from "@web3-onboard/react";
 import { BigNumber, ContractReceipt, providers } from "ethers";
-import { useContext, useState } from "react";
+import { ReactNode, useContext, useState } from "react";
 import { CONTRACT_ADDRESS } from "./config";
 import { RouteContext } from "./contexts";
 import { NZCOVIDBadge__factory } from "./contracts/types";
@@ -11,50 +11,53 @@ import { comparePubIdentities, getProofArgs, getRS, Proof, PubIdentity, PublicSi
 import { Body, CtaContainer } from "./styles";
 import { toHexString } from "./utils";
 
+function DataSection(props: Readonly<{ title: string, children: ReactNode }>) {
+  const { title } = props
+  return (
+    <div style={{ border: "1px solid lightgrey", marginTop: 20, padding: 10 }}>
+      <h4>{title}</h4>
+      <div style={{ marginTop: 10 }}>
+        {props.children}
+      </div>
+    </div>
+  )
+}
+
 export function PublicIdentity(props: { pubIdentity: PubIdentity }) {
   const { pubIdentity } = props
   const { nullifierHashPart, toBeSignedHash, data, exp } = pubIdentity
   return (
-    <div style={{ border: "1px solid lightgrey", marginTop: 20, padding: 10 }}>
-      <h4>Anonymized identity</h4>
-      <div style={{ marginTop: 10 }}>
-        <DataBit title="nullifierHashPart" value={`0x${toHexString(nullifierHashPart)}`} />
-        <DataBit title="toBeSignedHash" value={`0x${toHexString(toBeSignedHash)}`} />
-        <DataBit title="address" value={`0x${toHexString(data)}`} />
-        <DataBit title="exp" value={`${Number(exp)}`} />
-      </div>
-    </div>
+    <DataSection title="Anonymized identity">
+      <DataBit title="nullifierHashPart" value={`0x${toHexString(nullifierHashPart)}`} />
+      <DataBit title="toBeSignedHash" value={`0x${toHexString(toBeSignedHash)}`} />
+      <DataBit title="address" value={`0x${toHexString(data)}`} />
+      <DataBit title="exp" value={`${Number(exp)}`} />
+    </DataSection>
   )
 }
 
 export function Signature(props: { rs: [r: Uint8Array, s: Uint8Array] }) {
   const { rs } = props
   return (
-    <div style={{ border: "1px solid lightgrey", marginTop: 20, padding: 10 }}>
-      <h4>Pass signature</h4>
-      <div style={{ marginTop: 10 }}>
-        <DataBit title="r" value={`0x${toHexString(rs[0])}`} />
-        <DataBit title="s" value={`0x${toHexString(rs[1])}`} />
-      </div>
-    </div>
+    <DataSection title="Pass signature">
+      <DataBit title="r" value={`0x${toHexString(rs[0])}`} />
+      <DataBit title="s" value={`0x${toHexString(rs[1])}`} />
+    </DataSection>
   )
 }
 
 export function ProofComponent(props: { proof: Proof }) {
   const { proof } = props
-  const { pi_a, pi_b, pi_c } = proof
+  const { pi_a: a, pi_b: b, pi_c: c } = proof
   function toHex(n: string) {
     return BigNumber.from(n).toHexString()
   }
   return (
-    <div style={{ border: "1px solid lightgrey", marginTop: 20, padding: 10 }}>
-      <h4>Proof</h4>
-      <div style={{ marginTop: 10 }}>
-        <DataBit title="a" value={`[${toHex(pi_a[0])}, ${toHex(pi_a[1])}]`} />
-        <DataBit title="b" value={`[[${toHex(pi_b[0][1])}, ${toHex(pi_b[0][0])}], [${toHex(pi_b[1][1])}, ${toHex(pi_b[1][0])}]]`} />
-        <DataBit title="c" value={`[${toHex(pi_c[0])}, ${toHex(pi_c[1])}]`} />
-      </div>
-    </div>
+    <DataSection title="Proof">
+      <DataBit title="a" value={`[${toHex(a[0])}, ${toHex(a[1])}]`} />
+      <DataBit title="b" value={`[[${toHex(b[0][1])}, ${toHex(b[0][0])}], [${toHex(b[1][1])}, ${toHex(b[1][0])}]]`} />
+      <DataBit title="c" value={`[${toHex(c[0])}, ${toHex(c[1])}]`} />
+    </DataSection>
   )
 }
 
