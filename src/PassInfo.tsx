@@ -25,7 +25,6 @@ export function PassInfo(props: Readonly<{ passURI: string; }>) {
         <DataBit title="kid" value={`${new TextDecoder("utf-8").decode(kid)}`} />
         <DataBit title="alg" value={`${decodeAlg(alg)}`} />
         <DataBit title="iss" value={`${iss}`} />
-        {/* TODO: better display for timestamps */}
         <DataBitTS title="nbf" value={Number(nbf)} />
         <DataBitTS title="exp" value={Number(exp)} />
         <DataBit title="jti" value={`${ctiToJti(cti)}`} />
