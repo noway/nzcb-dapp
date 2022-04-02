@@ -20,13 +20,14 @@ export function Account() {
   const [error, setError] = useState<Error | null>(null);
   const [myBadgeIds, setMyBadgeIds] = useState<bigint[]>([]);
   const [{ wallet }] = useConnectWallet()
-  const account = getFirstAccount(wallet)
-  const address = account?.address
   const eip1193Provider = wallet?.provider
 
   useEffect(() => {
     async function scanBadges(eip1193Provider: EIP1193Provider) {
+      const account = getFirstAccount(wallet)
+      const address = account?.address    
       setLoading(true);
+      setMyBadgeIds([])
       setError(null)
       try {
         const myBadgeIds: bigint[] = []
@@ -50,7 +51,7 @@ export function Account() {
     if (eip1193Provider) {
       scanBadges(eip1193Provider)
     }
-  }, [address, eip1193Provider])
+  }, [wallet, eip1193Provider])
 
   return (
     <>
