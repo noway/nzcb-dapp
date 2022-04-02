@@ -72,9 +72,13 @@ function Success(props: SuccessProps) {
     <div>
       <h3>Success</h3>
       {/* TODO: block explorer links */}
-      <div>Transaction Hash: {receipt.transactionHash}</div>
-      <Transaction txHash={receipt.transactionHash} title="Mint Transaction" />
-      <div>NZ COVID Badge #{id.toString()}</div>
+      <div style={{ marginTop: 10 }}>
+        <div>Congratulations! You have successfully minted <b>NZ COVID Badge #{id.toString()}</b></div>
+        <DataSection title="Transaction">
+          <DataBit title="hash" value={receipt.transactionHash} />
+          <Transaction txHash={receipt.transactionHash} title="Mint Transaction" />
+        </DataSection>
+      </div>
     </div>
   )
 }
