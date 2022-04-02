@@ -23,7 +23,7 @@ function DataSection(props: Readonly<{ title: string, children: ReactNode }>) {
   )
 }
 
-export function PublicIdentity(props: { pubIdentity: PubIdentity }) {
+function PublicIdentity(props: { pubIdentity: PubIdentity }) {
   const { pubIdentity } = props
   const { nullifierHashPart, toBeSignedHash, data, exp } = pubIdentity
   return (
@@ -36,7 +36,7 @@ export function PublicIdentity(props: { pubIdentity: PubIdentity }) {
   )
 }
 
-export function Signature(props: { rs: [r: Uint8Array, s: Uint8Array] }) {
+function Signature(props: { rs: [r: Uint8Array, s: Uint8Array] }) {
   const { rs } = props
   return (
     <DataSection title="Pass signature">
@@ -46,7 +46,7 @@ export function Signature(props: { rs: [r: Uint8Array, s: Uint8Array] }) {
   )
 }
 
-export function ProofComponent(props: { proof: Proof }) {
+function ProofComponent(props: { proof: Proof }) {
   const { proof } = props
   const { pi_a: a, pi_b: b, pi_c: c } = proof
   function toHex(n: string) {
@@ -57,6 +57,14 @@ export function ProofComponent(props: { proof: Proof }) {
       <DataBit title="a" value={`[${toHex(a[0])}, ${toHex(a[1])}]`} />
       <DataBit title="b" value={`[[${toHex(b[0][1])}, ${toHex(b[0][0])}], [${toHex(b[1][1])}, ${toHex(b[1][0])}]]`} />
       <DataBit title="c" value={`[${toHex(c[0])}, ${toHex(c[1])}]`} />
+    </DataSection>
+  )
+}
+function PreFlightCheck(props: { pubIdentityMatches: boolean }) {
+  const { pubIdentityMatches } = props
+  return (
+    <DataSection title="Pre-flight check">
+      <DataBit title="matches" value={pubIdentityMatches ? "yes" : "no"} />
     </DataSection>
   )
 }
@@ -135,8 +143,7 @@ function MintContents(props: MintContentsProps) {
         <PublicIdentity pubIdentity={pubIdentity} />
         <Signature rs={getRS(passURI)} />
         <ProofComponent proof={proof} />
-        <h4>Pre-flight check</h4>
-        <span>{pubIdentityMatches ? "OK" : "Error"}</span>
+        <PreFlightCheck pubIdentityMatches={pubIdentityMatches} />
       </div>
       <div>{minting ? "Minting..." : ""}</div>
       <div>{mintingError ? "Error while minting:  " + mintingError.message : ""}</div>
@@ -144,7 +151,7 @@ function MintContents(props: MintContentsProps) {
       {/* TODO: add disclaimers */}
       <CtaContainer>
         {!receipt ?
-          <button type="button" onClick={() => mint()} disabled={minting}>Mint</button> :
+          <button type="button" onClick={() => mint()} disabled={minting || !pubIdentityMatches}>Mint</button> :
           <button type="button" onClick={() => done()}>Done</button>
         }
       </CtaContainer>
