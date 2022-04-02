@@ -5,6 +5,7 @@ import { useContext, useState } from "react";
 import { CONTRACT_ADDRESS } from "./config";
 import { RouteContext } from "./contexts";
 import { NZCOVIDBadge__factory } from "./contracts/types";
+import { DataBit } from "./DataBit";
 import { Header } from "./Header";
 import { comparePubIdentities, getProofArgs, getRS, Proof, PubIdentity, PublicSignals, signalsToPubIdentity } from "./nzcpCircom";
 import { Body, CtaContainer } from "./styles";
@@ -12,23 +13,24 @@ import { toHexString } from "./utils";
 
 export function PublicIdentity(props: { pubIdentity: PubIdentity }) {
   const { pubIdentity } = props
+  const { nullifierHashPart, toBeSignedHash, data, exp } = pubIdentity
   return (
-    <code>
-      <div>nullifierHashPart: 0x{toHexString(pubIdentity.nullifierHashPart)}</div>
-      <div>toBeSignedHash: 0x{toHexString(pubIdentity.toBeSignedHash)}</div>
-      <div>address: 0x{toHexString(pubIdentity.data)}</div>
-      <div>exp: {Number(pubIdentity.exp)}</div>
-    </code>
+    <div>
+      <DataBit title="nullifierHashPart" value={`0x${toHexString(nullifierHashPart)}`} />
+      <DataBit title="toBeSignedHash" value={`0x${toHexString(toBeSignedHash)}`} />
+      <DataBit title="address" value={`0x${toHexString(data)}`} />
+      <DataBit title="exp" value={`${Number(exp)}`} />
+    </div>
   )
 }
 
 export function Signature(props: { rs: [r: Uint8Array, s: Uint8Array] }) {
   const { rs } = props
   return (
-    <code>
-      <div>r: 0x{toHexString(rs[0])}</div>
-      <div>s: 0x{toHexString(rs[1])}</div>
-    </code>
+    <div>
+      <DataBit title="r" value={`0x${toHexString(rs[0])}`} />
+      <DataBit title="s" value={`0x${toHexString(rs[1])}`} />
+    </div>
   )
 }
 
@@ -39,11 +41,11 @@ export function ProofComponent(props: { proof: Proof }) {
     return BigNumber.from(n).toHexString()
   }
   return (
-    <code>
-      <div>a: [{toHex(pi_a[0])}, {toHex(pi_a[1])}]</div>
-      <div>b: [[{toHex(pi_b[0][1])}, {toHex(pi_b[0][0])}], [{toHex(pi_b[1][1])}, {toHex(pi_b[1][0])}]]</div>
-      <div>c: [{toHex(pi_c[0])}, {toHex(pi_c[1])}]</div>
-    </code>
+    <div>
+      <DataBit title="a" value={`[${toHex(pi_a[0])}, ${toHex(pi_a[1])}]`} />
+      <DataBit title="b" value={`[[${toHex(pi_b[0][1])}, ${toHex(pi_b[0][0])}], [${toHex(pi_b[1][1])}, ${toHex(pi_b[1][0])}]]`} />
+      <DataBit title="c" value={`[${toHex(pi_c[0])}, ${toHex(pi_c[1])}]`} />
+    </div>
   )
 }
 
