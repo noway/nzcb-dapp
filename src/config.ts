@@ -1,5 +1,5 @@
 export const CONTRACT_ADDRESS = "0x57F1fB3589befEeBedA95DAcdba72B11b3EBfcaC";
-export const TO_BE_SIGNED_MAX_LEN = 314;
+export const EXAMPLE_TOBESIGNED_MAX_LEN = 314;
 
 export const EXAMPLE_ASSET_URL = "example_badge.svg";
 export const EXAMPLE_PUBLIC_KEY_JWK = {
