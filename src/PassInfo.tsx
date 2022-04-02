@@ -1,5 +1,5 @@
 import { DataSection } from "./DataSection";
-import { DataBit } from "./DataBit";
+import { DataBit, DataBitTS } from "./DataBit";
 import { ctiToJti, Data, decodeAlg, decodeBytes, decodeCBOR, decodeCOSE } from "./nzcpTools";
 
 export function PassInfo(props: Readonly<{ passURI: string; }>) {
@@ -26,8 +26,8 @@ export function PassInfo(props: Readonly<{ passURI: string; }>) {
         <DataBit title="alg" value={`${decodeAlg(alg)}`} />
         <DataBit title="iss" value={`${iss}`} />
         {/* TODO: better display for timestamps */}
-        <DataBit title="nbf" value={`${nbf}`} />
-        <DataBit title="exp" value={`${exp}`} />
+        <DataBitTS title="nbf" value={Number(nbf)} />
+        <DataBitTS title="exp" value={Number(exp)} />
         <DataBit title="jti" value={`${ctiToJti(cti)}`} />
         <DataBit title="givenName" value={`${givenName}`} />
         <DataBit title="familyName" value={`${familyName}`} />
