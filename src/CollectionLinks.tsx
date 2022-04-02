@@ -1,6 +1,6 @@
 import { ExternalLink } from "./ExternalLink";
 
-export function Collection(props: Readonly<{ address: string, title: string }>) {
+export function CollectionLinks(props: Readonly<{ address: string, title: string }>) {
   const { address, title } = props;
   return (<>
     <div><ExternalLink href={`https://opensea.io/assets/${address}/0`} title={`${title} - OpenSea`}>OpenSea</ExternalLink></div>

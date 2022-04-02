@@ -1,6 +1,6 @@
 import { ExternalLink } from "./ExternalLink";
 
-export function Address(props: Readonly<{ address: string, title: string }>) {
+export function AddressLinks(props: Readonly<{ address: string, title: string }>) {
   const { address, title } = props;
   const addr = address.slice(2)
   return (<>

@@ -1,5 +1,5 @@
-import { Address } from "./Address";
-import { Collection } from "./Collection";
+import { AddressLinks } from "./AddressLinks";
+import { CollectionLinks } from "./CollectionLinks";
 import { CONTRACT_ADDRESS } from "./config";
 import { styled } from "./styles";
 
@@ -28,13 +28,13 @@ export function Footer() {
       <FooterSection>
         <b>Collection</b>
         <FooterList>
-          <Collection address={CONTRACT_ADDRESS} title="NZ COVID Badge collection" />
+          <CollectionLinks address={CONTRACT_ADDRESS} title="NZ COVID Badge collection" />
         </FooterList>
       </FooterSection>
       <FooterSection>
         <b>Contract Address</b>
         <FooterList>
-          <Address address={CONTRACT_ADDRESS} title="NZ COVID Badge contract address" />
+          <AddressLinks address={CONTRACT_ADDRESS} title="NZ COVID Badge contract address" />
         </FooterList>
       </FooterSection>
       <FooterSection>
