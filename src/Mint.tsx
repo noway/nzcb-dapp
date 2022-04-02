@@ -9,17 +9,17 @@ import { DataBit } from "./DataBit";
 import { DataSection } from "./DataSection";
 import { Header } from "./Header";
 import { comparePubIdentities, getProofArgs, getRS, Proof, PubIdentity, PublicSignals, signalsToPubIdentity } from "./nzcpCircom";
+import { bytesToHex } from "./nzcpTools";
 import { Body, CtaContainer } from "./styles";
-import { toHexString } from "./utils";
 
 function PublicIdentity(props: { pubIdentity: PubIdentity }) {
   const { pubIdentity } = props
   const { nullifierHashPart, toBeSignedHash, data, exp } = pubIdentity
   return (
     <DataSection title="Anonymized identity">
-      <DataBit title="nullifierHashPart" value={`0x${toHexString(nullifierHashPart)}`} />
-      <DataBit title="toBeSignedHash" value={`0x${toHexString(toBeSignedHash)}`} />
-      <DataBit title="address" value={`0x${toHexString(data)}`} />
+      <DataBit title="nullifierHashPart" value={`0x${bytesToHex(nullifierHashPart)}`} />
+      <DataBit title="toBeSignedHash" value={`0x${bytesToHex(toBeSignedHash)}`} />
+      <DataBit title="address" value={`0x${bytesToHex(data)}`} />
       <DataBit title="exp" value={`${Number(exp)}`} />
     </DataSection>
   )
@@ -29,8 +29,8 @@ function Signature(props: { rs: [r: Uint8Array, s: Uint8Array] }) {
   const { rs } = props
   return (
     <DataSection title="Pass signature">
-      <DataBit title="r" value={`0x${toHexString(rs[0])}`} />
-      <DataBit title="s" value={`0x${toHexString(rs[1])}`} />
+      <DataBit title="r" value={`0x${bytesToHex(rs[0])}`} />
+      <DataBit title="s" value={`0x${bytesToHex(rs[1])}`} />
     </DataSection>
   )
 }

@@ -20,6 +20,12 @@ function base32ToBytes(input: string) {
   return output;
 }
 
+export function bytesToHex(bytes: Uint8Array) {
+  return Array.from(bytes, (byte) => {
+    return ("0" + (byte & 0xff).toString(16)).slice(-2);
+  }).join("");
+}
+
 class Stream {
   data: Uint8Array;
   ptr: number;
@@ -217,6 +223,20 @@ export function decodeRS(bytes: Uint8Array) {
   const r = data.signature.slice(0, 32);
   const s = data.signature.slice(32, 64);
   return [r, s] as [Uint8Array, Uint8Array];
+}
+
+export function ctiToJti(cti: Uint8Array): string {
+  // https://datatracker.ietf.org/doc/html/rfc4122#section-4.1.2
+  const toHex = bytesToHex
+  const timeLow = toHex(cti.slice(0, 4));
+  const timeMid = toHex(cti.slice(4, 6));
+  const timeHighAndVersion = toHex(cti.slice(6, 8));
+  const clockSeqAndReserved = toHex(cti.slice(8, 9));
+  const clockSeqLow = toHex(cti.slice(9, 10));
+  const node = toHex(cti.slice(10, 16));
+  const uuid = `${timeLow}-${timeMid}-${timeHighAndVersion}-${clockSeqAndReserved}${clockSeqLow}-${node}`;
+  const jti = `urn:uuid:${uuid}`;
+  return jti;
 }
 
 export function decodeAlg(alg: number) {

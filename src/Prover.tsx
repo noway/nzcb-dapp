@@ -6,22 +6,8 @@ import { EXAMPLE_WASM_FILE, EXAMPLE_ZKEY_FILE } from "./config";
 import { CtaContainer } from "./styles";
 import { DataSection } from "./DataSection";
 import { DataBit } from "./DataBit";
-import { Data, decodeAlg, decodeBytes, decodeCBOR, decodeCOSE } from "./nzcpTools";
-import { toHexString } from "./utils";
+import { ctiToJti, Data, decodeAlg, decodeBytes, decodeCBOR, decodeCOSE } from "./nzcpTools";
 
-function ctiToJti(cti: Uint8Array): string {
-  // https://datatracker.ietf.org/doc/html/rfc4122#section-4.1.2
-  const toHex = toHexString
-  const timeLow = toHex(cti.slice(0, 4));
-  const timeMid = toHex(cti.slice(4, 6));
-  const timeHighAndVersion = toHex(cti.slice(6, 8));
-  const clockSeqAndReserved = toHex(cti.slice(8, 9));
-  const clockSeqLow = toHex(cti.slice(9, 10));
-  const node = toHex(cti.slice(10, 16));
-  const uuid = `${timeLow}-${timeMid}-${timeHighAndVersion}-${clockSeqAndReserved}${clockSeqLow}-${node}`;
-  const jti = `urn:uuid:${uuid}`;
-  return jti;
-}
 
 function PassInfo(props: Readonly<{ passURI: string }>) {
   const { passURI } = props
@@ -35,8 +21,6 @@ function PassInfo(props: Readonly<{ passURI: string }>) {
   const nbf = BigInt(claims.get(5) as number);
   const exp = BigInt(claims.get(4) as number);
   const cti = claims.get(7) as Uint8Array;
-  console.log('claims',claims)
-  console.log('headers',headers)
   const vc = claims.get("vc") as Map<string, Data>;
   const credentialSubject = vc.get("credentialSubject") as Map<string, string>;
   const givenName = credentialSubject.get("givenName");
