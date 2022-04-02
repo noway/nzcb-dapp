@@ -15,11 +15,14 @@ export function PublicIdentity(props: { pubIdentity: PubIdentity }) {
   const { pubIdentity } = props
   const { nullifierHashPart, toBeSignedHash, data, exp } = pubIdentity
   return (
-    <div>
-      <DataBit title="nullifierHashPart" value={`0x${toHexString(nullifierHashPart)}`} />
-      <DataBit title="toBeSignedHash" value={`0x${toHexString(toBeSignedHash)}`} />
-      <DataBit title="address" value={`0x${toHexString(data)}`} />
-      <DataBit title="exp" value={`${Number(exp)}`} />
+    <div style={{ border: "1px solid lightgrey", marginTop: 20, padding: 10 }}>
+      <h4>Anonymized identity</h4>
+      <div style={{ marginTop: 10 }}>
+        <DataBit title="nullifierHashPart" value={`0x${toHexString(nullifierHashPart)}`} />
+        <DataBit title="toBeSignedHash" value={`0x${toHexString(toBeSignedHash)}`} />
+        <DataBit title="address" value={`0x${toHexString(data)}`} />
+        <DataBit title="exp" value={`${Number(exp)}`} />
+      </div>
     </div>
   )
 }
@@ -27,9 +30,12 @@ export function PublicIdentity(props: { pubIdentity: PubIdentity }) {
 export function Signature(props: { rs: [r: Uint8Array, s: Uint8Array] }) {
   const { rs } = props
   return (
-    <div>
-      <DataBit title="r" value={`0x${toHexString(rs[0])}`} />
-      <DataBit title="s" value={`0x${toHexString(rs[1])}`} />
+    <div style={{ border: "1px solid lightgrey", marginTop: 20, padding: 10 }}>
+      <h4>Pass signature</h4>
+      <div style={{ marginTop: 10 }}>
+        <DataBit title="r" value={`0x${toHexString(rs[0])}`} />
+        <DataBit title="s" value={`0x${toHexString(rs[1])}`} />
+      </div>
     </div>
   )
 }
@@ -41,10 +47,13 @@ export function ProofComponent(props: { proof: Proof }) {
     return BigNumber.from(n).toHexString()
   }
   return (
-    <div>
-      <DataBit title="a" value={`[${toHex(pi_a[0])}, ${toHex(pi_a[1])}]`} />
-      <DataBit title="b" value={`[[${toHex(pi_b[0][1])}, ${toHex(pi_b[0][0])}], [${toHex(pi_b[1][1])}, ${toHex(pi_b[1][0])}]]`} />
-      <DataBit title="c" value={`[${toHex(pi_c[0])}, ${toHex(pi_c[1])}]`} />
+    <div style={{ border: "1px solid lightgrey", marginTop: 20, padding: 10 }}>
+      <h4>Proof</h4>
+      <div style={{ marginTop: 10 }}>
+        <DataBit title="a" value={`[${toHex(pi_a[0])}, ${toHex(pi_a[1])}]`} />
+        <DataBit title="b" value={`[[${toHex(pi_b[0][1])}, ${toHex(pi_b[0][0])}], [${toHex(pi_b[1][1])}, ${toHex(pi_b[1][0])}]]`} />
+        <DataBit title="c" value={`[${toHex(pi_c[0])}, ${toHex(pi_c[1])}]`} />
+      </div>
     </div>
   )
 }
@@ -120,11 +129,8 @@ function MintContents(props: MintContentsProps) {
     <>
       <h3>To be sent to the blockchain</h3>
       <div>
-        <h4>Anonymized identity</h4>
         <PublicIdentity pubIdentity={pubIdentity} />
-        <h4>Pass signature</h4>
         <Signature rs={getRS(passURI)} />
-        <h4>Proof</h4>
         <ProofComponent proof={proof} />
         <h4>Pre-flight check</h4>
         <span>{pubIdentityMatches ? "OK" : "Error"}</span>
