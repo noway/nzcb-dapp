@@ -37,12 +37,13 @@ export const globalStyles = globalCss({
 export const Body = styled("div", {
   maxWidth: 900,
   width: "100%",
-  margin: "20px",
   flex: 1,
   border: "1px solid lightgray",
+  margin: 20,
+  marginBottom: 0,
   padding: 20,
-  boxSizing: "border-box",
   paddingTop: 0,
+  boxSizing: "border-box",
 });
 
 export const CtaContainer = styled("div", {
