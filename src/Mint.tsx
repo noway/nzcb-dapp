@@ -130,7 +130,7 @@ function MintContents(props: MintContentsProps) {
   }
   return (
     <>
-      <h3>To be sent to the blockchain</h3>
+      <h3>To be sent to the smart contract</h3>
       <div>
         <PublicIdentity pubIdentity={pubIdentity} />
         <Signature rs={getRS(passURI)} />
