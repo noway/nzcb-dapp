@@ -26,7 +26,7 @@ const Back = styled("div", {
 
 const Title = styled("h1", {
   textAlign: "center",
-  flex: 3
+  flex: 3,
 })
 
 const WalletContainer = styled("div", {
@@ -35,6 +35,10 @@ const WalletContainer = styled("div", {
   margin: 10,
   flex: 1,
   justifyContent: "flex-end"
+})
+
+const HomeLink = styled("span", {
+  cursor: "pointer",
 })
 
 type Props = Readonly<{
@@ -49,6 +53,14 @@ export function Header(props: Props) {
   function back() {
     routeContext.goBack();
   }
+  function home() {
+    if (isLanding) {
+      routeContext.navigate(["landing", null]);
+    }
+    else {
+      routeContext.navigate(["account", null]);
+    }
+  }
 
   return (
     <HeaderContainer>
@@ -56,7 +68,7 @@ export function Header(props: Props) {
         <Back>
           {showBack ? <button type="button" onClick={back}>Back</button> : <span />}
         </Back>
-        <Title>NZ COVID Badge</Title>
+        <Title><HomeLink onClick={home}>NZ COVID Badge</HomeLink></Title>
         <WalletContainer>
           {!isLanding ? <Wallet /> : <span />}
         </WalletContainer>
