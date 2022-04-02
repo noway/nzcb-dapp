@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { EXAMPLE_PUBLIC_KEY_JWK } from "./config";
 import { RouteContext } from "./contexts";
 import { DataBit } from "./DataBit";
+import { DataSection } from "./DataSection";
 import { Header } from "./Header";
 import { decodeBytes, decodeCOSE, encodeToBeSigned } from "./nzcpTools";
 import { PassInfo } from "./PassInfo";
@@ -50,7 +51,9 @@ export function NewBadge() {
       </div>
       {/* TODO: same data bit style as in mint */}
       <PassInfo passURI={passURI} />
-      <DataBit title="Pass valid" value={validStatus} />
+      <DataSection title="Pass signature">
+        <DataBit title="valid" value={validStatus} />
+      </DataSection>
       <CtaContainer>
         <button type="button" disabled={validStatus !== "yes"} onClick={prepare}>Prepare</button>
       </CtaContainer>
