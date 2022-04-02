@@ -42,6 +42,7 @@ export const Body = styled("div", {
   border: "1px solid lightgray",
   padding: 20,
   boxSizing: "border-box",
+  paddingTop: 0,
 });
 
 export const CtaContainer = styled("div", {

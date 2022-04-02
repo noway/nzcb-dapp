@@ -138,13 +138,12 @@ function MintContents(props: MintContentsProps) {
   }
   return (
     <>
-      <h3>To be sent to the smart contract</h3>
-      <div>
-        <PublicIdentity pubIdentity={pubIdentity} />
-        <Signature rs={getRS(passURI)} />
-        <ProofComponent proof={proof} />
-        <PreFlightCheck pubIdentityMatches={pubIdentityMatches} />
-      </div>
+      <h3 style={{ marginTop: 20 }}>Proof</h3>
+      <PreFlightCheck pubIdentityMatches={pubIdentityMatches} />
+      <h3 style={{ marginTop: 20 }}>To be sent to the smart contract</h3>
+      <PublicIdentity pubIdentity={pubIdentity} />
+      <Signature rs={getRS(passURI)} />
+      <ProofComponent proof={proof} />
       <div>{minting ? "Minting..." : ""}</div>
       <div>{mintingError ? "Error while minting:  " + mintingError.message : ""}</div>
       {receipt ? <Success receipt={receipt} /> : null}
