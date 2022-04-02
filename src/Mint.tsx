@@ -13,7 +13,7 @@ import { bytesToHex } from "./nzcpTools";
 import { Status, StatusError } from "./Status";
 import { Body, CtaContainer } from "./styles";
 
-function PublicIdentity(props: { pubIdentity: PubIdentity }) {
+function PublicIdentity(props: Readonly<{ pubIdentity: PubIdentity }>) {
   const { pubIdentity } = props
   const { nullifierHashPart, toBeSignedHash, data, exp } = pubIdentity
   return (
@@ -26,7 +26,7 @@ function PublicIdentity(props: { pubIdentity: PubIdentity }) {
   )
 }
 
-function Signature(props: { rs: [r: Uint8Array, s: Uint8Array] }) {
+function Signature(props: Readonly<{ rs: [r: Uint8Array, s: Uint8Array] }>) {
   const { rs } = props
   return (
     <DataSection title="Pass signature">
@@ -36,7 +36,7 @@ function Signature(props: { rs: [r: Uint8Array, s: Uint8Array] }) {
   )
 }
 
-function ProofComponent(props: { proof: Proof }) {
+function ProofComponent(props: Readonly<{ proof: Proof }>) {
   const { proof } = props
   const { pi_a: a, pi_b: b, pi_c: c } = proof
   function toHex(n: string) {
