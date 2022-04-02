@@ -20,6 +20,7 @@ export function NewBadge() {
     checkValid(passURI)
   }, [passURI]);
 
+  // TODO: should this be in jti tools?
   async function checkValid(passURI: string) {
     try {
       const bytes = decodeBytes(passURI);
@@ -47,7 +48,7 @@ export function NewBadge() {
         />
       </div>
       {/* TODO: same data bit style as in mint */}
-      <DataBit title="Valid" value={validStatus} />
+      <DataBit title="Pass valid" value={validStatus} />
       <CtaContainer>
         <button type="button" disabled={validStatus !== "yes"} onClick={prepare}>Prepare</button>
       </CtaContainer>

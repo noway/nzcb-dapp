@@ -1,27 +1,16 @@
 import { EIP1193Provider } from "@web3-onboard/core";
 import { useConnectWallet } from "@web3-onboard/react";
 import { BigNumber, ContractReceipt, providers } from "ethers";
-import { ReactNode, useContext, useState } from "react";
+import { useContext, useState } from "react";
 import { CONTRACT_ADDRESS } from "./config";
 import { RouteContext } from "./contexts";
 import { NZCOVIDBadge__factory } from "./contracts/types";
 import { DataBit } from "./DataBit";
+import { DataSection } from "./DataSection";
 import { Header } from "./Header";
 import { comparePubIdentities, getProofArgs, getRS, Proof, PubIdentity, PublicSignals, signalsToPubIdentity } from "./nzcpCircom";
 import { Body, CtaContainer } from "./styles";
 import { toHexString } from "./utils";
-
-function DataSection(props: Readonly<{ title: string, children: ReactNode }>) {
-  const { title } = props
-  return (
-    <div style={{ border: "1px solid lightgrey", marginTop: 20, padding: 10 }}>
-      <h4>{title}</h4>
-      <div style={{ marginTop: 10 }}>
-        {props.children}
-      </div>
-    </div>
-  )
-}
 
 function PublicIdentity(props: { pubIdentity: PubIdentity }) {
   const { pubIdentity } = props

@@ -4,6 +4,53 @@ import { getNZCPPubIdentity, getNZCPCircuitInput, PubIdentity, Proof, PublicSign
 import { RouteContext } from "./contexts";
 import { EXAMPLE_WASM_FILE, EXAMPLE_ZKEY_FILE } from "./config";
 import { CtaContainer } from "./styles";
+import { DataSection } from "./DataSection";
+import { DataBit } from "./DataBit";
+import { Data, decodeBytes, decodeCBOR, decodeCOSE } from "./nzcpTools";
+import { toHexString } from "./utils";
+
+function ctiToJti(cti: Uint8Array): string {
+  // https://datatracker.ietf.org/doc/html/rfc4122#section-4.1.2
+  const toHex = toHexString
+  const timeLow = toHex(cti.slice(0, 4));
+  const timeMid = toHex(cti.slice(4, 6));
+  const timeHighAndVersion = toHex(cti.slice(6, 8));
+  const clockSeqAndReserved = toHex(cti.slice(8, 9));
+  const clockSeqLow = toHex(cti.slice(9, 10));
+  const node = toHex(cti.slice(10, 16));
+  const uuid = `${timeLow}-${timeMid}-${timeHighAndVersion}-${clockSeqAndReserved}${clockSeqLow}-${node}`;
+  const jti = `urn:uuid:${uuid}`;
+  return jti;
+}
+
+function PassInfo(props: Readonly<{ passURI: string }>) {
+  const { passURI } = props
+  const bytes = decodeBytes(passURI);
+  const cose = decodeCOSE(bytes);
+  const claims = decodeCBOR(cose.payload) as Map<Data, Data>;
+  const headers = decodeCBOR(cose.bodyProtected) as Map<Data, Data>;
+  const nbf = BigInt(claims.get(5) as number);
+  const exp = BigInt(claims.get(4) as number);
+  const cti = claims.get(7) as Uint8Array;
+  console.log('claims',claims)
+  console.log('headers',headers)
+  const vc = claims.get("vc") as Map<string, Data>;
+  const credentialSubject = vc.get("credentialSubject") as Map<string, string>;
+  const givenName = credentialSubject.get("givenName");
+  const familyName = credentialSubject.get("familyName");
+  const dob = credentialSubject.get("dob");
+
+  return (
+    <DataSection title="Pass info">
+      <DataBit title="nbf" value={`${nbf}`} />
+      <DataBit title="exp" value={`${exp}`} />
+      <DataBit title="jti" value={`${ctiToJti(cti)}`} />
+      <DataBit title="givenName" value={`${givenName}`} />
+      <DataBit title="familyName" value={`${familyName}`} />
+      <DataBit title="dob" value={`${dob}`} />
+    </DataSection>
+  )
+}
 
 type Props = Readonly<{
   passURI: string
@@ -46,6 +93,7 @@ export function Prover(props: Props) {
 
   return (
     <div>
+      <PassInfo passURI={passURI} />
       {/* TODO: make this into generic status messages */}
       <div>{proving ? "Proving, this may take a while..." : ""}</div>
       <div>{provingError ? "Error while proving:  " + provingError.message : ""}</div>
