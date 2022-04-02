@@ -136,8 +136,11 @@ function MintContents(props: MintContentsProps) {
     <>
       <h3 style={{ marginTop: 20 }}>Proof</h3>
       <PreFlightCheck pubIdentityMatches={pubIdentityMatches} />
-      {/* TODO: better style here */}
-      <h3 style={{ marginTop: 20 }}>Advanced <span onClick={toggle}>[±]</span></h3>
+      <h3 style={{
+        marginTop: 20,
+        verticalAlign: 'middle',
+        display: 'flex'
+      }}>Advanced <button style={{ marginLeft: 10 }} onClick={toggle}>{open ? '-' : '+'}</button></h3>
       {open ? <>
         <PublicIdentity pubIdentity={pubIdentity} />
         <Signature rs={getRS(passURI)} />
@@ -147,12 +150,12 @@ function MintContents(props: MintContentsProps) {
         <h3>Disclaimer</h3>
         <p>By minting you confirm that you understand the following:</p>
         <ul>
-        <li>Minting may result in loss of ether</li>
-        <li>The smart contract was not audited</li>
-        <li>The smart contract may contain bugs</li>
-        <li>NZ COVID Badge is not an investment</li>
-        <li>There's no liquidity for your NZ COVID Badge</li>
-        <li>You're minting on {chains.find(({ id }) => id === connectedChain?.id)?.label}</li>
+          <li>Minting may result in loss of ether</li>
+          <li>The smart contract was not audited</li>
+          <li>The smart contract may contain bugs</li>
+          <li>NZ COVID Badge is not an investment</li>
+          <li>There's no liquidity for your NZ COVID Badge</li>
+          <li>You're minting on {chains.find(({ id }) => id === connectedChain?.id)?.label}</li>
         </ul>
       </div>
       {minting ? <Status status="Minting..." /> : null}

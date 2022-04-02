@@ -47,6 +47,7 @@ export function NewBadge() {
           value={passURI}
           cols={60}
           rows={12}
+          style={{ marginTop: 20 }}
         />
       </div>
       <PassInfo passURI={passURI} />

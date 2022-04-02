@@ -60,7 +60,7 @@ export function Account() {
         {loading ? <Status status="Searching for your badges..." /> : null}
         {error ? <StatusError error={error} /> : null}
         {!loading && myBadgeIds.length === 0 ? <Status status="You don't have any badges yet." /> : null}
-        {!loading && myBadgeIds.length > 0 ? <div style={{ display: "flex", flexWrap: "wrap", gap: 20 }}>
+        {!loading && myBadgeIds.length > 0 ? <div style={{ display: "flex", flexWrap: "wrap", gap: 20, marginTop: 20 }}>
           {myBadgeIds.map(id => (
             <div key={id.toString()} style={{ border: "1px solid lightgrey", padding: "10px 10px 10px 10px" }}>
               <Sample />
