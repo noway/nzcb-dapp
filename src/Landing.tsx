@@ -1,4 +1,5 @@
 import { ConnectWallet } from "./ConnectWallet"
+import { Footer } from "./Footer";
 import { Header } from "./Header";
 import { Sample } from "./Sample"
 import { Body, styled } from "./styles";
@@ -51,21 +52,7 @@ export function Landing() {
       <p>You get an ERC721 NZ COVID Badge, nothing more.</p>
       <h3>How is this project licensed?</h3>
       <p>The badge asset is released as CC0 (public domain) while the code is licensed under MIT unless specified otherwise.</p>
-      <h2>Links</h2>
-      <h3>Collection</h3>
-      <p>OpenSea</p>
-      <p>LooksRare</p>
-      <p>Zorb</p>
-      <h3>Contract Address</h3>
-      <p>Etherscan</p>
-      <p>etherchain.org</p>
-      <h3>Source code</h3>
-      <p>Contract GitHub rpeo</p>
-      <p>Dapp GitHub repo</p>
-      <p>ZK-SNARK GitHub repo</p>
-      <h3>Badge assets</h3>
-      <p>svg file</p>
-      <p>figma file</p>
     </Body>
+    <Footer />
   </>
 }
