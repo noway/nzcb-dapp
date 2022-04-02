@@ -3,11 +3,13 @@ import { Collection } from "./Collection";
 import { CONTRACT_ADDRESS } from "./config";
 import { styled } from "./styles";
 
-const FooterSection = styled("div", {})
+const FooterSection = styled("div", {
+  display: 'flex',
+  gap: 10,
+  flexDirection: 'column'
+});
 
-const FooterList = styled("div", {
-  marginTop: 10
-})
+const FooterList = styled("div", {})
 
 export function Footer() {
   return (

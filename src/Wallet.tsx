@@ -51,18 +51,18 @@ export function Wallet() {
       ) : null}
 
       {(wallet && account && open) ? (
-        <div style={{ position: 'absolute', top: 70, right: 30, display: 'flex', flexDirection: 'column', alignItems: 'flex-end', background: 'white', border: '1px solid lightgrey', padding: 10 }}>
-          <div style={{}}>
+        <div style={{ position: 'absolute', top: 70, right: 30, display: 'flex', flexDirection: 'column', alignItems: 'flex-end', background: 'white', border: '1px solid lightgrey', padding: 10, gap: 10 }}>
+          <div>
             {account.address}
           </div>
-          <div style={{ marginTop: 10 }}>
+          <div>
             {settingChain ? (
               <span>Switching chain...</span>
             ) : (
               <span>{chains.find(({ id }) => id === connectedChain?.id)?.label}</span>
             )}
           </div>
-          <div style={{ marginTop: 10 }}>
+          <div>
             <button onClick={() => disconnect(wallet)}>Disconnect Wallet</button>
           </div>
         </div>
