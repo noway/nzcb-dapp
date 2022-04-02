@@ -75,8 +75,10 @@ function Success(props: SuccessProps) {
       <div style={{ marginTop: 10 }}>
         <div>Congratulations! You have successfully minted <b>NZ COVID Badge #{id.toString()}</b></div>
         <DataSection title="Transaction">
-          <DataBit title="hash" value={receipt.transactionHash} />
-          <Transaction txHash={receipt.transactionHash} title="Mint Transaction" />
+          <div style={{ display: 'inline-grid', gap: 10 }}>
+            <DataBit title="hash" value={receipt.transactionHash} />
+            <Transaction txHash={receipt.transactionHash} title="Mint Transaction" />
+          </div>
         </DataSection>
       </div>
     </div>
