@@ -37,7 +37,7 @@ export function NewBadge() {
   }
 
   return <>
-    <Header showWallet={true} showBack={true} />
+    <Header isLanding={false} showBack={true} />
     <Body>
       <div>
         <textarea

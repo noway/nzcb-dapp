@@ -17,7 +17,7 @@ export function Prepare(props: Props) {
   const passURI = props.passURI
 
   return <>
-    <Header showWallet={true} showBack={true} />
+    <Header isLanding={false} showBack={true} />
     <Body>
       {address ?
         <Prover

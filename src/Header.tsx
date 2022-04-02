@@ -38,12 +38,12 @@ const WalletContainer = styled("div", {
 })
 
 type Props = Readonly<{
-  showWallet: boolean;
+  isLanding: boolean;
   showBack: boolean;
 }>
 export function Header(props: Props) {
 
-  const { showWallet, showBack } = props
+  const { isLanding, showBack } = props
   const routeContext = useContext(RouteContext);
 
   function back() {
@@ -58,7 +58,7 @@ export function Header(props: Props) {
         </Back>
         <Title>NZ COVID Badge</Title>
         <WalletContainer>
-          {showWallet ? <Wallet /> : <span />}
+          {!isLanding ? <Wallet /> : <span />}
         </WalletContainer>
       </Navigation>
     </HeaderContainer>

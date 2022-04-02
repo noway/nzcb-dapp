@@ -18,7 +18,7 @@ const Section = styled("div", {
 
 export function Landing() {
   return <>
-    <Header showWallet={false} showBack={false} />
+    <Header isLanding={true} showBack={false} />
     <Body>
       <Lead>An ERC721 project that lets you mint your NZ&nbsp;COVID&nbsp;vaccination&nbsp;status on the Ethereum network.</Lead>
       <Section>

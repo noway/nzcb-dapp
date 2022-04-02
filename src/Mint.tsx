@@ -197,7 +197,7 @@ export function Mint(props: Props) {
   const [{ wallet }] = useConnectWallet()
   const eip1193Provider = wallet?.provider
   return <>
-    <Header showWallet={true} showBack={true} />
+    <Header isLanding={false} showBack={true} />
     <Body>
       {eip1193Provider ?
         <MintContents

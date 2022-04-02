@@ -56,7 +56,7 @@ export function Account() {
 
   return (
     <>
-      <Header showWallet={true} showBack={false} />
+      <Header isLanding={false} showBack={false} />
       <Body>
         {loading ? <Status status="Searching for your badges..." /> : null}
         {error ? <StatusError error={error} /> : null}
