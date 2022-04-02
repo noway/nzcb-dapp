@@ -1,5 +1,4 @@
-import { DataSection } from "./DataSection";
-import { DataBit, DataBitTS } from "./DataBit";
+import { DataBit, DataBitTS, DataSection } from "./DataSection";
 import { ctiToJti, Data, decodeAlg, decodeBytes, decodeCBOR, decodeCOSE } from "./nzcpTools";
 
 export function PassInfo(props: Readonly<{ passURI: string; }>) {
