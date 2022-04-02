@@ -86,7 +86,6 @@ export function App() {
             pubIdentity={route[1].pubIdentity}
           /> : null}
       </AppContainer>
-      {/* TODO: add footer with all the links */}
     </RouteContext.Provider>
   )
 }
