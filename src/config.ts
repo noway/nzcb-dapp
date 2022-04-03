@@ -10,4 +10,4 @@ export const EXAMPLE_PUBLIC_KEY_JWK = {
 };
 
 export const EXAMPLE_WASM_FILE = "nzcp_example.wasm";
-export const EXAMPLE_ZKEY_FILE = "nzcp_example_0001.zkey";
+export const EXAMPLE_ZKEY_FILE = "nzcp_example_final.zkey";
