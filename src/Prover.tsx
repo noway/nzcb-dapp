@@ -58,7 +58,6 @@ export function Prover(props: Props) {
       const circuitInput = getNZCPCircuitInput(passURI, address);
 
 
-      /*
       console.time("fetch")
       const res = await fetch(EXAMPLE_ZKEY_FILE);
       const blob = await res.blob();
@@ -71,9 +70,8 @@ export function Prover(props: Props) {
       const data = await plonk.fullProve(circuitInput, EXAMPLE_WASM_FILE, zkeyurl)
       console.log('data',data)
       console.timeEnd("plonk")
-      */
 
-      const data = stub
+      // const data = stub
 
       const { proof, publicSignals } = data
       setProof(proof)
