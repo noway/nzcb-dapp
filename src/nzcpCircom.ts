@@ -1,4 +1,4 @@
-import { utils } from "ethers";
+import { utils as eutils } from "ethers";
 import { EXAMPLE_TOBESIGNED_MAX_LEN } from "./config";
 import {
   Data,
@@ -18,6 +18,9 @@ import {
   evmRearrangeBytes,
   fitBytes,
 } from "./utils";
+import { plonk } from 'snarkjs'
+import {utils} from 'ffjavascript';
+const unstringifyBigInts = utils.unstringifyBigInts
 
 export type PubIdentity = Readonly<{
   nullifierHashPart: Uint8Array;
@@ -52,13 +55,13 @@ export async function getNZCPPubIdentity(
   const toBeSignedHash = new Uint8Array(
     await crypto.subtle.digest("SHA-256", toBeSignedByteArray)
   );
-  const signedAddressBytes = utils.arrayify(signerAddress);
+  const signedAddressBytes = eutils.arrayify(signerAddress);
   const data = fitBytes(signedAddressBytes, 25);
   const pubIdentity = { nullifierHashPart, toBeSignedHash, exp, data };
   return pubIdentity;
 }
 
-export function signalsToPubIdentity(publicSignals: string[]): PubIdentity {
+export function signalsToPubIdentity(publicSignals: Readonly<[string,string,string]>): PubIdentity {
   const bigintSignals = publicSignals.map((s) => BigInt(s));
 
   const out0 = bitArrayToBuffer(
@@ -90,7 +93,7 @@ export function getNZCPCircuitInput(passURI: string, signerAddress: string) {
   const cose = decodeCOSE(bytes);
   const ToBeSigned = encodeToBeSigned(cose.bodyProtected, cose.payload);
   const fitToBeSigned = fitBytes(ToBeSigned, EXAMPLE_TOBESIGNED_MAX_LEN);
-  const signedAddressBytes = utils.arrayify(signerAddress);
+  const signedAddressBytes = eutils.arrayify(signerAddress);
   const data = evmRearrangeBytes(fitBytes(signedAddressBytes, 25));
   const input = {
     toBeSigned: bufferToBitArray(fitToBeSigned),
@@ -112,30 +115,48 @@ type ProofArgs = Readonly<{
 }>;
 
 export type Proof = Readonly<{
-  pi_a: [string, string];
-  pi_b: [[string, string], [string, string]];
-  pi_c: [string, string];
+  readonly A: string[];
+  readonly B: string[];
+  readonly C: string[];
+  readonly T1: string[];
+  readonly T2: string[];
+  readonly T3: string[];
+  readonly Wxi: string[];
+  readonly Wxiw: string[];
+  readonly Z: string[];
+  readonly curve: string;
+  readonly eval_a: string;
+  readonly eval_b: string;
+  readonly eval_c: string;
+  readonly eval_r: string;
+  readonly eval_s1: string;
+  readonly eval_s2: string;
+  readonly eval_zw: string;
+  readonly protocol: string;
 }>;
 
-export type PublicSignals = [string, string, string];
+
+
+export type PublicSignals = Readonly<[string, string, string]>;
 
 export function getProofArgs(
   proof: Proof,
   publicSignals: PublicSignals
-): ProofArgs {
-  const { pi_a, pi_b, pi_c } = proof;
-  const a: [bigint, bigint] = [BigInt(pi_a[0]), BigInt(pi_a[1])];
-  const b: [[bigint, bigint], [bigint, bigint]] = [
-    [BigInt(pi_b[0][1]), BigInt(pi_b[0][0])],
-    [BigInt(pi_b[1][1]), BigInt(pi_b[1][0])],
-  ];
-  const c: [bigint, bigint] = [BigInt(pi_c[0]), BigInt(pi_c[1])];
-  const input: [bigint, bigint, bigint] = [
-    BigInt(publicSignals[0]),
-    BigInt(publicSignals[1]),
-    BigInt(publicSignals[2]),
-  ];
-  return { a, b, c, input };
+): Promise<ProofArgs> {
+  return plonk.exportSolidityCallData(unstringifyBigInts(proof), publicSignals)
+  // const { pi_a, pi_b, pi_c } = proof;
+  // const a: [bigint, bigint] = [BigInt(pi_a[0]), BigInt(pi_a[1])];
+  // const b: [[bigint, bigint], [bigint, bigint]] = [
+  //   [BigInt(pi_b[0][1]), BigInt(pi_b[0][0])],
+  //   [BigInt(pi_b[1][1]), BigInt(pi_b[1][0])],
+  // ];
+  // const c: [bigint, bigint] = [BigInt(pi_c[0]), BigInt(pi_c[1])];
+  // const input: [bigint, bigint, bigint] = [
+  //   BigInt(publicSignals[0]),
+  //   BigInt(publicSignals[1]),
+  //   BigInt(publicSignals[2]),
+  // ];
+  // return { a, b, c, input };
 }
 
 export function comparePubIdentities(a: PubIdentity, b: PubIdentity) {

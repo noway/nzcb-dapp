@@ -48,12 +48,12 @@ function Signature(props: Readonly<{ rs: [r: Uint8Array, s: Uint8Array] }>) {
 
 function ProofComponent(props: Readonly<{ proof: Proof }>) {
   const { proof } = props
-  const { pi_a: a, pi_b: b, pi_c: c } = proof
+  // const { pi_a: a, pi_b: b, pi_c: c } = proof
   return (
     <DataSection title="Pairing points">
-      <DataBit title="a" value={`[${a[0]}n, ${a[1]}n]`} />
-      <DataBit title="b" value={`[[${b[0][1]}n, ${b[0][0]}n], [${b[1][1]}n, ${b[1][0]}n]]`} />
-      <DataBit title="c" value={`[${c[0]}n, ${c[1]}n]`} />
+      <DataBit title="proof" value={JSON.stringify(proof,null,2)} />
+      {/* <DataBit title="b" value={`[[${b[0][1]}n, ${b[0][0]}n], [${b[1][1]}n, ${b[1][0]}n]]`} /> */}
+      {/* <DataBit title="c" value={`[${c[0]}n, ${c[1]}n]`} /> */}
     </DataSection>
   )
 }
@@ -123,7 +123,9 @@ function MintContents(props: MintContentsProps) {
     setMintingError(null)
     try {
       const rs = getRS(passURI);
-      const { a, b, c, input } = getProofArgs(proof, publicSignals);
+      const data = await getProofArgs(proof, publicSignals);
+      console.log(data)
+      const { a, b, c, input } = data
 
       const tx = await nzCovidBadge.mint(a, b, c, input, rs)
       const receipt = await tx.wait()
