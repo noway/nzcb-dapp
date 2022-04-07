@@ -2,11 +2,8 @@ import { useCallback, useEffect, useState } from "react";
 import { Status } from "./Status";
 
 const fetchAvg = 12806.33
-const fetchMed = 12599.50
 const proveAvg = 2634874.33
-const proveMed = 2421669.00
 const controlAvg = 6618.25
-const controlMed = 6613.00
 
 type Props = Readonly<{
   controlStart: number | null;
@@ -19,8 +16,7 @@ type Props = Readonly<{
 
 export function ProverStatus(props: Props) {
   const { controlStart, controlEnd, fetchStart, fetchEnd, proveStart, proveEnd } = props;
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [_, setNonce] = useState(0);
+  const [, setNonce] = useState(0);
   const refresh = useCallback(function refresh() {
     setNonce(Date.now());
   }, []);
