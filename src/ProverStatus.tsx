@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Status } from "./Status";
 
 const fetchAvg = 12806.33
@@ -15,18 +15,22 @@ type Props = Readonly<{
 
 export function ProverStatus(props: Props) {
   const { fetchStart, fetchEnd, proveStart, proveEnd } = props;
-  const [nonce, setNonce] = useState(0);
-  function refresh() {
-    setNonce(nonce + 1);
-  }
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [_, setNonce] = useState(0);
+  const refresh = useCallback(function refresh() {
+    setNonce(Date.now());
+  }, []);
+  useEffect(() => {
+    const intervalId = setInterval(refresh, 1000);
+    return () => clearInterval(intervalId);
+  }, [refresh])
   if (!fetchEnd && fetchStart) {
     const done = Date.now() - fetchStart;
     const progress = done / fetchAvg * 100;
     return (
       <>
         <Status status="Fetching key, this may take a while..." />
-        <Status status={`${progress}% done`} />
-        <button onClick={refresh} type="button">Update</button>
+        <Status status={`${progress.toFixed(2)}% done`} />
       </>
     )
   }
@@ -36,8 +40,7 @@ export function ProverStatus(props: Props) {
     return (
       <>
         <Status status="Proving, this may take a while..." />
-        <Status status={`${progress}% done`} />
-        <button onClick={refresh} type="button">Update</button>
+        <Status status={`${progress.toFixed(2)}% done`} />
       </>
     )
   }
