@@ -61,15 +61,28 @@ export function ProverStatus(props: Props) {
 function Progress(props: { start: number, avg: number }) {
   const { start, avg } = props;
   const done = Date.now() - start;
-  const doneMinutes = done / 100 / 60;
   const left = Math.max(avg - done, 0);
   const progress = done / avg * 100;
-  const leftMinutes = left / 1000 / 60;
   return (
     <>
       {left > 0 ?
-        <Status status={`${progress.toFixed(2)}% done (${leftMinutes.toFixed(0)} minutes left)`} /> :
-        <Status status={`Just about done (running for ${doneMinutes.toFixed(0)} minutes)... `} />}
+        <Status status={`${progress.toFixed(2)}% done (${timeSpan(left)} left)`} /> :
+        <Status status={`Just about done (running for ${timeSpan(done)})... `} />}
     </>
   );
+}
+
+function timeSpan(ms: number) {
+  const minutes = Math.floor(ms / 1000 / 60);
+  const seconds = Math.floor(ms / 1000) % 60;
+  const milliseconds = ms % 1000;
+  if (minutes > 0) { 
+    return `${minutes.toFixed(0)} minutes`;
+  }
+  else if (seconds > 0) {
+    return `${seconds.toFixed(0)} seconds`;
+  }
+  else {
+    return `${milliseconds.toFixed(0)} milliseconds`;
+  }
 }
