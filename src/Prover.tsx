@@ -53,13 +53,11 @@ export function Prover(props: Props) {
         setFetchStart(Date.now())
         console.time("fetch")
         const res = await fetch(EXAMPLE_ZKEY_FILE);
+        const blob = await res.blob();
         console.timeEnd("fetch")
         setFetchEnd(Date.now())
-
-        const blob = await res.blob();
-        console.log(blob)
         const zkeyurl = URL.createObjectURL(blob)
-        console.log(zkeyurl)
+        console.log('zkeyurl', zkeyurl)
 
         setProveStart(Date.now())
         console.time("plonk")
