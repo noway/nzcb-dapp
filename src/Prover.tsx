@@ -1,6 +1,6 @@
 import { useCallback, useContext, useEffect, useState } from "react";
 import { plonk } from 'snarkjs'
-import { getNZCPPubIdentity, getNZCPCircuitInput, PubIdentity, Proof, PublicSignals } from "./nzcpCircom";
+import { getNZCPPubIdentity, getNZCPCircuitInput, PubIdentity, Proof, PublicSignals, controlVerify } from "./nzcpCircom";
 import { RouteContext } from "./contexts";
 import { EXAMPLE_WASM_FILE, EXAMPLE_ZKEY_FILE, USE_REAL_PROOF } from "./config";
 import { CtaContainer } from "./styles";
@@ -22,6 +22,8 @@ export function Prover(props: Props) {
   const [proof, setProof] = useState<Proof | null>(null);
   const [publicSignals, setPublicSignals] = useState<PublicSignals | null>(null);
   const [pubIdentity, setPubIdentity] = useState<PubIdentity | null>(null);
+  const [controlStart, setControlStart] = useState<number | null>(null);
+  const [controlEnd, setControlEnd] = useState<number | null>(null);
   const [fetchStart, setFetchStart] = useState<null | number>(null);
   const [fetchEnd, setFetchEnd] = useState<null | number>(null);
   const [proveStart, setProveStart] = useState<null | number>(null);
@@ -41,24 +43,25 @@ export function Prover(props: Props) {
 
       let data: {proof: Proof, publicSignals: PublicSignals};
       if (USE_REAL_PROOF) {
-        console.time("fetch")
-        setFetchStart(Date.now())
-        const res = await fetch(EXAMPLE_ZKEY_FILE);
-        setFetchEnd(Date.now())
-        const blob = await res.blob();
-        console.log(blob)
-        const zkeyurl = URL.createObjectURL(blob)
-        console.log(zkeyurl)
-        console.timeEnd("fetch")
+        controlVerify()
+        // console.time("fetch")
+        // setFetchStart(Date.now())
+        // const res = await fetch(EXAMPLE_ZKEY_FILE);
+        // setFetchEnd(Date.now())
+        // const blob = await res.blob();
+        // console.log(blob)
+        // const zkeyurl = URL.createObjectURL(blob)
+        // console.log(zkeyurl)
+        // console.timeEnd("fetch")
 
-        console.time("plonk")
-        setProveStart(Date.now())
-        const realData = await plonk.fullProve(circuitInput, EXAMPLE_WASM_FILE, zkeyurl)
-        setProveEnd(Date.now())
-        console.log('realData',realData)
-        console.timeEnd("plonk")
+        // console.time("plonk")
+        // setProveStart(Date.now())
+        // const realData = await plonk.fullProve(circuitInput, EXAMPLE_WASM_FILE, zkeyurl)
+        // setProveEnd(Date.now())
+        // console.log('realData',realData)
+        // console.timeEnd("plonk")
 
-        data = realData
+        data = { proof: exampleProof, publicSignals: examplePubSignals }
       }
       else {
         data = { proof: exampleProof, publicSignals: examplePubSignals }
