@@ -10,6 +10,11 @@
         "internalType": "string",
         "name": "_symbol",
         "type": "string"
+      },
+      {
+        "internalType": "contract IPlonkVerifier",
+        "name": "_verifier",
+        "type": "address"
       }
     ],
     "stateMutability": "nonpayable",
@@ -169,7 +174,7 @@
     "inputs": [
       {
         "internalType": "bytes32",
-        "name": "credSubjHash",
+        "name": "nullifierHashPart",
         "type": "bytes32"
       }
     ],
@@ -211,24 +216,14 @@
   {
     "inputs": [
       {
-        "internalType": "uint256[2]",
-        "name": "a",
-        "type": "uint256[2]"
+        "internalType": "bytes",
+        "name": "proof",
+        "type": "bytes"
       },
       {
-        "internalType": "uint256[2][2]",
-        "name": "b",
-        "type": "uint256[2][2]"
-      },
-      {
-        "internalType": "uint256[2]",
-        "name": "c",
-        "type": "uint256[2]"
-      },
-      {
-        "internalType": "uint256[3]",
+        "internalType": "uint256[]",
         "name": "input",
-        "type": "uint256[3]"
+        "type": "uint256[]"
       },
       {
         "internalType": "uint256[2]",
@@ -459,40 +454,6 @@
     "name": "transferFrom",
     "outputs": [],
     "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256[2]",
-        "name": "a",
-        "type": "uint256[2]"
-      },
-      {
-        "internalType": "uint256[2][2]",
-        "name": "b",
-        "type": "uint256[2][2]"
-      },
-      {
-        "internalType": "uint256[2]",
-        "name": "c",
-        "type": "uint256[2]"
-      },
-      {
-        "internalType": "uint256[3]",
-        "name": "input",
-        "type": "uint256[3]"
-      }
-    ],
-    "name": "verifyProof",
-    "outputs": [
-      {
-        "internalType": "bool",
-        "name": "r",
-        "type": "bool"
-      }
-    ],
-    "stateMutability": "view",
     "type": "function"
   }
 ]
