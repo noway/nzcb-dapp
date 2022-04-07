@@ -108,10 +108,8 @@ export function getRS(passURI: string): [Uint8Array, Uint8Array] {
 }
 
 type VerifyArgs = Readonly<{
-  a: [bigint, bigint];
-  b: [[bigint, bigint], [bigint, bigint]];
-  c: [bigint, bigint];
-  input: [bigint, bigint, bigint];
+  proof: string
+  publicSignals: Readonly<[string, string, string]>
 }>;
 
 export type Proof = Readonly<{
