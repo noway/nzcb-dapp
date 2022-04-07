@@ -25,36 +25,36 @@ export function ProverStatus(props: Props) {
     return () => clearInterval(intervalId);
   }, [refresh])
   if (!fetchEnd && fetchStart) {
-    const done = Date.now() - fetchStart;
-    const doneMinutes = done / 100 / 60;
-    const left = Math.max(fetchAvg - done, 0);
-    const progress = done / fetchAvg * 100;
-    const leftMinutes = left / 1000 / 60
-    return (
-      <>
-        <Status status="Fetching key, this may take a while..." />
-        {left > 0 ?
-          <Status status={`${progress.toFixed(2)}% done (${leftMinutes.toFixed(0)} minutes left)`} /> :
-          <Status status={`Just about done (running for ${doneMinutes.toFixed(0)} minutes)... `} />}
-      </>
-    )
+    return <>
+      <Status status="Fetching key, this may take a while..." />
+      <Progress start={fetchStart} avg={fetchAvg} />
+    </>
   }
   else if (!proveEnd && proveStart) {
-    const done = Date.now() - proveStart;
-    const doneMinutes = done / 100 / 60;
-    const left = Math.max(proveAvg - done, 0);
-    const progress = done / proveAvg * 100;
-    const leftMinutes = left / 1000 / 60
     return (
       <>
         <Status status="Proving, this may take a while..." />
-        {left > 0 ?
-          <Status status={`${progress.toFixed(2)}% done (${leftMinutes.toFixed(0)} minutes left)`} /> :
-          <Status status={`Just about done (running for ${doneMinutes.toFixed(0)} minutes)... `} />}
+        <Progress start={proveStart} avg={proveAvg} />
       </>
     )
   }
   else {
     return null;
   }
+}
+
+function Progress(props: { start: number, avg: number }) {
+  const { start, avg } = props;
+  const done = Date.now() - start;
+  const doneMinutes = done / 100 / 60;
+  const left = Math.max(avg - done, 0);
+  const progress = done / avg * 100;
+  const leftMinutes = left / 1000 / 60;
+  return (
+    <>
+      {left > 0 ?
+        <Status status={`${progress.toFixed(2)}% done (${leftMinutes.toFixed(0)} minutes left)`} /> :
+        <Status status={`Just about done (running for ${doneMinutes.toFixed(0)} minutes)... `} />}
+    </>
+  );
 }
