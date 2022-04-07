@@ -143,7 +143,7 @@ export function getProofArgs(
   proof: Proof,
   publicSignals: PublicSignals
 ): Promise<ProofArgs> {
-  return plonk.exportSolidityCallData(unstringifyBigInts(proof), publicSignals)
+  return plonk.exportSolidityCallData(proof, publicSignals)
   // const { pi_a, pi_b, pi_c } = proof;
   // const a: [bigint, bigint] = [BigInt(pi_a[0]), BigInt(pi_a[1])];
   // const b: [[bigint, bigint], [bigint, bigint]] = [
