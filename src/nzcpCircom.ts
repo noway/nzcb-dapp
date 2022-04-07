@@ -137,24 +137,15 @@ export type Proof = Readonly<{
 
 export type PublicSignals = Readonly<[string, string, string]>;
 
-export function getVerifyArgs(
-  proof: Proof,
-  publicSignals: PublicSignals
+export async function getVerifyArgs(
+  proofJS: Proof,
+  publicSignalsJS: PublicSignals
 ): Promise<VerifyArgs> {
-  return plonk.exportSolidityCallData(proof, publicSignals)
-  // const { pi_a, pi_b, pi_c } = proof;
-  // const a: [bigint, bigint] = [BigInt(pi_a[0]), BigInt(pi_a[1])];
-  // const b: [[bigint, bigint], [bigint, bigint]] = [
-  //   [BigInt(pi_b[0][1]), BigInt(pi_b[0][0])],
-  //   [BigInt(pi_b[1][1]), BigInt(pi_b[1][0])],
-  // ];
-  // const c: [bigint, bigint] = [BigInt(pi_c[0]), BigInt(pi_c[1])];
-  // const input: [bigint, bigint, bigint] = [
-  //   BigInt(publicSignals[0]),
-  //   BigInt(publicSignals[1]),
-  //   BigInt(publicSignals[2]),
-  // ];
-  // return { a, b, c, input };
+  const calldata = await plonk.exportSolidityCallData(unstringifyBigInts(proofJS), unstringifyBigInts(publicSignalsJS))
+  const calldataSplit = calldata.split(',')
+  const [proof, ...rest] = calldataSplit
+  const publicSignals = JSON.parse(rest.join(",")).map((x: string) => BigInt(x).toString())
+  return { proof, publicSignals }
 }
 
 export function comparePubIdentities(a: PubIdentity, b: PubIdentity) {

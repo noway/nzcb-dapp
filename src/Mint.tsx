@@ -103,7 +103,7 @@ type ProviderError = { code: number, data: { code: number, message: string, data
 type MintingError = Error | ProviderError
 
 function MintContents(props: MintContentsProps) {
-  const { eip1193Provider, passURI, publicSignals, proof, pubIdentity } = props
+  const { eip1193Provider, passURI, publicSignals: publicSignalsJS, proof: proofJS, pubIdentity } = props
   const provider = new providers.Web3Provider(eip1193Provider);
   const nzCovidBadge = NZCOVIDBadge__factory.connect(CONTRACT_ADDRESS, provider.getSigner())
   const [minting, setMinting] = useState(false)
@@ -122,11 +122,10 @@ function MintContents(props: MintContentsProps) {
     setMintingError(null)
     try {
       const rs = getRS(passURI);
-      const data = await getVerifyArgs(proof, publicSignals);
+      const data = await getVerifyArgs(proofJS, publicSignalsJS);
       console.log(data)
-      const { a, b, c, input } = data
-
-      const tx = await nzCovidBadge.mint(a, b, c, input, rs)
+      const { proof, publicSignals } = data
+      const tx = await nzCovidBadge.mint(proof, publicSignals as [string, string, string], rs)
       const receipt = await tx.wait()
       setReceipt(receipt)
     }
@@ -141,7 +140,7 @@ function MintContents(props: MintContentsProps) {
     }
     setMinting(false)
   }
-  const pubIdentityMatches = comparePubIdentities(pubIdentity, signalsToPubIdentity(publicSignals));
+  const pubIdentityMatches = comparePubIdentities(pubIdentity, signalsToPubIdentity(publicSignalsJS));
 
   function done() {
     routeContext.navigate(["account", null]);
@@ -158,8 +157,8 @@ function MintContents(props: MintContentsProps) {
       {open ? <>
         <PublicIdentity pubIdentity={pubIdentity} />
         <Signature rs={getRS(passURI)} />
-        <ProofComponent proof={proof} />
-        <PublicSignalsComponent publicSignals={publicSignals} />
+        <ProofComponent proof={proofJS} />
+        <PublicSignalsComponent publicSignals={publicSignalsJS} />
       </> : null}
       <div style={{ marginTop: 20 }}>
         <h3>Disclaimer</h3>
