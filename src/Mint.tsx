@@ -8,7 +8,7 @@ import { NZCOVIDBadge__factory } from "./contracts/types";
 import { DataBit, DataSection } from "./DataSection";
 import { Footer } from "./Footer";
 import { Header } from "./Header";
-import { comparePubIdentities, getProofArgs, getRS, Proof, PubIdentity, PublicSignals, signalsToPubIdentity } from "./nzcpCircom";
+import { comparePubIdentities, getVerifyArgs, getRS, Proof, PubIdentity, PublicSignals, signalsToPubIdentity } from "./nzcpCircom";
 import { bytesToHex } from "./nzcpTools";
 import { Status, StatusError } from "./Status";
 import { Body, CtaContainer } from "./styles";
@@ -122,7 +122,7 @@ function MintContents(props: MintContentsProps) {
     setMintingError(null)
     try {
       const rs = getRS(passURI);
-      const data = await getProofArgs(proof, publicSignals);
+      const data = await getVerifyArgs(proof, publicSignals);
       console.log(data)
       const { a, b, c, input } = data
 

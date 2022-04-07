@@ -107,7 +107,7 @@ export function getRS(passURI: string): [Uint8Array, Uint8Array] {
   return decodeRS(decodeBytes(passURI));
 }
 
-type ProofArgs = Readonly<{
+type VerifyArgs = Readonly<{
   a: [bigint, bigint];
   b: [[bigint, bigint], [bigint, bigint]];
   c: [bigint, bigint];
@@ -139,10 +139,10 @@ export type Proof = Readonly<{
 
 export type PublicSignals = Readonly<[string, string, string]>;
 
-export function getProofArgs(
+export function getVerifyArgs(
   proof: Proof,
   publicSignals: PublicSignals
-): Promise<ProofArgs> {
+): Promise<VerifyArgs> {
   return plonk.exportSolidityCallData(proof, publicSignals)
   // const { pi_a, pi_b, pi_c } = proof;
   // const a: [bigint, bigint] = [BigInt(pi_a[0]), BigInt(pi_a[1])];
