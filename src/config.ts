@@ -1,4 +1,4 @@
-export const CONTRACT_ADDRESS = "0xA94F97aAF991757b245F649707005aEA59b4Adc3";
+export const CONTRACT_ADDRESS = "0x4A5E808fccF08b12795A19873EE12D88664ec216";
 export const EXAMPLE_TOBESIGNED_MAX_LEN = 314;
 
 export const EXAMPLE_ASSET_URL = "example_badge.svg";
@@ -12,4 +12,4 @@ export const EXAMPLE_PUBLIC_KEY_JWK = {
 export const EXAMPLE_WASM_FILE = "nzcp_example.wasm";
 export const EXAMPLE_ZKEY_FILE = "nzcp_example_final.zkey";
 
-export const USE_REAL_PROOF = true;
+export const USE_REAL_PROOF = false;
