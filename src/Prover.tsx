@@ -7,6 +7,7 @@ import { CtaContainer } from "./styles";
 import { PassInfo } from "./PassInfo";
 import { Status, StatusError } from "./Status";
 import { exampleProof, examplePubSignals } from "./stubs";
+import { ProverStatus } from "./ProverStatus";
 
 type Props = Readonly<{
   passURI: string
@@ -21,10 +22,18 @@ export function Prover(props: Props) {
   const [proof, setProof] = useState<Proof | null>(null);
   const [publicSignals, setPublicSignals] = useState<PublicSignals | null>(null);
   const [pubIdentity, setPubIdentity] = useState<PubIdentity | null>(null);
+  const [fetchStart, setFetchStart] = useState<null | number>(null);
+  const [fetchEnd, setFetchEnd] = useState<null | number>(null);
+  const [proveStart, setProveStart] = useState<null | number>(null);
+  const [proveEnd, setProveEnd] = useState<null | number>(null);
 
   const prove = useCallback(async function (passURI: string) {
     setProving(true)
     setProvingError(null)
+    setFetchStart(null)
+    setFetchEnd(null)
+    setProveStart(null)
+    setProveEnd(null)
     try {
       const pubIdentity = await getNZCPPubIdentity(passURI, address);
       setPubIdentity(pubIdentity)
@@ -33,7 +42,9 @@ export function Prover(props: Props) {
       let data: {proof: Proof, publicSignals: PublicSignals};
       if (USE_REAL_PROOF) {
         console.time("fetch")
+        setFetchStart(Date.now())
         const res = await fetch(EXAMPLE_ZKEY_FILE);
+        setFetchEnd(Date.now())
         const blob = await res.blob();
         console.log(blob)
         const zkeyurl = URL.createObjectURL(blob)
@@ -41,7 +52,9 @@ export function Prover(props: Props) {
         console.timeEnd("fetch")
 
         console.time("plonk")
+        setProveStart(Date.now())
         const realData = await plonk.fullProve(circuitInput, EXAMPLE_WASM_FILE, zkeyurl)
+        setProveEnd(Date.now())
         console.log('realData',realData)
         console.timeEnd("plonk")
 
@@ -73,7 +86,13 @@ export function Prover(props: Props) {
   return (
     <div>
       <PassInfo passURI={passURI} />
-      {proving ? <Status status="Proving, this may take a while..." /> : null}
+      {proving ? 
+        <ProverStatus
+          fetchStart={fetchStart}
+          fetchEnd={fetchEnd}
+          proveStart={proveStart}
+          proveEnd={proveEnd}
+        /> : null}
       {provingError ? <StatusError error={provingError} /> : null}
       {proof && publicSignals && pubIdentity ? <Status status="Proof is ready" /> : null}
       <CtaContainer>
