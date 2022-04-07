@@ -30,7 +30,7 @@ export function Prover(props: Props) {
       setPubIdentity(pubIdentity)
       const circuitInput = getNZCPCircuitInput(passURI, address);
 
-      let data;
+      let data: {proof: Proof, publicSignals: PublicSignals};
       if (USE_REAL_PROOF) {
         console.time("fetch")
         const res = await fetch(EXAMPLE_ZKEY_FILE);

@@ -115,24 +115,24 @@ type ProofArgs = Readonly<{
 }>;
 
 export type Proof = Readonly<{
-  readonly A: string[];
-  readonly B: string[];
-  readonly C: string[];
-  readonly T1: string[];
-  readonly T2: string[];
-  readonly T3: string[];
-  readonly Wxi: string[];
-  readonly Wxiw: string[];
-  readonly Z: string[];
-  readonly curve: string;
-  readonly eval_a: string;
-  readonly eval_b: string;
-  readonly eval_c: string;
-  readonly eval_r: string;
-  readonly eval_s1: string;
-  readonly eval_s2: string;
-  readonly eval_zw: string;
-  readonly protocol: string;
+  A: Readonly<string[]>;
+  B: Readonly<string[]>;
+  C: Readonly<string[]>;
+  T1: Readonly<string[]>;
+  T2: Readonly<string[]>;
+  T3: Readonly<string[]>;
+  Wxi: Readonly<string[]>;
+  Wxiw: Readonly<string[]>;
+  Z: Readonly<string[]>;
+  curve: string;
+  eval_a: string;
+  eval_b: string;
+  eval_c: string;
+  eval_r: string;
+  eval_s1: string;
+  eval_s2: string;
+  eval_zw: string;
+  protocol: string;
 }>;
 
 
