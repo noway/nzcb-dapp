@@ -43,25 +43,31 @@ export function Prover(props: Props) {
 
       let data: {proof: Proof, publicSignals: PublicSignals};
       if (USE_REAL_PROOF) {
+
+        setControlStart(Date.now())
+        console.time("control")
         controlVerify()
-        // console.time("fetch")
-        // setFetchStart(Date.now())
-        // const res = await fetch(EXAMPLE_ZKEY_FILE);
-        // setFetchEnd(Date.now())
-        // const blob = await res.blob();
-        // console.log(blob)
-        // const zkeyurl = URL.createObjectURL(blob)
-        // console.log(zkeyurl)
-        // console.timeEnd("fetch")
+        console.timeEnd("control")
+        setControlEnd(Date.now())
 
-        // console.time("plonk")
-        // setProveStart(Date.now())
-        // const realData = await plonk.fullProve(circuitInput, EXAMPLE_WASM_FILE, zkeyurl)
-        // setProveEnd(Date.now())
-        // console.log('realData',realData)
-        // console.timeEnd("plonk")
+        setFetchStart(Date.now())
+        console.time("fetch")
+        const res = await fetch(EXAMPLE_ZKEY_FILE);
+        console.timeEnd("fetch")
+        setFetchEnd(Date.now())
 
-        data = { proof: exampleProof, publicSignals: examplePubSignals }
+        const blob = await res.blob();
+        console.log(blob)
+        const zkeyurl = URL.createObjectURL(blob)
+        console.log(zkeyurl)
+
+        setProveStart(Date.now())
+        console.time("plonk")
+        const realData = await plonk.fullProve(circuitInput, EXAMPLE_WASM_FILE, zkeyurl)
+        console.timeEnd("plonk")
+        setProveEnd(Date.now())
+
+        data = realData
       }
       else {
         data = { proof: exampleProof, publicSignals: examplePubSignals }
@@ -91,6 +97,8 @@ export function Prover(props: Props) {
       <PassInfo passURI={passURI} />
       {proving ? 
         <ProverStatus
+          controlStart={controlStart}
+          controlEnd={controlEnd}
           fetchStart={fetchStart}
           fetchEnd={fetchEnd}
           proveStart={proveStart}

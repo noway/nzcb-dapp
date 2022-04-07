@@ -5,8 +5,12 @@ const fetchAvg = 12806.33
 const fetchMed = 12599.50
 const proveAvg = 2634874.33
 const proveMed = 2421669.00
+const controlAvg = 6618.25
+const controlMed = 6613.00
 
 type Props = Readonly<{
+  controlStart: number | null;
+  controlEnd: number | null;
   fetchStart: number | null;
   fetchEnd: number | null;
   proveStart: number | null;
@@ -14,7 +18,7 @@ type Props = Readonly<{
 }>;
 
 export function ProverStatus(props: Props) {
-  const { fetchStart, fetchEnd, proveStart, proveEnd } = props;
+  const { controlStart, controlEnd, fetchStart, fetchEnd, proveStart, proveEnd } = props;
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [_, setNonce] = useState(0);
   const refresh = useCallback(function refresh() {
@@ -24,17 +28,28 @@ export function ProverStatus(props: Props) {
     const intervalId = setInterval(refresh, 1000);
     return () => clearInterval(intervalId);
   }, [refresh])
-  if (!fetchEnd && fetchStart) {
+
+  if (!controlEnd || !controlStart) {
     return <>
-      <Status status="Fetching key, this may take a while..." />
-      <Progress start={fetchStart} avg={fetchAvg} />
+      <Status status="Approximating time to prove..." />
     </>
+  }
+  const controlTime = controlEnd - controlStart;
+  const control = controlTime / controlAvg;
+
+  if (!fetchEnd && fetchStart) {
+    return (
+      <>
+        <Status status="Fetching key, this may take a while..." />
+        <Progress start={fetchStart} avg={fetchAvg * control} />
+      </>
+    )
   }
   else if (!proveEnd && proveStart) {
     return (
       <>
         <Status status="Proving, this may take a while..." />
-        <Progress start={proveStart} avg={proveAvg} />
+        <Progress start={proveStart} avg={proveAvg * control} />
       </>
     )
   }
