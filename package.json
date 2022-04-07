@@ -23,7 +23,7 @@
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-scripts": "5.0.0",
-    "snarkjs": "^0.4.14",
+    "snarkjs": "0.4.16",
     "stream-browserify": "^3.0.0",
     "typescript": "^4.4.2",
     "util": "^0.12.4",

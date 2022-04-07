@@ -9586,10 +9586,10 @@ slash@^4.0.0:
   resolved "https://registry.yarnpkg.com/slash/-/slash-4.0.0.tgz#2422372176c4c6c5addb5e2ada885af984b396a7"
   integrity sha512-3dOsAHXXUkQTpOYcoAxLIorMTp4gIQr5IW3iVb7A7lFIp0VHhnynm9izx6TssdrIcVIESAlVjtnO2K8bg+Coew==
 
-snarkjs@^0.4.14:
-  version "0.4.14"
-  resolved "https://registry.yarnpkg.com/snarkjs/-/snarkjs-0.4.14.tgz#b3fceb23c1674fc8c9d0cd6aff056c5100602937"
-  integrity sha512-DkYYlSG98ZOcXADDOMegxYC/Lp1GcUpllq2ASH25MpyW3CWx43Lvo8eCALuK10agEzSfDFYsKnXTr89emIPA8A==
+snarkjs@0.4.16:
+  version "0.4.16"
+  resolved "https://registry.yarnpkg.com/snarkjs/-/snarkjs-0.4.16.tgz#d855e0a16f053806e514d12b8600c4f4b3f0eb97"
+  integrity sha512-Q5nTANzZNp2VI/2ZLeWazioYs4P2tn0gzQfG/fctibLEZh8UgF2RX1xst42CFw6WrsytB8WqPRH1JghN5OrEyg==
   dependencies:
     "@iden3/binfileutils" "0.0.10"
     blake2b-wasm "^2.4.0"
