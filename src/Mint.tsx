@@ -27,11 +27,11 @@ function PublicIdentity(props: Readonly<{ pubIdentity: PubIdentity }>) {
   )
 }
 
-function PublicSinals(props: Readonly<{ publicSignals: PublicSignals}>) {
-  const {publicSignals: signals} = props
+function PublicSinals(props: Readonly<{ publicSignals: PublicSignals }>) {
+  const { publicSignals: signals } = props
   return (
     <DataSection title="Public signals">
-      <DataBit title="input" value={`[${signals[0]}n, ${signals[1]}n, ${signals[2]}n]`} />
+      <DataBit title="input" value={JSON.stringify(signals, null, 2)} />
     </DataSection>
   )
 }
@@ -48,12 +48,11 @@ function Signature(props: Readonly<{ rs: [r: Uint8Array, s: Uint8Array] }>) {
 
 function ProofComponent(props: Readonly<{ proof: Proof }>) {
   const { proof } = props
-  // const { pi_a: a, pi_b: b, pi_c: c } = proof
   return (
-    <DataSection title="Pairing points">
-      <DataBit title="proof" value={JSON.stringify(proof,null,2)} />
-      {/* <DataBit title="b" value={`[[${b[0][1]}n, ${b[0][0]}n], [${b[1][1]}n, ${b[1][0]}n]]`} /> */}
-      {/* <DataBit title="c" value={`[${c[0]}n, ${c[1]}n]`} /> */}
+    <DataSection title="Proof calldata">
+      {Object.entries(proof).map(([key, value]) => (
+        <DataBit title={key} value={JSON.stringify(value, null, 2)} />
+      ))}
     </DataSection>
   )
 }
