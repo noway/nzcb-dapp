@@ -27,7 +27,7 @@ function PublicIdentity(props: Readonly<{ pubIdentity: PubIdentity }>) {
   )
 }
 
-function PublicSinals(props: Readonly<{ publicSignals: PublicSignals }>) {
+function PublicSignalsComponent(props: Readonly<{ publicSignals: PublicSignals }>) {
   const { publicSignals: signals } = props
   return (
     <DataSection title="Public signals">
@@ -159,7 +159,7 @@ function MintContents(props: MintContentsProps) {
         <PublicIdentity pubIdentity={pubIdentity} />
         <Signature rs={getRS(passURI)} />
         <ProofComponent proof={proof} />
-        <PublicSinals publicSignals={publicSignals} />
+        <PublicSignalsComponent publicSignals={publicSignals} />
       </> : null}
       <div style={{ marginTop: 20 }}>
         <h3>Disclaimer</h3>
