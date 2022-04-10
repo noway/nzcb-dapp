@@ -53,6 +53,8 @@ export function Landing() {
       <p>You get an ERC721 NZ COVID Badge, nothing more.</p>
       <h3>How is this project licensed?</h3>
       <p>The badge asset is released as CC0 (public domain) while the code is licensed under MIT unless specified otherwise.</p>
+      <h3>What browser should I use?</h3>
+      <p>NZ COVID Badge works best in Mozilla Firefox. </p>
     </Body>
     <Footer />
   </>
