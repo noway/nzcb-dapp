@@ -162,6 +162,7 @@ export function controlVerify() {
   for (var j = 0; j < 5; j++) {
     let a = 1n
     for (let i = 0; i < 200000; i++) {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       a *= 2n
     }
   }
