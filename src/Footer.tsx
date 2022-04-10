@@ -1,6 +1,6 @@
 import { AddressLinks } from "./AddressLinks";
 import { CollectionLinks } from "./CollectionLinks";
-import { CONTRACT_ADDRESS } from "./config";
+import { CONTRACT_ADDRESS, EXAMPLE_ASSET_URL, LIVE_ASSET_URL } from "./config";
 import { ExternalLink } from "./ExternalLink";
 import { styled } from "./styles";
 
@@ -53,8 +53,8 @@ export function Footer() {
       <FooterSection>
         <FooterTitle>Badge assets</FooterTitle>
         <FooterList>
-          <div><ExternalLink href="live_badge.svg" title="Live .svg file">Live .svg file</ExternalLink></div>
-          <div><ExternalLink href="example_badge.svg" title="Example .svg file">Example .svg file</ExternalLink></div>
+          <div><ExternalLink href={LIVE_ASSET_URL} title="Live .svg file">Live .svg file</ExternalLink></div>
+          <div><ExternalLink href={EXAMPLE_ASSET_URL} title="Example .svg file">Example .svg file</ExternalLink></div>
         </FooterList>
       </FooterSection>
     </div>
