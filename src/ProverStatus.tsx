@@ -62,7 +62,7 @@ function Progress(props: { start: number, avg: number }) {
   return (
     <>
       {left > 0 ?
-        <Status status={`${progress.toFixed(2)}% done (${timeSpan(left)} left)`} /> :
+        <Status status={`${progress.toFixed(2)}% done (~${timeSpan(left)} left)`} /> :
         <Status status={`Just about done (running for ${timeSpan(done)})... `} />}
     </>
   );
