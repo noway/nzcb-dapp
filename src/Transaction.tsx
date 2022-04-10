@@ -1,7 +1,16 @@
+import { NETWORK } from "./config";
 import { ExternalLink } from "./ExternalLink";
 
 export function Transaction(props: Readonly<{ txHash: string, title: string }>) {
   const { txHash, title } = props
+  if (NETWORK === "rinkeby") {
+    return (
+      <>
+        <div><ExternalLink href={`https://rinkeby.etherscan.io/tx/${txHash}`} title={`${title} - Etherscan`}>Etherscan</ExternalLink></div>
+      </>
+    )
+  }
+
   return (
     <div>
       <div><ExternalLink href={`https://etherscan.io/tx/${txHash}`} title={`${title} - Etherscan`}>Etherscan</ExternalLink></div>

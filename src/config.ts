@@ -14,3 +14,4 @@ export const EXAMPLE_WASM_FILE = "nzcp_example.wasm";
 export const EXAMPLE_ZKEY_FILE = "nzcp_example_final.zkey";
 
 export const USE_REAL_PROOF = true;
+export const NETWORK = "rinkeby";

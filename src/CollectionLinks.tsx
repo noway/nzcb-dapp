@@ -1,7 +1,16 @@
+import { NETWORK } from "./config";
 import { ExternalLink } from "./ExternalLink";
 
 export function CollectionLinks(props: Readonly<{ address: string, title: string }>) {
   const { address, title } = props;
+  if (NETWORK === "rinkeby") {
+    return (
+      <>
+        <div><ExternalLink href={`https://testnets.opensea.io/assets/${address}/0`} title={`${title} - OpenSea`}>OpenSea</ExternalLink></div>
+      </>
+    )
+  }
+
   return (<>
     <div><ExternalLink href={`https://opensea.io/assets/${address}/0`} title={`${title} - OpenSea`}>OpenSea</ExternalLink></div>
     <div><ExternalLink href={`https://looksrare.org/collections/${address}`} title={`${title} - LooksRare`}>LooksRare</ExternalLink></div>
