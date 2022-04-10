@@ -45,9 +45,9 @@ export function Footer() {
       <FooterSection>
         <FooterTitle>Source code</FooterTitle>
         <FooterList>
-          <div>Contract GitHub repo</div>
-          <div>Dapp GitHub repo</div>
-          <div>ZK-SNARK GitHub repo</div>
+          <div><ExternalLink href="https://github.com/noway/nzcb" title="Contract GitHub repo">Contract GitHub repo</ExternalLink></div>
+          <div><ExternalLink href="https://github.com/noway/nzcb-dapp" title="Dapp GitHub repo">Dapp GitHub repo</ExternalLink></div>
+          <div><ExternalLink href="https://github.com/noway/nzcb-circom" title="ZK-SNARK GitHub repo">ZK-SNARK GitHub repo</ExternalLink></div>
         </FooterList>
       </FooterSection>
       <FooterSection>
