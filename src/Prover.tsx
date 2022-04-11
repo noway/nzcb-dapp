@@ -57,7 +57,6 @@ export function Prover(props: Props) {
         console.timeEnd("fetch")
         setFetchEnd(Date.now())
         const zkeyurl = URL.createObjectURL(blob)
-        console.log('zkeyurl', zkeyurl)
 
         setProveStart(Date.now())
         console.time("plonk")

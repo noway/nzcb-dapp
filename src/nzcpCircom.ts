@@ -158,7 +158,6 @@ export function comparePubIdentities(a: PubIdentity, b: PubIdentity) {
 }
 
 export function controlVerify() {
-  console.time("control6")
   for (var j = 0; j < 5; j++) {
     let a = 1n
     for (let i = 0; i < 200000; i++) {
@@ -166,6 +165,5 @@ export function controlVerify() {
       a *= 2n
     }
   }
-  console.timeEnd("control6")
   return 0
 }
