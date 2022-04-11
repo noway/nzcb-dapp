@@ -83,13 +83,7 @@ export function Prover(props: Props) {
   }, [address])
 
   useEffect(() => {
-    async function perform() {
-      while (true) {
-        await prove(passURI)
-        await new Promise(resolve => setTimeout(resolve, 5000))
-      }
-    }
-    perform()
+    prove(passURI)
   }, [passURI, prove])
 
   function proceed(proof: Proof, publicSignals: PublicSignals, pubIdentity: PubIdentity) {
