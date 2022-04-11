@@ -45,6 +45,7 @@ export function Prover(props: Props) {
       if (USE_REAL_PROOF) {
 
         setControlStart(Date.now())
+        await new Promise(resolve => setImmediate(resolve))
         console.time("control")
         controlVerify()
         console.timeEnd("control")
