@@ -56,7 +56,7 @@ export async function getNZCPPubIdentity(
     await crypto.subtle.digest("SHA-256", toBeSignedByteArray)
   );
   const signedAddressBytes = eutils.arrayify(signerAddress);
-  const data = fitBytes(signedAddressBytes, 25);
+  const data = fitBytes(signedAddressBytes, 20);
   const pubIdentity = { nullifierHashPart, toBeSignedHash, exp, data };
   return pubIdentity;
 }
@@ -94,7 +94,7 @@ export function getNZCPCircuitInput(passURI: string, signerAddress: string) {
   const ToBeSigned = encodeToBeSigned(cose.bodyProtected, cose.payload);
   const fitToBeSigned = fitBytes(ToBeSigned, EXAMPLE_TOBESIGNED_MAX_LEN);
   const signedAddressBytes = eutils.arrayify(signerAddress);
-  const data = evmRearrangeBytes(fitBytes(signedAddressBytes, 25));
+  const data = evmRearrangeBytes(fitBytes(signedAddressBytes, 20));
   const input = {
     toBeSigned: bufferToBitArray(fitToBeSigned),
     toBeSignedLen: ToBeSigned.length,
