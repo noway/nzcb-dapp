@@ -6,7 +6,7 @@ import { EXAMPLE_WASM_FILE, EXAMPLE_ZKEY_FILE, USE_REAL_PROOF } from "./config";
 import { CtaContainer } from "./styles";
 import { PassInfo } from "./PassInfo";
 import { Status, StatusError } from "./Status";
-import { exampleProof, examplePubSignals } from "./stubs";
+import { EXAMPLE_PROOF, EXAMPLE_PUB_SIGNALS } from "./stubs";
 import { ProverStatus } from "./ProverStatus";
 
 type Props = Readonly<{
@@ -68,7 +68,7 @@ export function Prover(props: Props) {
         data = realData
       }
       else {
-        data = { proof: exampleProof, publicSignals: examplePubSignals }
+        data = { proof: EXAMPLE_PROOF, publicSignals: EXAMPLE_PUB_SIGNALS }
       }
 
       const { proof, publicSignals } = data
