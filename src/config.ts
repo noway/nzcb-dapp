@@ -1,5 +1,5 @@
-export const CONTRACT_ADDRESS = "0x7CeFc722cf5eE05Bd6C80891F32a79c0D9fd2C90";
-export const USE_REAL_PROOF = false;
+export const CONTRACT_ADDRESS = "0xd9f461702019a63318f5Acb9cEa63BcbDc186446";
+export const USE_REAL_PROOF = true;
 export const NETWORK = "rinkeby";
 export const LIVE = true;
 
