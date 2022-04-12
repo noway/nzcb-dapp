@@ -2,11 +2,12 @@ import { useCallback, useContext, useEffect, useState } from "react";
 import { plonk } from 'snarkjs'
 import { getNZCPPubIdentity, getNZCPCircuitInput, PubIdentity, Proof, PublicSignals, controlVerify } from "./nzcpCircom";
 import { RouteContext } from "./contexts";
-import { WASM_FILE, ZKEY_FILE, USE_REAL_PROOF } from "./config";
+import { WASM_FILE, ZKEY_FILE, USE_REAL_PROOF, LIVE } from "./config";
 import { CtaContainer } from "./styles";
 import { PassInfo } from "./PassInfo";
 import { Status, StatusError } from "./Status";
 import { EXAMPLE_PROOF, EXAMPLE_PUB_SIGNALS } from "./exampleStubs";
+import { LIVE_PROOF, LIVE_PUB_SIGNALS } from "./liveStubs";
 import { ProverStatus } from "./ProverStatus";
 
 type Props = Readonly<{
@@ -68,7 +69,7 @@ export function Prover(props: Props) {
         data = realData
       }
       else {
-        data = { proof: EXAMPLE_PROOF, publicSignals: EXAMPLE_PUB_SIGNALS }
+        data = { proof: LIVE ? LIVE_PROOF : EXAMPLE_PROOF, publicSignals: LIVE ? LIVE_PUB_SIGNALS : EXAMPLE_PUB_SIGNALS }
       }
 
       const { proof, publicSignals } = data
