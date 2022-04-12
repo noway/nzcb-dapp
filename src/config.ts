@@ -1,7 +1,7 @@
 export const CONTRACT_ADDRESS = "0xBED1aCf0708723f8b9F6632571f5F79866DD95b1";
-export const USE_REAL_PROOF = false;
+export const USE_REAL_PROOF = true;
 export const NETWORK = "rinkeby";
-export const LIVE = false;
+export const LIVE = true;
 
 // example pass vars
 export const EXAMPLE_ASSET_URL =
