@@ -1,5 +1,5 @@
 export const CONTRACT_ADDRESS = "0xBED1aCf0708723f8b9F6632571f5F79866DD95b1";
-export const EXAMPLE_TOBESIGNED_MAX_LEN = 314;
+export const EXAMPLE_TOBESIGNED_MAX = 314;
 
 export const EXAMPLE_ASSET_URL = "https://cloudflare-ipfs.com/ipfs/QmXKiU24bL3t86aJNvFTGSbXdSA8CUFJM223MdaKqG9LfP";
 export const LIVE_ASSET_URL = "https://cloudflare-ipfs.com/ipfs/Qma3Tyha3V5FWJpYyhN9FtFTMcitqFZdQ7fafzF4TPmzYH";
