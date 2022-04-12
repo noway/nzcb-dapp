@@ -6,7 +6,7 @@ import { WASM_FILE, ZKEY_FILE, USE_REAL_PROOF } from "./config";
 import { CtaContainer } from "./styles";
 import { PassInfo } from "./PassInfo";
 import { Status, StatusError } from "./Status";
-import { EXAMPLE_PROOF, EXAMPLE_PUB_SIGNALS } from "./stubs";
+import { EXAMPLE_PROOF, EXAMPLE_PUB_SIGNALS } from "./exampleStubs";
 import { ProverStatus } from "./ProverStatus";
 
 type Props = Readonly<{
