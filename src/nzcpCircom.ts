@@ -81,7 +81,7 @@ export function signalsToPubIdentity(publicSignals: Readonly<[string,string,stri
     out2[1],
   ]);
   const expBytes = new Uint8Array([out2[2], out2[3], out2[4], out2[5]]);
-  const data = out2.slice(6);
+  const data = out2.slice(6, 6 + 20);
   const exp = evmBytesToNum(expBytes);
 
   const pubIdentity = { nullifierHashPart, toBeSignedHash, exp, data };
