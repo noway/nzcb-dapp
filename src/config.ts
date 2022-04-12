@@ -14,7 +14,7 @@ export const EXAMPLE_PUBLIC_KEY_JWK = {
 };
 export const EXAMPLE_TOBESIGNED_MAX = 314;
 export const EXAMPLE_WASM_FILE = "nzcp_example.wasm";
-export const EXAMPLE_ZKEY_FILE = "nzcp_example_final.zkey";
+export const EXAMPLE_ZKEY_FILE = "https://f004.backblazeb2.com/file/nzcb-zkeys/nzcp_example_final.zkey";
 
 // live pass vars
 export const LIVE_ASSET_URL =
@@ -27,7 +27,7 @@ export const LIVE_PUBLIC_KEY_JWK = {
 };
 export const LIVE_TOBESIGNED_MAX = 351;
 export const LIVE_WASM_FILE = "nzcp_live.wasm";
-export const LIVE_ZKEY_FILE = "nzcp_live_final.zkey";
+export const LIVE_ZKEY_FILE = "https://f004.backblazeb2.com/file/nzcb-zkeys/nzcp_live_final.zkey";
 
 // either live or example pass vars depending on config
 export const ASSET_URL = LIVE ? LIVE_ASSET_URL : EXAMPLE_ASSET_URL;
