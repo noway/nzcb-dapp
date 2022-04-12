@@ -40,7 +40,7 @@
   },
   "scripts": {
     "start": "GENERATE_SOURCEMAP=false react-scripts start",
-    "build": "react-scripts build",
+    "build": "yarn run compile-contract-types && react-scripts build",
     "eject": "react-scripts eject",
     "postinstall": "patch-package",
     "compile-contract-types": "typechain --target ethers-v5 --out-dir './src/contracts/types' './src/contracts/*.json'"
