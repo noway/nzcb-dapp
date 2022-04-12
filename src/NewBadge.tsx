@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { EXAMPLE_PUBLIC_KEY_JWK } from "./config";
+import { PUBLIC_KEY_JWK } from "./config";
 import { RouteContext } from "./contexts";
 import { DataBit, DataSection } from "./DataSection";
 import { Footer } from "./Footer";
@@ -27,7 +27,7 @@ export function NewBadge() {
       const bytes = decodeBytes(passURI);
       const data = decodeCOSE(bytes);
       const toBeSigned = encodeToBeSigned(data.bodyProtected, data.payload)
-      const key = await crypto.subtle.importKey('jwk', EXAMPLE_PUBLIC_KEY_JWK, { name: 'ECDSA', namedCurve: 'P-256' }, false, ['verify']);
+      const key = await crypto.subtle.importKey('jwk', PUBLIC_KEY_JWK, { name: 'ECDSA', namedCurve: 'P-256' }, false, ['verify']);
       const ret = await crypto.subtle.verify({ name: 'ECDSA', hash: 'SHA-256' }, key, data.signature, toBeSigned);
       setValidStatus(ret ? "yes" : "no");
     }

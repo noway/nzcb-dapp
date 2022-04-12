@@ -1,5 +1,5 @@
 import { utils as eutils } from "ethers";
-import { EXAMPLE_TOBESIGNED_MAX } from "./config";
+import { TOBESIGNED_MAX } from "./config";
 import {
   Data,
   decodeBytes,
@@ -92,7 +92,7 @@ export function getNZCPCircuitInput(passURI: string, signerAddress: string) {
   const bytes = decodeBytes(passURI);
   const cose = decodeCOSE(bytes);
   const ToBeSigned = encodeToBeSigned(cose.bodyProtected, cose.payload);
-  const fitToBeSigned = fitBytes(ToBeSigned, EXAMPLE_TOBESIGNED_MAX);
+  const fitToBeSigned = fitBytes(ToBeSigned, TOBESIGNED_MAX);
   const signedAddressBytes = eutils.arrayify(signerAddress);
   const data = evmRearrangeBytes(fitBytes(signedAddressBytes, 20));
   const input = {

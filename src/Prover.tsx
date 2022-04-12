@@ -2,7 +2,7 @@ import { useCallback, useContext, useEffect, useState } from "react";
 import { plonk } from 'snarkjs'
 import { getNZCPPubIdentity, getNZCPCircuitInput, PubIdentity, Proof, PublicSignals, controlVerify } from "./nzcpCircom";
 import { RouteContext } from "./contexts";
-import { EXAMPLE_WASM_FILE, EXAMPLE_ZKEY_FILE, USE_REAL_PROOF } from "./config";
+import { WASM_FILE, ZKEY_FILE, USE_REAL_PROOF } from "./config";
 import { CtaContainer } from "./styles";
 import { PassInfo } from "./PassInfo";
 import { Status, StatusError } from "./Status";
@@ -53,7 +53,7 @@ export function Prover(props: Props) {
 
         setFetchStart(Date.now())
         console.time("fetch")
-        const res = await fetch(EXAMPLE_ZKEY_FILE);
+        const res = await fetch(ZKEY_FILE);
         const blob = await res.blob();
         console.timeEnd("fetch")
         setFetchEnd(Date.now())
@@ -61,7 +61,7 @@ export function Prover(props: Props) {
 
         setProveStart(Date.now())
         console.time("plonk")
-        const realData = await plonk.fullProve(circuitInput, EXAMPLE_WASM_FILE, zkeyurl)
+        const realData = await plonk.fullProve(circuitInput, WASM_FILE, zkeyurl)
         console.timeEnd("plonk")
         setProveEnd(Date.now())
 

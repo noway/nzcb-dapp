@@ -1,4 +1,4 @@
-import { EXAMPLE_ASSET_URL } from "./config";
+import { ASSET_URL } from "./config";
 import { styled } from "./styles";
 
 const Container = styled("div", {
@@ -14,7 +14,7 @@ export function Sample() {
   return (
     <Container>
       <Frame>
-        <img src={EXAMPLE_ASSET_URL} alt="NZ COVID Badge" width={256} height={256} />
+        <img src={ASSET_URL} alt="NZ COVID Badge" width={256} height={256} />
       </Frame>
     </Container>
   )
