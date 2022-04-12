@@ -19,7 +19,9 @@ export function NewBadge() {
   }
 
   useEffect(() => {
-    checkValid(passURI)
+    if (passURI) {
+      checkValid(passURI)
+    }
   }, [passURI]);
 
   async function checkValid(passURI: string) {

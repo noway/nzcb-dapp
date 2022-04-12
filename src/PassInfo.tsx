@@ -3,6 +3,13 @@ import { ctiToJti, Data, decodeAlg, decodeBytes, decodeCBOR, decodeCOSE } from "
 
 export function PassInfo(props: Readonly<{ passURI: string; }>) {
   const { passURI } = props;
+  if (!passURI) {
+    return (
+      <DataSection title="Pass info">
+        <DataBit title="data" value={`empty`} />
+      </DataSection>
+    )
+  }
   try {
     const bytes = decodeBytes(passURI);
     const cose = decodeCOSE(bytes);
