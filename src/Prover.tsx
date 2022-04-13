@@ -57,7 +57,16 @@ export function Prover(props: Readonly<{ passURI: string; address: string }>) {
 
         setProveStart(Date.now())
         console.time("plonk")
-        const realData = await plonk.fullProve(circuitInput, WASM_FILE, zkeyurl)
+        let realData: any
+        try {
+          realData = await plonk.fullProve(circuitInput, WASM_FILE, zkeyurl)
+        }
+        catch (e) {
+          if ((e as Error).message.includes("Failed to fetch")) {
+            throw new Error("Failed to generate plonk proof, only Mozilla Firefox is supported.")
+          }
+          throw e
+        }
         console.timeEnd("plonk")
         setProveEnd(Date.now())
 
