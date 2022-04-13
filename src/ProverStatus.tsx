@@ -36,7 +36,7 @@ export function ProverStatus(props: Props) {
   if (!fetchEnd && fetchStart) {
     return (
       <>
-        <Status status="Fetching key, this may take a while..." />
+        <Status status="Fetching proving key, this may take a while..." />
         <Progress start={fetchStart} avg={fetchAvg * control} />
       </>
     )
