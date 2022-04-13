@@ -10,8 +10,11 @@ import { init } from "@web3-onboard/react";
 const injected = injectedModule();
 const walletConnect = walletConnectModule();
 
-const MAINNET_RPC_URL = `https://eth-mainnet.alchemyapi.io/v2/${process.env.REACT_APP_ALCHEMY_API_KEY}`;
-const RINKEBY_RPC_URL = `https://eth-rinkeby.alchemyapi.io/v2/${process.env.REACT_APP_ALCHEMY_API_KEY}`;
+const ALCHEMY_API_KEY = process.env.REACT_APP_ALCHEMY_API_KEY;
+const MAINNET_RPC_URL = `https://eth-mainnet.alchemyapi.io/v2/${ALCHEMY_API_KEY}`;
+const RINKEBY_RPC_URL = `https://eth-rinkeby.alchemyapi.io/v2/${ALCHEMY_API_KEY}`;
+const POLYGON_MAINNET_RPC_URL = `https://polygon-mainnet.g.alchemy.com/v2/${ALCHEMY_API_KEY}`;
+const POLYGON_MUMBAI_RPC_URL = `https://polygon-mumbai.g.alchemy.com/v2/${ALCHEMY_API_KEY}`;
 const GANACHE_RPC_URL = `http://localhost:7545`;
 
 init({
@@ -30,6 +33,20 @@ init({
       namespace: "evm",
       label: "Ethereum Rinkeby Testnet",
       rpcUrl: RINKEBY_RPC_URL
+    },
+    {
+      id: "0x89",
+      token: "MATIC",
+      namespace: "evm",
+      label: "Matic Mainnet",
+      rpcUrl: POLYGON_MAINNET_RPC_URL
+    },
+    {
+      id: "0x13881",
+      token: "MATIC",
+      namespace: "evm",
+      label: "Polygon Testnet",
+      rpcUrl: POLYGON_MUMBAI_RPC_URL
     },
     {
       id: "0x539",
