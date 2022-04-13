@@ -1,9 +1,9 @@
 import { EXAMPLE_PROOF, EXAMPLE_PUB_SIGNALS } from "./exampleStubs";
 import { LIVE_PROOF, LIVE_PUB_SIGNALS } from "./liveStubs";
 
-export const CONTRACT_ADDRESS = "0xd9f461702019a63318f5Acb9cEa63BcbDc186446";
+export const CONTRACT_ADDRESS = "0x14fFB19A685BB8Ec4B925604280f7e441A343af9";
 export const USE_REAL_PROOF = true;
-export const NETWORK = "rinkeby";
+export const NETWORK: "mainnet" | "rinkeby" | "polygon" | "polygonMumbai" = "polygonMumbai";
 export const LIVE = true;
 
 // example pass vars
