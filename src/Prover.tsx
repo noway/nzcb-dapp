@@ -69,6 +69,7 @@ export function Prover(props: Props) {
         data = realData
       }
       else {
+        // TODO: tidy up?
         data = { proof: LIVE ? LIVE_PROOF : EXAMPLE_PROOF, publicSignals: LIVE ? LIVE_PUB_SIGNALS : EXAMPLE_PUB_SIGNALS }
       }
 
