@@ -51,7 +51,7 @@ function ProofComponent(props: Readonly<{ proof: Proof }>) {
   return (
     <DataSection title="Proof calldata">
       {Object.entries(proof).map(([key, value]) => (
-        <DataBit title={key} value={JSON.stringify(value, null, 2)} />
+        <DataBit key={key} title={key} value={JSON.stringify(value, null, 2)} />
       ))}
     </DataSection>
   )
