@@ -20,7 +20,7 @@ export function Landing() {
   return <>
     <Header isLanding={true} showBack={false} />
     <Body>
-      <Lead>An ERC721 project that lets you mint your NZ&nbsp;COVID&nbsp;vaccination&nbsp;status on the Ethereum network.</Lead>
+      <Lead>An ERC721 project that lets you mint your NZ&nbsp;COVID&nbsp;vaccination&nbsp;status.</Lead>
       <Section>
         <Sample />
       </Section>
@@ -36,7 +36,7 @@ export function Landing() {
       <h3>Do you save my NZ COVID Pass on the backend?</h3>
       <p><b>No.</b> NZ COVID Badge is a stateless decentralized application (Dapp) and doesn’t have a backend.</p>
       <h3>Does this website have analytics or telemetry?</h3>
-      <p><b>No.</b> This website collects no analytics, telemetry or any other data derived from user actions. The website only communicates with an Ethereum node RPC endpoint to send and receive information from the blockchain.</p>
+      <p><b>No.</b> This website collects no analytics, telemetry or any other data derived from user actions. The website only communicates with an EVM node RPC endpoint to send and receive information from the blockchain.</p>
       <h3>How many badges I can mint?</h3>
       <p>You can only mint <b>1 badge per person</b>. Even if you request a new NZ COVID Pass from <ExternalLink href="https://mycovidrecord.nz" title="mycovidrecord.nz">mycovidrecord.nz</ExternalLink>, your anonymized identity will match against the list of spent anonymized identities and prevent you from minting again.</p>
       <h3>Can I sell my NZ COVID Badge?</h3>
@@ -44,7 +44,7 @@ export function Landing() {
       <h3>What’s the mint price?</h3>
       <p>Mint is <b>free</b>, it only costs gas to mint. Although the gas price itself is on the higher side, due to the Elliptic Curve signature and ZK-SNARK verification that happens in the smart contract.</p>
       <h3>What’s the roadmap?</h3>
-      <p>There’s <b>no roadmap</b>, the project is finished once the contract has been deployed to the Ethereum mainnet.</p>
+      <p>There’s <b>no roadmap</b>, the project is finished once the contract has been deployed to mainnet.</p>
       <h3>How this project will be promoted?</h3>
       <p>This project will not be promoted.</p>
       <h3>How many badges can ever be minted?</h3>
