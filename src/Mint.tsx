@@ -172,7 +172,7 @@ function MintContents(props: MintContentsProps) {
         <h3>Disclaimer</h3>
         <p>By minting you confirm that you understand the following:</p>
         <ul>
-          <li>Minting may result in loss of Ether</li>
+          <li>Minting may result in loss of funds</li>
           <li>The smart contract was not audited</li>
           <li>The smart contract may contain bugs</li>
           <li>NZ COVID Badge is not an investment</li>

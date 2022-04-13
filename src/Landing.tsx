@@ -56,20 +56,20 @@ export function Landing() {
       <Question title="Do you save my NZ COVID Pass on the backend?">
         <p><b>No.</b> NZ COVID Badge is a stateless decentralized application (Dapp) and doesn’t have a backend.</p>
       </Question>
-      <Question title="Does this website have analytics or telemetry?">
+      <Question title="Does this website send analytics or telemetry?">
         <p><b>No.</b> This website collects no analytics, telemetry or any other data derived from user actions. The website only communicates with an EVM node RPC endpoint to send and receive information from the blockchain.</p>
       </Question>
-      <Question title="How many badges I can mint?">
+      <Question title="How many badges can I mint?">
         <p>You can only mint <b>1 badge per person</b>. Even if you request a new NZ COVID Pass from <ExternalLink href="https://mycovidrecord.nz" title="mycovidrecord.nz">mycovidrecord.nz</ExternalLink>, your anonymized identity will match against the list of spent anonymized identities and prevent you from minting again.</p>
       </Question>
       <Question title="Can I sell my NZ COVID Badge?">
-        <p>Yes. Although the chance that anyone will buy is infinite small. Don’t expect to recoup the Ether you spent. </p>
+        <p>Yes. Although the chance that anyone will buy is infinite small. Don’t expect to recoup the funds you spent. </p>
       </Question>
       <Question title="What’s the mint price?">
         <p>Mint is <b>free</b>, it only costs gas to mint. Although the gas price itself is on the higher side, due to the Elliptic Curve signature and ZK-SNARK verification that happens in the smart contract.</p>
       </Question>
       <Question title="What’s the roadmap?">
-        <p>There’s <b>no roadmap</b>, the project is finished once the contract has been deployed to mainnet.</p>
+        <p>There’s <b>no roadmap</b>, the project is finished once the contract has been deployed on mainnet.</p>
       </Question>
       <Question title="How this project will be promoted?">
         <p>This project will not be promoted.</p>
@@ -87,7 +87,7 @@ export function Landing() {
         <p>No. </p>
       </Question>
       <Question title="What browser should I use?">
-        <p>NZ COVID Badge works best in Mozilla Firefox. </p>
+        <p>NZ COVID Badge only works in Mozilla Firefox. </p>
       </Question>
     </Body>
     <Footer />
