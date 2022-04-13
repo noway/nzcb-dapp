@@ -11,6 +11,13 @@ export function AssetLinks(props: Readonly<{ address: string, title: string, id:
       </>
     )
   }
+  if (NETWORK === "polygonMumbai") {
+    return (
+      <>
+        <div><ExternalLink href={`https://testnets.opensea.io/assets/${address}/${id}`} title={`${title} - OpenSea`}>OpenSea</ExternalLink></div>
+      </>
+    )
+  }
 
   return (<div>
     <div><ExternalLink href={`https://opensea.io/assets/${address}/${id}`} title={`${title} - OpenSea`}>OpenSea</ExternalLink></div>

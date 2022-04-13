@@ -11,6 +11,13 @@ export function AddressLinks(props: Readonly<{ address: string, title: string }>
       </>
     )
   }
+  if (NETWORK === "polygonMumbai") {
+    return (
+      <>
+        <div><ExternalLink href={`https://mumbai.polygonscan.com/address/0x${addr}`} title={`${title} - Etherscan`}>Etherscan</ExternalLink></div>
+      </>
+    )
+  }
   return (
     <>
       <div><ExternalLink href={`https://etherscan.io/address/0x${addr}`} title={`${title} - Etherscan`}>Etherscan</ExternalLink></div>
