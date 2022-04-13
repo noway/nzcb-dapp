@@ -4,6 +4,19 @@ import { CONTRACT_ADDRESS, EXAMPLE_ASSET_URL, LIVE_ASSET_URL } from "./config";
 import { ExternalLink } from "./ExternalLink";
 import { styled } from "./styles";
 
+const FooterContainer = styled("div", {
+  border: '1px solid lightgrey',
+  display: 'grid',
+  flex: '1',
+  width: '100%',
+  margin: '20px',
+  padding: '20px',
+  boxSizing: 'border-box',
+  maxWidth: 900,
+  gridTemplateColumns: 'repeat(4, 1fr)',
+  gap: 20
+})
+
 const FooterSection = styled("div", {
   display: 'flex',
   gap: 10,
@@ -18,18 +31,7 @@ const FooterTitle = styled("h4", {
 
 export function Footer() {
   return (
-    <div style={{
-      border: '1px solid lightgrey',
-      display: 'grid',
-      flex: '1',
-      width: '100%',
-      margin: '20px',
-      padding: '20px',
-      boxSizing: 'border-box',
-      maxWidth: 900,
-      gridTemplateColumns: 'repeat(4, 1fr)',
-      gap: 20
-    }}>
+    <FooterContainer>
       <FooterSection>
         <FooterTitle>Collection</FooterTitle>
         <FooterList>
@@ -57,6 +59,6 @@ export function Footer() {
           <div><ExternalLink href={EXAMPLE_ASSET_URL} title="Example .svg file">Example .svg file</ExternalLink></div>
         </FooterList>
       </FooterSection>
-    </div>
+    </FooterContainer>
   )
 }
