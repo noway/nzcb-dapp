@@ -57,10 +57,10 @@ init({
     },
   ],
   appMetadata: {
-    name: "My App",
-    icon: "https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg",
-    logo: "https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg",
-    description: "My app using Onboard",
+    name: "NZ COVID Badge",
+    icon: "https://nzcb.netlify.app/android-chrome-192x192.png",
+    logo: "https://nzcb.netlify.app/android-chrome-192x192.png",
+    description: "An ERC721 project that lets you mint your NZ COVID vaccination status.",
     recommendedInjectedWallets: [
       { name: "MetaMask", url: "https://metamask.io" }
     ]
