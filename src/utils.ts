@@ -106,3 +106,18 @@ export function truncateAddress(address: string) {
 export function getFirstAccount(wallet: WalletState | null) {
   return wallet?.accounts[0];
 }
+
+export function blink() {
+  // skip 5 frames
+  return new Promise(resolve => {
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            requestAnimationFrame(resolve)
+          })
+        })
+      })
+    })
+  });
+}

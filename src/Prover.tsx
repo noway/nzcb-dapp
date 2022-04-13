@@ -10,6 +10,7 @@ import { EXAMPLE_PROOF, EXAMPLE_PUB_SIGNALS } from "./exampleStubs";
 import { LIVE_PROOF, LIVE_PUB_SIGNALS } from "./liveStubs";
 import { ProverStatus } from "./ProverStatus";
 import { fetchZKeyBlob } from "./fetcher";
+import { blink } from "./utils";
 
 type Props = Readonly<{
   passURI: string
@@ -43,21 +44,23 @@ export function Prover(props: Props) {
       setPubIdentity(pubIdentity)
       const circuitInput = getNZCPCircuitInput(passURI, address);
 
-      let data: {proof: Proof, publicSignals: PublicSignals};
+      let data: { proof: Proof, publicSignals: PublicSignals };
       if (USE_REAL_PROOF) {
 
         setControlStart(Date.now())
-        await new Promise(resolve => requestAnimationFrame(resolve))
+        await blink()
         console.time("control")
         controlVerify()
         console.timeEnd("control")
         setControlEnd(Date.now())
 
         setFetchStart(Date.now())
+        await blink()
         console.time("fetch")
         const zkeyurl = await fetchZKeyBlob()
         console.timeEnd("fetch")
         setFetchEnd(Date.now())
+        await blink()
 
         setProveStart(Date.now())
         console.time("plonk")
@@ -94,7 +97,7 @@ export function Prover(props: Props) {
   return (
     <div>
       <PassInfo passURI={passURI} />
-      {proving ? 
+      {proving ?
         <ProverStatus
           controlStart={controlStart}
           controlEnd={controlEnd}
@@ -113,3 +116,4 @@ export function Prover(props: Props) {
     </div>
   );
 }
+
