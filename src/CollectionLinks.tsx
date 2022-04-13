@@ -13,7 +13,7 @@ export function CollectionLinks(props: Readonly<{ address: string, title: string
   if (NETWORK === "polygonMumbai") {
     return (
       <>
-        <div><ExternalLink href={`https://testnets.opensea.io/assets/${address}/0`} title={`${title} - OpenSea`}>OpenSea</ExternalLink></div>
+        <div><ExternalLink href={`https://testnets.opensea.io/assets/mumbai/${address}/0`} title={`${title} - OpenSea`}>OpenSea</ExternalLink></div>
       </>
     )
   }
