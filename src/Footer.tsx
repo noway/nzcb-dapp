@@ -47,8 +47,8 @@ export function Footer() {
       <FooterSection>
         <FooterTitle>Source code</FooterTitle>
         <FooterList>
-          <div><ExternalLink href="https://github.com/noway/nzcb" title="Contract repo">Contract repo</ExternalLink></div>
           <div><ExternalLink href="https://github.com/noway/nzcb-dapp" title="Dapp repo">Dapp repo</ExternalLink></div>
+          <div><ExternalLink href="https://github.com/noway/nzcb" title="Contract repo">Contract repo</ExternalLink></div>
           <div><ExternalLink href="https://github.com/noway/nzcb-circom" title="ZK-SNARK repo">ZK-SNARK repo</ExternalLink></div>
         </FooterList>
       </FooterSection>
