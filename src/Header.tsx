@@ -41,6 +41,12 @@ const HomeLink = styled("span", {
   cursor: "pointer",
 })
 
+
+const Link = styled("a", {
+  textDecoration: "none",
+  color: 'black'
+});
+
 export function Header(props: Readonly<{ isLanding: boolean; showBack: boolean; }>) {
 
   const { isLanding, showBack } = props
@@ -64,7 +70,9 @@ export function Header(props: Readonly<{ isLanding: boolean; showBack: boolean; 
         <Back>
           {showBack ? <button type="button" onClick={back}>Back</button> : <span />}
         </Back>
-        <Title><HomeLink onClick={home}>NZ COVID Badge</HomeLink></Title>
+        <Title>
+          {!isLanding ? <HomeLink onClick={home}>NZ COVID Badge</HomeLink> : <Link href="/">NZ COVID Badge</Link>}
+        </Title>
         <WalletContainer>
           {!isLanding ? <Wallet /> : <span />}
         </WalletContainer>
