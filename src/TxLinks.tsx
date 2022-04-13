@@ -19,6 +19,14 @@ export function TxLinks(props: Readonly<{ txHash: string, title: string }>) {
     )
   }
 
+  if (NETWORK === "polygon") {
+    return (
+      <>
+        <div><ExternalLink href={`https://polygonscan.com/tx/${txHash}`} title={`${title} - PolygonScan`}>PolygonScan</ExternalLink></div>
+      </>
+    )
+  }
+
   return (
     <div>
       <div><ExternalLink href={`https://etherscan.io/tx/${txHash}`} title={`${title} - Etherscan`}>Etherscan</ExternalLink></div>
