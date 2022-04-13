@@ -12,7 +12,7 @@ import { comparePubIdentities, getVerifyArgs, getRS, Proof, PubIdentity, PublicS
 import { bytesToHex } from "./nzcpTools";
 import { Status, StatusError } from "./Status";
 import { Body, CtaContainer } from "./styles";
-import { Transaction } from "./Transaction";
+import { TxLinks } from "./TxLinks";
 
 function PublicIdentity(props: Readonly<{ pubIdentity: PubIdentity }>) {
   const { pubIdentity } = props
@@ -79,7 +79,7 @@ function Success(props: Readonly<{ receipt: ContractReceipt }>) {
         <DataSection title="Transaction">
           <div style={{ display: 'inline-grid', gap: 10 }}>
             <DataBit title="hash" value={receipt.transactionHash} />
-            <Transaction txHash={receipt.transactionHash} title="Mint Transaction" />
+            <TxLinks txHash={receipt.transactionHash} title="Mint Transaction" />
           </div>
         </DataSection>
       </div>

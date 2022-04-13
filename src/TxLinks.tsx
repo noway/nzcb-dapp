@@ -1,7 +1,7 @@
 import { NETWORK } from "./config";
 import { ExternalLink } from "./ExternalLink";
 
-export function Transaction(props: Readonly<{ txHash: string, title: string }>) {
+export function TxLinks(props: Readonly<{ txHash: string, title: string }>) {
   const { txHash, title } = props
   if (NETWORK === "rinkeby") {
     return (
