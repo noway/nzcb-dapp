@@ -4,6 +4,7 @@ import { ExternalLink } from "./ExternalLink";
 export function AssetLinks(props: Readonly<{ address: string, title: string, id: string }>) {
   const { address, id, title } = props;
   if (NETWORK === "rinkeby") {
+    // TODO: more links
     return (
       <>
         <div><ExternalLink href={`https://testnets.opensea.io/assets/${address}/${id}`} title={`${title} - OpenSea`}>OpenSea</ExternalLink></div>
