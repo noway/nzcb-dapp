@@ -1,3 +1,4 @@
+import { useSetChain } from "@web3-onboard/react";
 import { useContext } from "react";
 import { RouteContext } from "./contexts";
 import { styled } from "./styles";
@@ -51,6 +52,7 @@ export function Header(props: Readonly<{ isLanding: boolean; showBack: boolean; 
 
   const { isLanding, showBack } = props
   const routeContext = useContext(RouteContext);
+  const [{ connectedChain }] = useSetChain()
 
   function back() {
     routeContext.goBack();
@@ -66,6 +68,9 @@ export function Header(props: Readonly<{ isLanding: boolean; showBack: boolean; 
 
   return (
     <HeaderContainer>
+
+      {connectedChain?.id !== '0x89' ? <div style={{ color: 'red', textAlign: "center", backgroundColor: 'rgba(255, 0, 0, 0.2)', padding: 20 }}>Wrong Chain - Please Switch to ?</div> : null}
+
       <Navigation>
         <Back>
           {showBack ? <button type="button" onClick={back}>Back</button> : <span />}
