@@ -1,3 +1,6 @@
+import { EXAMPLE_PROOF, EXAMPLE_PUB_SIGNALS } from "./exampleStubs";
+import { LIVE_PROOF, LIVE_PUB_SIGNALS } from "./liveStubs";
+
 export const CONTRACT_ADDRESS = "0xd9f461702019a63318f5Acb9cEa63BcbDc186446";
 export const USE_REAL_PROOF = true;
 export const NETWORK = "rinkeby";
@@ -41,3 +44,6 @@ export const TOBESIGNED_MAX = LIVE
   : EXAMPLE_TOBESIGNED_MAX;
 export const WASM_FILE = LIVE ? LIVE_WASM_FILE : EXAMPLE_WASM_FILE;
 export const ZKEY_FILE = LIVE ? LIVE_ZKEY_FILE : EXAMPLE_ZKEY_FILE;
+
+export const STUB_PROOF = LIVE ? LIVE_PROOF : EXAMPLE_PROOF;
+export const STUB_PUB_SIGNALS = LIVE ? LIVE_PUB_SIGNALS : EXAMPLE_PUB_SIGNALS;
