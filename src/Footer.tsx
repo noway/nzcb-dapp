@@ -1,6 +1,6 @@
 import { AddressLinks } from "./AddressLinks";
 import { CollectionLinks } from "./CollectionLinks";
-import { CONTRACT_ADDRESS, EXAMPLE_ASSET_URL, LIVE_ASSET_URL } from "./config";
+import { CONTRACT_ADDRESS, EXAMPLE_ASSET_URL, EXAMPLE_ZKEY_FILE, LIVE_ASSET_URL, LIVE_ZKEY_FILE } from "./config";
 import { ExternalLink } from "./ExternalLink";
 import { styled } from "./styles";
 
@@ -13,7 +13,7 @@ const FooterContainer = styled("div", {
   padding: '20px',
   boxSizing: 'border-box',
   maxWidth: 900,
-  gridTemplateColumns: 'repeat(4, 1fr)',
+  gridTemplateColumns: 'repeat(5, 1fr)',
   gap: 20
 })
 
@@ -47,9 +47,9 @@ export function Footer() {
       <FooterSection>
         <FooterTitle>Source code</FooterTitle>
         <FooterList>
-          <div><ExternalLink href="https://github.com/noway/nzcb" title="Contract GitHub repo">Contract GitHub repo</ExternalLink></div>
-          <div><ExternalLink href="https://github.com/noway/nzcb-dapp" title="Dapp GitHub repo">Dapp GitHub repo</ExternalLink></div>
-          <div><ExternalLink href="https://github.com/noway/nzcb-circom" title="ZK-SNARK GitHub repo">ZK-SNARK GitHub repo</ExternalLink></div>
+          <div><ExternalLink href="https://github.com/noway/nzcb" title="Contract repo">Contract repo</ExternalLink></div>
+          <div><ExternalLink href="https://github.com/noway/nzcb-dapp" title="Dapp repo">Dapp repo</ExternalLink></div>
+          <div><ExternalLink href="https://github.com/noway/nzcb-circom" title="ZK-SNARK repo">ZK-SNARK repo</ExternalLink></div>
         </FooterList>
       </FooterSection>
       <FooterSection>
@@ -57,6 +57,13 @@ export function Footer() {
         <FooterList>
           <div><ExternalLink href={LIVE_ASSET_URL} title="Live .svg file">Live .svg file</ExternalLink></div>
           <div><ExternalLink href={EXAMPLE_ASSET_URL} title="Example .svg file">Example .svg file</ExternalLink></div>
+        </FooterList>
+      </FooterSection>
+      <FooterSection>
+        <FooterTitle>Proving key</FooterTitle>
+        <FooterList>
+          <div><ExternalLink href={LIVE_ZKEY_FILE} title="Live .zkey file">Live .zkey file</ExternalLink></div>
+          <div><ExternalLink href={EXAMPLE_ZKEY_FILE} title="Example .zkey file">Example .zkey file</ExternalLink></div>
         </FooterList>
       </FooterSection>
     </FooterContainer>
