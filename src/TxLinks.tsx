@@ -23,6 +23,7 @@ export function TxLinks(props: Readonly<{ txHash: string, title: string }>) {
     return (
       <>
         <div><ExternalLink href={`https://polygonscan.com/tx/${txHash}`} title={`${title} - PolygonScan`}>PolygonScan</ExternalLink></div>
+        <div><ExternalLink href={`https://explorer.bitquery.io/matic/tx/${txHash}`} title={`${title} - Bitquery`}>Bitquery</ExternalLink></div>
       </>
     )
   }

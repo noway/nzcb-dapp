@@ -22,6 +22,7 @@ export function AddressLinks(props: Readonly<{ address: string, title: string }>
     return (
       <>
         <div><ExternalLink href={`https://polygonscan.com/address/0x${addr}`} title={`${title} - PolygonScan`}>PolygonScan</ExternalLink></div>
+        <div><ExternalLink href={`https://explorer.bitquery.io/matic/address/0x${addr}`} title={`${title} - Bitquery`}>Bitquery</ExternalLink></div>
       </>
     )
   }
