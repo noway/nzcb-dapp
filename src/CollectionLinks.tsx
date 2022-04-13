@@ -21,6 +21,7 @@ export function CollectionLinks(props: Readonly<{ address: string, title: string
     return (
       <>
         <div><ExternalLink href={`https://opensea.io/assets/matic/${address}/0`} title={`${title} - OpenSea`}>OpenSea</ExternalLink></div>
+        <div><ExternalLink href={`https://rarible.com/collection/polygon/${address}/items`} title={`${title} - Rarible`}>Rarible</ExternalLink></div>
       </>
     )
   }
@@ -29,7 +30,7 @@ export function CollectionLinks(props: Readonly<{ address: string, title: string
     <div><ExternalLink href={`https://opensea.io/assets/${address}/0`} title={`${title} - OpenSea`}>OpenSea</ExternalLink></div>
     <div><ExternalLink href={`https://looksrare.org/collections/${address}`} title={`${title} - LooksRare`}>LooksRare</ExternalLink></div>
     <div><ExternalLink href={`https://zora.co/collections/${address}`} title={`${title} - Zora`}>Zora</ExternalLink></div>
-    <div><ExternalLink href={`https://rarible.com/token/${address}:0`} title={`${title} - Rarible`}>Rarible</ExternalLink></div>
+    <div><ExternalLink href={`https://rarible.com/collection/${address}/items`} title={`${title} - Rarible`}>Rarible</ExternalLink></div>
   </>)
 
 }

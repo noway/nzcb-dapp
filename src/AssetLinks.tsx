@@ -22,6 +22,7 @@ export function AssetLinks(props: Readonly<{ address: string, title: string, id:
     return (
       <>
         <div><ExternalLink href={`https://opensea.io/assets/matic/${address}/${id}`} title={`${title} - OpenSea`}>OpenSea</ExternalLink></div>
+        <div><ExternalLink href={`https://rarible.com/token/polygon/${address}:${id}`} title={`${title} - Rarible`}>Rarible</ExternalLink></div>
       </>
     )
   }
