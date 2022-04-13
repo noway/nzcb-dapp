@@ -72,7 +72,7 @@ function timeSpan(ms: number) {
   const minutes = Math.floor(ms / 1000 / 60);
   const seconds = Math.floor(ms / 1000) % 60;
   const milliseconds = ms % 1000;
-  if (minutes > 0) { 
+  if (minutes > 0) {
     return `${minutes.toFixed(0)} minutes`;
   }
   else if (seconds > 0) {

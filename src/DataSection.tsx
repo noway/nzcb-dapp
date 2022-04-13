@@ -4,7 +4,7 @@ export function DataSection(props: Readonly<{ title?: string; children: ReactNod
   const { title } = props;
   return (
     <div>
-      <div style={{ border: "1px solid lightgrey", marginTop: 20, padding: 10 , display: 'inline-grid', gap: 10 }}>
+      <div style={{ border: "1px solid lightgrey", marginTop: 20, padding: 10, display: 'inline-grid', gap: 10 }}>
         {title ? <h4>{title}</h4> : null}
         <div>
           {props.children}
