@@ -121,3 +121,8 @@ export function blink() {
     });
   });
 }
+
+export function isFirefox() {
+  const match = navigator.userAgent.match(/(?:firefox|fxios)\/(\d+)/i);
+  return match !== null;
+}

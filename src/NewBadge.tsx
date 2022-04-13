@@ -8,6 +8,7 @@ import { Header } from "./Header";
 import { decodeBytes, decodeCOSE, encodeToBeSigned } from "./nzcpTools";
 import { PassInfo } from "./PassInfo";
 import { Body, CtaContainer, styled } from "./styles";
+import { isFirefox } from "./utils";
 
 const PassInput = styled("textarea", {
   marginTop: 20,
@@ -19,6 +20,9 @@ export function NewBadge() {
   const routeContext = useContext(RouteContext);
   const [validStatus, setValidStatus] = useState<string>("N/A");
   function prepare() {
+    if (!isFirefox()) {
+      alert("This browser is not supported and may not work. Please use Mozilla Firefox.");
+    }
     routeContext.navigate(["prepare", { passURI }]);
   }
 
