@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useState } from "react";
 import { Status } from "./Status";
 
-const fetchAvg = 12806.33
-const proveAvg = 2634874.33
+const fetchAvg = 191525.25
+const proveAvg = 856499.71
 const controlAvg = 6618.25
 
 type Props = Readonly<{
