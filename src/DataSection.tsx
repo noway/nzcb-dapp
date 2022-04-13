@@ -1,15 +1,24 @@
 import { ReactNode } from "react";
+import { styled } from "./styles";
+
+const DataSectionContainer = styled("div", {
+  border: "1px solid lightgrey",
+  marginTop: 20,
+  padding: 10,
+  display: 'inline-grid',
+  gap: 10
+})
 
 export function DataSection(props: Readonly<{ title?: string; children: ReactNode; }>) {
   const { title } = props;
   return (
     <div>
-      <div style={{ border: "1px solid lightgrey", marginTop: 20, padding: 10, display: 'inline-grid', gap: 10 }}>
+      <DataSectionContainer>
         {title ? <h4>{title}</h4> : null}
         <div>
           {props.children}
         </div>
-      </div>
+      </DataSectionContainer>
     </div>
   );
 }

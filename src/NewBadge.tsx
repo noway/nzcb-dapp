@@ -7,7 +7,12 @@ import { Footer } from "./Footer";
 import { Header } from "./Header";
 import { decodeBytes, decodeCOSE, encodeToBeSigned } from "./nzcpTools";
 import { PassInfo } from "./PassInfo";
-import { Body, CtaContainer } from "./styles";
+import { Body, CtaContainer, styled } from "./styles";
+
+const PassInput = styled("textarea", {
+  marginTop: 20,
+  border: '1px solid lightgrey'
+})
 
 export function NewBadge() {
   const [passURI, setPassURI] = useState(LIVE ? "" : EXAMPLE_PASS_URI);
@@ -41,13 +46,12 @@ export function NewBadge() {
     <Header isLanding={false} showBack={true} />
     <Body>
       <div>
-        <textarea
+        <PassInput
           placeholder="NZCP:/1/..."
           onChange={(e) => setPassURI(e.target.value)}
           value={passURI}
           cols={60}
           rows={12}
-          style={{ marginTop: 20, border: '1px solid lightgrey' }}
         />
       </div>
       <PassInfo passURI={passURI} />

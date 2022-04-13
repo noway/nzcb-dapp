@@ -1,11 +1,18 @@
 import { ReactNode } from "react";
+import { styled } from "./styles";
 
+const AHref = styled("a", {
+  textDecoration: "none"
+})
 
+const Underlined = styled("span", {
+  textDecoration: "underline"
+})
 export function ExternalLink(props: Readonly<{ href: string; title: string; children: ReactNode; }>) {
   const { href, title } = props;
   return (
-    <a style={{ textDecoration: "none" }} href={href} rel="nofollow noopener noreferrer" title={title} target="_blank">
-      <span style={{ textDecoration: "underline" }}>{props.children}</span> ⧉
-    </a>
+    <AHref href={href} rel="nofollow noopener noreferrer" title={title} target="_blank">
+      <Underlined>{props.children}</Underlined> ⧉
+    </AHref>
   );
 }

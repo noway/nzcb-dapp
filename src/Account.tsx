@@ -9,8 +9,15 @@ import { NZCOVIDBadge__factory } from "./contracts/types";
 import { Footer } from "./Footer";
 import { Header } from "./Header";
 import { Status, StatusError } from "./Status";
-import { Body, CtaContainer } from "./styles";
+import { Body, CtaContainer, styled } from "./styles";
 import { getFirstAccount } from "./utils";
+
+const AssetsContainer = styled("div", {
+  display: "flex",
+  flexWrap: "wrap",
+  gap: 20,
+  marginTop: 20
+});
 
 export function Account() {
   const routeContext = useContext(RouteContext);
@@ -61,11 +68,11 @@ export function Account() {
         {loading ? <Status status="Searching for your badges..." /> : null}
         {error ? <StatusError error={error} /> : null}
         {!loading && !error && myBadgeIds.length === 0 ? <Status status="You don't have any badges yet." /> : null}
-        {!loading && !error && myBadgeIds.length > 0 ? <div style={{ display: "flex", flexWrap: "wrap", gap: 20, marginTop: 20 }}>
+        {!loading && !error && myBadgeIds.length > 0 ? <AssetsContainer>
           {myBadgeIds.map(id => (
             <Asset id={id} key={id.toString()} />
           ))}
-        </div> : null}
+        </AssetsContainer> : null}
         <CtaContainer>
           <button type="button" onClick={newBadge}>New Badge</button>
         </CtaContainer>

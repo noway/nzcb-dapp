@@ -2,7 +2,34 @@ import { Account } from "@web3-onboard/core/dist/types";
 import { useConnectWallet, useSetChain } from "@web3-onboard/react";
 import { useContext, useEffect, useState } from "react";
 import { RouteContext } from "./contexts";
+import { styled } from "./styles";
 import { getFirstAccount, truncateAddress } from "./utils";
+
+const WalletContainer = styled("div", {
+  border: '1px solid lightgrey',
+  padding: 10,
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'flex-end'
+})
+
+const AccountButton = styled("div", {
+  userSelect: "none",
+  cursor: "pointer"
+})
+
+const Dropdown = styled("div", {
+  position: 'absolute',
+  top: 70,
+  right: 30,
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'flex-end',
+  background: 'white',
+  border: '1px solid lightgrey',
+  padding: 10,
+  gap: 10
+})
 
 function AccountContent(props: Readonly<{ account: Account }>) {
   const { account } = props
@@ -33,7 +60,7 @@ export function Wallet() {
   }
 
   return (
-    <div style={{ border: '1px solid lightgrey', padding: 10, display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
+    <WalletContainer>
       {!(wallet && account) ? (
         connecting ?
           <button disabled={true}>Connecting</button> :
@@ -41,13 +68,13 @@ export function Wallet() {
       ) : null}
 
       {(wallet && account) ? (
-        <div onClick={toggleDropdown} style={{ userSelect: "none", cursor: "pointer" }} role="button">
+        <AccountButton onClick={toggleDropdown} role="button">
           <AccountContent account={account} />
-        </div>
+        </AccountButton>
       ) : null}
 
       {(wallet && account && open) ? (
-        <div style={{ position: 'absolute', top: 70, right: 30, display: 'flex', flexDirection: 'column', alignItems: 'flex-end', background: 'white', border: '1px solid lightgrey', padding: 10, gap: 10 }}>
+        <Dropdown>
           <div>
             {account.address}
           </div>
@@ -61,9 +88,8 @@ export function Wallet() {
           <div>
             <button onClick={() => disconnect(wallet)}>Disconnect Wallet</button>
           </div>
-        </div>
+        </Dropdown>
       ) : null}
-    </div>
-
+    </WalletContainer>
   )
 }
