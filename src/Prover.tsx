@@ -12,12 +12,7 @@ import { ProverStatus } from "./ProverStatus";
 import { fetchZKeyBlob } from "./fetcher";
 import { blink } from "./utils";
 
-type Props = Readonly<{
-  passURI: string
-  address: string
-}>;
-
-export function Prover(props: Props) {
+export function Prover(props: Readonly<{ passURI: string; address: string }>) {
   const { passURI, address } = props
   const routeContext = useContext(RouteContext);
   const [proving, setProving] = useState(false);

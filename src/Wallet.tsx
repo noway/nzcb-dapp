@@ -4,11 +4,7 @@ import { useContext, useEffect, useState } from "react";
 import { RouteContext } from "./contexts";
 import { getFirstAccount, truncateAddress } from "./utils";
 
-type AccountProps = Readonly<{
-  account: Account
-}>
-
-function AccountContent(props: AccountProps) {
+function AccountContent(props: Readonly<{ account: Account }>) {
   const { account } = props
   return (
     <div>

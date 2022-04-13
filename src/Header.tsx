@@ -41,11 +41,7 @@ const HomeLink = styled("span", {
   cursor: "pointer",
 })
 
-type Props = Readonly<{
-  isLanding: boolean;
-  showBack: boolean;
-}>
-export function Header(props: Props) {
+export function Header(props: Readonly<{ isLanding: boolean; showBack: boolean; }>) {
 
   const { isLanding, showBack } = props
   const routeContext = useContext(RouteContext);

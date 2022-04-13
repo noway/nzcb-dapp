@@ -65,10 +65,7 @@ function PreFlightCheck(props: Readonly<{ pubIdentityMatches: boolean }>) {
   )
 }
 
-type SuccessProps = Readonly<{
-  receipt: ContractReceipt
-}>
-function Success(props: SuccessProps) {
+function Success(props: Readonly<{ receipt: ContractReceipt }>) {
   const { receipt } = props
   const { transactionHash } = receipt
   const events = receipt.events || []
@@ -99,7 +96,18 @@ type MintContentsProps = Readonly<{
   pubIdentity: PubIdentity
 }>
 
-type ProviderError = { code: number, data: { code: number, message: string, data: { name: string, stack: string } }, message: string }
+type ProviderError = Readonly<{
+  code: number,
+  data: {
+    code: number,
+    message: string,
+    data: {
+      name: string,
+      stack: string
+    }
+  },
+  message: string
+}>
 type MintingError = Error | ProviderError
 
 function MintContents(props: MintContentsProps) {

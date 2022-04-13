@@ -5,11 +5,7 @@ import { Body } from "./styles";
 import { getFirstAccount } from "./utils";
 import { Footer } from "./Footer";
 
-type Props = Readonly<{
-  passURI: string
-}>;
-
-export function Prepare(props: Props) {
+export function Prepare(props: Readonly<{ passURI: string }>) {
   const [{ wallet }] = useConnectWallet()
   const account = getFirstAccount(wallet)
 
