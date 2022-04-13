@@ -54,7 +54,7 @@ export function ProverStatus(props: Props) {
   }
 }
 
-function Progress(props: { start: number, avg: number }) {
+function Progress(props: Readonly<{ start: number, avg: number }>) {
   const { start, avg } = props;
   const done = Date.now() - start;
   const left = Math.max(avg - done, 0);

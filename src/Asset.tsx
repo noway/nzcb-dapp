@@ -2,7 +2,7 @@ import { AssetLinks } from "./AssetLinks";
 import { CONTRACT_ADDRESS } from "./config";
 import { Sample } from "./Sample";
 
-export function Asset(props: { id: bigint; }) {
+export function Asset(props: Readonly<{ id: bigint; }>) {
   const { id } = props;
   const title = `NZ COVID Badge #${id.toString()}`
   return (

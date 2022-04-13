@@ -56,7 +56,7 @@ function ProofComponent(props: Readonly<{ proof: Proof }>) {
     </DataSection>
   )
 }
-function PreFlightCheck(props: { pubIdentityMatches: boolean }) {
+function PreFlightCheck(props: Readonly<{ pubIdentityMatches: boolean }>) {
   const { pubIdentityMatches } = props
   return (
     <DataSection title="Pre-flight check">
