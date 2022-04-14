@@ -14,7 +14,7 @@ const FooterContainer = styled("div", {
   boxSizing: 'border-box',
   maxWidth: 900,
   gridTemplateColumns: 'repeat(5, 1fr)',
-  gap: 20
+  gap: 10
 })
 
 const FooterSection = styled("div", {
