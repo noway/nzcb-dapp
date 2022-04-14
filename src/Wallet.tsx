@@ -1,9 +1,10 @@
 import { Account } from "@web3-onboard/core/dist/types";
-import { useConnectWallet, useSetChain } from "@web3-onboard/react";
+import { init, useConnectWallet, useSetChain } from "@web3-onboard/react";
 import { useContext, useEffect, useState } from "react";
 import { RouteContext } from "./contexts";
 import { styled } from "./styles";
 import { getFirstAccount, truncateAddress } from "./utils";
+import { getInitOptions } from "./web3";
 
 const WalletContainer = styled("div", {
   border: '1px solid lightgrey',
@@ -65,6 +66,7 @@ export function Wallet() {
   const [rpcUrl, setRpcUrl] = useState<string>(savedRpcUrl)
   async function saveRpcUrl() {
     localStorage.setItem('rpcUrl', rpcUrl)
+    setRpcUrl('')
     setNonce(nonce + 1)
   }
   async function clearRpcUrl() {
@@ -99,16 +101,19 @@ export function Wallet() {
             )}
           </div>
           <div>
-            rpcUrl: {savedRpcUrl}
+            Current RPC URL: {savedRpcUrl}
           </div>
           <div>
-            rpcUrl: <input
+            New RPC URL: <input
               value={rpcUrl}
               onChange={(e) => setRpcUrl(e.target.value)}
             />
           </div>
-          <button onClick={saveRpcUrl}>Set rpc url</button>
-          <button onClick={clearRpcUrl}>Clear rpc url</button>
+          <div style={{ display: 'flex', gap: 10 }}>
+            <button onClick={clearRpcUrl}>Clear RPC URL</button>
+            <button onClick={saveRpcUrl}>Set RPC URL</button>
+            <button onClick={() => window.location.reload()}>Reload to apply</button>
+          </div>
           <div>
             <button onClick={() => disconnect(wallet)}>Disconnect Wallet</button>
           </div>
