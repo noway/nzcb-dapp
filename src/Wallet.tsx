@@ -87,7 +87,7 @@ export function Wallet() {
             <h4>Wallet</h4>
             <div>
               <code>
-                <b>address</b>: {account.address}
+                <b>address</b>:&nbsp;{account.address}
               </code>
               <div>
                 {settingChain ? (
