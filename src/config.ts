@@ -3,7 +3,10 @@ import { LIVE_PROOF, LIVE_PUB_SIGNALS } from "./liveStubs";
 
 export const CONTRACT_ADDRESS = "0x14fFB19A685BB8Ec4B925604280f7e441A343af9";
 export const USE_REAL_PROOF = true;
-export const NETWORK: "mainnet" | "rinkeby" | "polygon" | "polygonMumbai" = "polygon";
+export const NETWORK: "mainnet" | "rinkeby" | "polygon" | "polygonMumbai" =
+  "polygon";
+export const NETWORK_ID = "0x89";
+export const NETWORK_LABEL = "Matic Mainnet";
 export const LIVE = true;
 
 // example pass vars

@@ -1,7 +1,7 @@
-import { useSetChain } from "@web3-onboard/react";
 import { useContext } from "react";
 import { RouteContext } from "./contexts";
 import { styled } from "./styles";
+import { ChainChecker } from "./ChainChecker";
 import { Wallet } from "./Wallet";
 
 const Navigation = styled("div", {
@@ -11,11 +11,20 @@ const Navigation = styled("div", {
   height: 65,
 });
 
-const HeaderContainer = styled("div", {
+export const HeaderContainer = styled("div", {
   marginLeft: 20,
   marginRight: 20,
   border: "1px solid lightgrey",
-  width: '100%'
+  width: '100%',
+  maxWidth: '900px',
+  variants: {
+    purpose: {
+      error: {
+        marginTop: 20,
+        borderColor: 'red'
+      },
+    },
+  },
 })
 
 const Back = styled("div", {
@@ -52,7 +61,6 @@ export function Header(props: Readonly<{ isLanding: boolean; showBack: boolean; 
 
   const { isLanding, showBack } = props
   const routeContext = useContext(RouteContext);
-  const [{ connectedChain }] = useSetChain()
 
   function back() {
     routeContext.goBack();
@@ -67,21 +75,21 @@ export function Header(props: Readonly<{ isLanding: boolean; showBack: boolean; 
   }
 
   return (
-    <HeaderContainer>
-
-      {connectedChain?.id !== '0x89' ? <div style={{ color: 'red', textAlign: "center", backgroundColor: 'rgba(255, 0, 0, 0.2)', padding: 20 }}>Wrong Chain - Please Switch to ?</div> : null}
-
-      <Navigation>
-        <Back>
-          {showBack ? <button type="button" onClick={back}>Back</button> : <span />}
-        </Back>
-        <Title>
-          {!isLanding ? <HomeLink onClick={home}>NZ COVID Badge</HomeLink> : <Link href="/">NZ COVID Badge</Link>}
-        </Title>
-        <WalletContainer>
-          {!isLanding ? <Wallet /> : <span />}
-        </WalletContainer>
-      </Navigation>
-    </HeaderContainer>
+    <>
+      <HeaderContainer>
+        <Navigation>
+          <Back>
+            {showBack ? <button type="button" onClick={back}>Back</button> : <span />}
+          </Back>
+          <Title>
+            {!isLanding ? <HomeLink onClick={home}>NZ COVID Badge</HomeLink> : <Link href="/">NZ COVID Badge</Link>}
+          </Title>
+          <WalletContainer>
+            {!isLanding ? <Wallet /> : <span />}
+          </WalletContainer>
+        </Navigation>
+      </HeaderContainer>
+      <ChainChecker />
+    </>
   );
 }
