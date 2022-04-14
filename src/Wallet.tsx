@@ -42,6 +42,13 @@ function AccountContent(props: Readonly<{ account: Account }>) {
     </div>
   )
 }
+const DropdownSection = styled("div", {
+  border: '1px solid lightgrey',
+  padding: 10,
+  display: 'flex',
+  gap: 10,
+  flexDirection: 'column'
+})
 
 export function Wallet() {
   const routeContext = useContext(RouteContext);
@@ -76,7 +83,7 @@ export function Wallet() {
 
       {(wallet && account && open) ? (
         <Dropdown>
-          <div style={{ border: '1px solid lightgrey', padding: 10, display: 'flex', gap: 10, flexDirection: 'column' }}>
+          <DropdownSection>
             <h4>Wallet</h4>
             <div>
               <code>
@@ -93,15 +100,35 @@ export function Wallet() {
             <div>
               <button onClick={() => disconnect(wallet)}>Disconnect Wallet</button>
             </div>
-          </div>
-          <div style={{ border: '1px solid lightgrey', padding: 10, display: 'flex', gap: 10, flexDirection: 'column' }}>
+          </DropdownSection>
+          <DropdownSection>
             <RpcSetter />
-          </div>
+          </DropdownSection>
         </Dropdown>
       ) : null}
     </WalletContainer>
   )
 }
+
+const RpcContent = styled("div", {
+  display: 'grid',
+  gap: 5
+})
+
+const RpcField = styled("div", {
+  display: 'flex',
+  alignItems: "center",
+  gap: 5
+})
+
+const RpcActions = styled("div", {
+  display: 'flex',
+  gap: 10
+})
+
+const RpcInput = styled("input", {
+  flex: 1,
+})
 
 function RpcSetter() {
   const [{ chains, connectedChain }] = useSetChain()
@@ -126,32 +153,30 @@ function RpcSetter() {
 
   return <>
     <h4>RPC endpoint</h4>
-    <div style={{ display: 'grid', gap: 5 }}>
-      <div style={{ display: 'flex', alignItems: "center", gap: 5 }}>
+    <RpcContent>
+      <RpcField>
         <code><b>saved RPC URL</b>: </code>
-        <input
+        <RpcInput
           value={savedRpcUrl}
           readOnly={true}
-          style={{ flex: 1 }}
         />
-      </div>
-      {(reloadNeeded || storageRpcUrl) ? <div style={{ display: 'flex', gap: 10 }}>
+      </RpcField>
+      {(reloadNeeded || storageRpcUrl) ? <RpcActions>
         {storageRpcUrl ?
           <button onClick={clearRpcUrl}>Clear RPC URL</button> : null}
         {reloadNeeded ?
           <button onClick={() => window.location.reload()}>Reload to apply</button> : null}
-      </div> : null}
-      <div style={{ display: 'flex', alignItems: "center", gap: 5 }}>
+      </RpcActions> : null}
+      <RpcField>
         <code><b>new RPC URL</b>: </code>
-        <input
+        <RpcInput
           value={newRpcUrl}
           onChange={(e) => setNewRpcUrl(e.target.value)}
-          style={{ flex: 1 }}
         />
-      </div>
-      <div>
+      </RpcField>
+      <RpcActions>
         <button onClick={saveRpcUrl} disabled={!newRpcUrl}>Set new RPC URL</button>
-      </div>
-    </div>
+      </RpcActions>
+    </RpcContent>
   </>;
 }
