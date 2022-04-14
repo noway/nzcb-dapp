@@ -21,12 +21,13 @@ const AccountButton = styled("div", {
 const Dropdown = styled("div", {
   position: 'absolute',
   top: 70,
-  right: 30,
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'flex-end',
   background: 'white',
   border: '1px solid lightgrey',
+  marginRight: -10,
+  transform: 'translate(1px, 0)',
   padding: 10,
   gap: 10
 })
