@@ -128,6 +128,7 @@ const RpcActions = styled("div", {
 
 const RpcInput = styled("input", {
   flex: 1,
+  border: '1px solid lightgrey'
 })
 
 function RpcSetter() {
