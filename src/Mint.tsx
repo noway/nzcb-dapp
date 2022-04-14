@@ -11,7 +11,7 @@ import { Header } from "./Header";
 import { comparePubIdentities, getVerifyArgs, getRS, Proof, PubIdentity, PublicSignals, signalsToPubIdentity } from "./nzcpCircom";
 import { bytesToHex } from "./nzcpTools";
 import { Status, StatusError } from "./Status";
-import { Body, CtaContainer } from "./styles";
+import { Body, CtaContainer, styled } from "./styles";
 import { TxLinks } from "./TxLinks";
 
 function PublicIdentity(props: Readonly<{ pubIdentity: PubIdentity }>) {
@@ -65,6 +65,15 @@ function PreFlightCheck(props: Readonly<{ pubIdentityMatches: boolean }>) {
   )
 }
 
+const CongratulationsContainer = styled("div", {
+  marginTop: 10
+})
+
+const TxBits = styled("div", {
+  display: 'inline-grid',
+  gap: 10,
+})
+
 function Success(props: Readonly<{ receipt: ContractReceipt }>) {
   const { receipt } = props
   const { transactionHash } = receipt
@@ -74,15 +83,15 @@ function Success(props: Readonly<{ receipt: ContractReceipt }>) {
   return (
     <div>
       <h3>Success</h3>
-      <div style={{ marginTop: 10 }}>
+      <CongratulationsContainer>
         <div>Congratulations! You have successfully minted <b>NZ COVID Badge #{id.toString()}</b></div>
         <DataSection title="Transaction">
-          <div style={{ display: 'inline-grid', gap: 10 }}>
+          <TxBits>
             <DataBit title="hash" value={receipt.transactionHash} />
             <TxLinks txHash={receipt.transactionHash} title="Mint Transaction" />
-          </div>
+          </TxBits>
         </DataSection>
-      </div>
+      </CongratulationsContainer>
     </div>
   )
 }
@@ -109,6 +118,13 @@ type ProviderError = Readonly<{
   message: string
 }>
 type MintingError = Error | ProviderError
+
+const SectionTitle = styled("h3", {
+  marginTop: 20,
+  verticalAlign: 'middle',
+  display: 'flex'
+})
+
 
 function MintContents(props: MintContentsProps) {
   const { eip1193Provider, passURI, publicSignals: publicSignalsJS, proof: proofJS, pubIdentity } = props
@@ -155,31 +171,25 @@ function MintContents(props: MintContentsProps) {
   }
   return (
     <>
-      <h3 style={{ marginTop: 20 }}>Proof</h3>
+      <SectionTitle>Proof</SectionTitle>
       <PreFlightCheck pubIdentityMatches={pubIdentityMatches} />
-      <h3 style={{
-        marginTop: 20,
-        verticalAlign: 'middle',
-        display: 'flex'
-      }}>Advanced <button style={{ marginLeft: 10 }} onClick={toggle}>{open ? '-' : '+'}</button></h3>
+      <SectionTitle>Advanced&nbsp;<button onClick={toggle}>{open ? '-' : '+'}</button></SectionTitle>
       {open ? <>
         <PublicIdentity pubIdentity={pubIdentity} />
         <Signature rs={getRS(passURI)} />
         <ProofComponent proof={proofJS} />
         <PublicSignalsComponent publicSignals={publicSignalsJS} />
       </> : null}
-      <div style={{ marginTop: 20 }}>
-        <h3>Disclaimer</h3>
-        <p>By minting you confirm that you understand the following:</p>
-        <ul>
-          <li>Minting may result in loss of funds</li>
-          <li>The smart contract was not audited</li>
-          <li>The smart contract may contain bugs</li>
-          <li>NZ COVID Badge is not an investment</li>
-          <li>There's no liquidity for your NZ COVID Badge</li>
-          <li>You're minting on {chains.find(({ id }) => id === connectedChain?.id)?.label}</li>
-        </ul>
-      </div>
+      <SectionTitle>Disclaimer</SectionTitle>
+      <p>By minting you confirm that you understand the following:</p>
+      <ul>
+        <li>Minting may result in loss of funds</li>
+        <li>The smart contract was not audited</li>
+        <li>The smart contract may contain bugs</li>
+        <li>NZ COVID Badge is not an investment</li>
+        <li>There's no liquidity for your NZ COVID Badge</li>
+        <li>You're minting on {chains.find(({ id }) => id === connectedChain?.id)?.label}</li>
+      </ul>
       {minting ? <Status status="Minting..." /> : null}
       {mintingError ? <StatusError error={mintingError} /> : null}
       {receipt ? <Success receipt={receipt} /> : null}
