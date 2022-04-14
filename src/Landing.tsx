@@ -45,19 +45,19 @@ export function Landing() {
         <ConnectWallet />
       </Section>
       <Question title="How does it work?">
-        <p>We take your NZ COVID Pass, deconstruct it, pass it through a custom ZK-SNARK and send it off to the smart contract for minting.</p>
+        <p>NZ COVID Badge takes your NZ COVID Pass, deconstructs it, passes it through a custom ZK-SNARK and sends it off to the smart contract for minting.</p>
       </Question>
       <Question title="Does my NZ COVID Pass get saved in the calldata?">
-        <p><b>No.</b> We only take a few key parts of your NZ COVID Pass, pass them through a custom ZK-SNARK, then verify the zero knowledge proof of you holding the said pass in the smart contract. An attacker can’t reconstruct your NZ COVID Pass based on the blockchain logs.</p>
+        <p><b>No.</b> NZ COVID Badge only takes a few key parts of your NZ COVID Pass, passes them through a custom ZK-SNARK, then verifies the zero knowledge proof of you holding the said pass in the smart contract. An attacker can’t reconstruct your NZ COVID Pass based on blockchain logs.</p>
       </Question>
       <Question title="Does my name get saved in the calldata?">
-        <p><b>No.</b> We send an anonymized identity of your NZ COVID Pass to the smart contract. To be precise, we send 2<sup>256</sup> hashes of random identities, one of which is yours. An attacker can’t figure out your name without reversing the hash function.</p>
+        <p><b>No.</b> NZ COVID Badge sends an anonymized identity of your NZ COVID Pass to the smart contract. To be precise, NZ COVID Badge sends 2<sup>256</sup> hashes of random identities, one of which is yours. An attacker can’t figure out your name without reversing the hash function.</p>
       </Question>
       <Question title="Do you save my NZ COVID Pass on the backend?">
         <p><b>No.</b> NZ COVID Badge is a stateless decentralized application (Dapp) and doesn’t have a backend.</p>
       </Question>
       <Question title="Does this website send analytics or telemetry?">
-        <p><b>No.</b> This website collects no analytics, telemetry or any other data derived from user actions. The website only communicates with an EVM node RPC endpoint to send and receive information from the blockchain.</p>
+        <p><b>No.</b> This website collects no analytics, telemetry or any other data derived from user actions. The website only communicates with an EVM node via an RPC endpoint to send and receive information from the blockchain.</p>
       </Question>
       <Question title="How many badges can I mint?">
         <p>You can only mint <b>1 badge per person</b>. Even if you request a new NZ COVID Pass from <ExternalLink href="https://mycovidrecord.nz" title="mycovidrecord.nz">mycovidrecord.nz</ExternalLink>, your anonymized identity will match against the list of spent anonymized identities and prevent you from minting again.</p>
@@ -88,6 +88,12 @@ export function Landing() {
       </Question>
       <Question title="What browser should I use?">
         <p>NZ COVID Badge only works in Mozilla Firefox. </p>
+      </Question>
+      <Question title="Is NZ COVID Badge vulnerable to The Frozen Heart?">
+        <p>No, NZ COVID Badge is not vulnerable to <ExternalLink href="https://blog.trailofbits.com/2022/04/13/part-1-coordinated-disclosure-of-vulnerabilities-affecting-girault-bulletproofs-and-plonk/" title="The Frozen Heart vulnerability">The Frozen Heart</ExternalLink>. </p>
+      </Question>
+      <Question title="How long it takes to compute a proof?">
+        <p>It takes somewhere in between 14 and 43 minutes to compute a proof of holding a pass on a modern CPU.</p>
       </Question>
     </Body>
     <Footer />
