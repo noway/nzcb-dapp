@@ -77,7 +77,7 @@ const TxBits = styled("div", {
 function Success(props: Readonly<{ receipt: ContractReceipt }>) {
   const { receipt } = props
   const { transactionHash } = receipt
-  const events = receipt.events || []
+  const events = receipt.events ?? []
   const event = events.find(e => e.transactionHash === transactionHash)
   const id = event?.args?.id as BigNumber
   return (
