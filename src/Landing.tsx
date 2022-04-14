@@ -95,6 +95,9 @@ export function Landing() {
       <Question title="How long it takes to compute a proof?">
         <p>It takes somewhere in between 14 and 43 minutes to compute a proof of holding a pass on a modern CPU.</p>
       </Question>
+      <Question title="Can I read more about the technical implementation?">
+        <p>See <ExternalLink href="https://github.com/noway/nzcb/blob/main/TECH_SPEC.md" title="NZ COVID Badge - Tech Spec">NZ COVID Badge - Tech Spec</ExternalLink></p>
+      </Question>
     </Body>
     <Footer />
   </>
