@@ -7,7 +7,7 @@ import { getInitOptions } from './web3';
 
 
 
-init(getInitOptions());
+init(getInitOptions(localStorage.getItem('rpcUrl')));
 
 
 ReactDOM.render(

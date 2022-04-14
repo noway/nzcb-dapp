@@ -60,6 +60,18 @@ export function Wallet() {
     setOpen(!open)
   }
 
+  const savedRpcUrl = localStorage.getItem('rpcUrl') ?? ''
+  const [nonce, setNonce] = useState(0)
+  const [rpcUrl, setRpcUrl] = useState<string>(savedRpcUrl)
+  async function saveRpcUrl() {
+    localStorage.setItem('rpcUrl', rpcUrl)
+    setNonce(nonce + 1)
+  }
+  async function clearRpcUrl() {
+    localStorage.removeItem('rpcUrl')
+    setRpcUrl('')
+    setNonce(nonce + 1)
+  }
   return (
     <WalletContainer>
       {!(wallet && account) ? (
@@ -86,6 +98,17 @@ export function Wallet() {
               <span>{chains.find(({ id }) => id === connectedChain?.id)?.label}</span>
             )}
           </div>
+          <div>
+            rpcUrl: {savedRpcUrl}
+          </div>
+          <div>
+            rpcUrl: <input
+              value={rpcUrl}
+              onChange={(e) => setRpcUrl(e.target.value)}
+            />
+          </div>
+          <button onClick={saveRpcUrl}>Set rpc url</button>
+          <button onClick={clearRpcUrl}>Clear rpc url</button>
           <div>
             <button onClick={() => disconnect(wallet)}>Disconnect Wallet</button>
           </div>

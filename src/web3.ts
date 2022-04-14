@@ -2,7 +2,7 @@ import injectedModule from "@web3-onboard/injected-wallets";
 import walletConnectModule from "@web3-onboard/walletconnect";
 import { InitOptions } from "@web3-onboard/core";
 
-export function getInitOptions(rpcUrl?: string): InitOptions {
+export function getInitOptions(rpcUrl: string | null): InitOptions {
   const injected = injectedModule();
   const walletConnect = walletConnectModule();
   const ALCHEMY_API_KEY = process.env.REACT_APP_ALCHEMY_API_KEY;
