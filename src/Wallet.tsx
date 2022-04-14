@@ -1,10 +1,10 @@
 import { Account } from "@web3-onboard/core/dist/types";
-import { init, useConnectWallet, useSetChain } from "@web3-onboard/react";
+import { useConnectWallet, useSetChain } from "@web3-onboard/react";
 import { useContext, useEffect, useState } from "react";
 import { RouteContext } from "./contexts";
 import { styled } from "./styles";
 import { getFirstAccount, truncateAddress } from "./utils";
-import { getDefaultRpcUrl, getInitOptions } from "./web3";
+import { getDefaultRpcUrl } from "./web3";
 
 const WalletContainer = styled("div", {
   border: '1px solid lightgrey',
