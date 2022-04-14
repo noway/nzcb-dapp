@@ -4,7 +4,7 @@ import { useContext, useEffect, useState } from "react";
 import { RouteContext } from "./contexts";
 import { styled } from "./styles";
 import { getFirstAccount, truncateAddress } from "./utils";
-import { getInitOptions } from "./web3";
+import { getDefaultRpcUrl, getInitOptions } from "./web3";
 
 const WalletContainer = styled("div", {
   border: '1px solid lightgrey',
@@ -24,7 +24,6 @@ const Dropdown = styled("div", {
   top: 70,
   display: 'flex',
   flexDirection: 'column',
-  alignItems: 'flex-end',
   background: 'white',
   border: '1px solid lightgrey',
   marginRight: -10,
@@ -61,19 +60,6 @@ export function Wallet() {
     setOpen(!open)
   }
 
-  const savedRpcUrl = localStorage.getItem('rpcUrl') ?? ''
-  const [nonce, setNonce] = useState(0)
-  const [rpcUrl, setRpcUrl] = useState<string>(savedRpcUrl)
-  async function saveRpcUrl() {
-    localStorage.setItem('rpcUrl', rpcUrl)
-    setRpcUrl('')
-    setNonce(nonce + 1)
-  }
-  async function clearRpcUrl() {
-    localStorage.removeItem('rpcUrl')
-    setRpcUrl('')
-    setNonce(nonce + 1)
-  }
   return (
     <WalletContainer>
       {!(wallet && account) ? (
@@ -90,35 +76,82 @@ export function Wallet() {
 
       {(wallet && account && open) ? (
         <Dropdown>
-          <div>
-            {account.address}
+          <div style={{ border: '1px solid lightgrey', padding: 10, display: 'flex', gap: 10, flexDirection: 'column' }}>
+            <h4>Wallet</h4>
+            <div>
+              <code>
+                <b>address</b>: {account.address}
+              </code>
+              <div>
+                {settingChain ? (
+                  <code><b>switching chain..</b>.</code>
+                ) : (
+                  <code><b>chain</b>: {chains.find(({ id }) => id === connectedChain?.id)?.label}</code>
+                )}
+              </div>
+            </div>
+            <div>
+              <button onClick={() => disconnect(wallet)}>Disconnect Wallet</button>
+            </div>
           </div>
-          <div>
-            {settingChain ? (
-              <span>Switching chain...</span>
-            ) : (
-              <span>{chains.find(({ id }) => id === connectedChain?.id)?.label}</span>
-            )}
-          </div>
-          <div>
-            Current RPC URL: {savedRpcUrl}
-          </div>
-          <div>
-            New RPC URL: <input
-              value={rpcUrl}
-              onChange={(e) => setRpcUrl(e.target.value)}
-            />
-          </div>
-          <div style={{ display: 'flex', gap: 10 }}>
-            <button onClick={clearRpcUrl}>Clear RPC URL</button>
-            <button onClick={saveRpcUrl}>Set RPC URL</button>
-            <button onClick={() => window.location.reload()}>Reload to apply</button>
-          </div>
-          <div>
-            <button onClick={() => disconnect(wallet)}>Disconnect Wallet</button>
+          <div style={{ border: '1px solid lightgrey', padding: 10, display: 'flex', gap: 10, flexDirection: 'column' }}>
+            <RpcSetter />
           </div>
         </Dropdown>
       ) : null}
     </WalletContainer>
   )
+}
+
+function RpcSetter() {
+  const [{ chains, connectedChain }] = useSetChain()
+  const chain = chains.find(({ id }) => id === connectedChain?.id)
+  const activeRpcUrl = chain?.rpcUrl ?? null
+  const storageRpcUrl = localStorage.getItem('rpcUrl')
+  const savedRpcUrl = storageRpcUrl ?? getDefaultRpcUrl()
+  const reloadNeeded = activeRpcUrl !== savedRpcUrl
+  const [newRpcUrl, setNewRpcUrl] = useState<string>('')
+  const [nonce, setNonce] = useState(0)
+
+  async function saveRpcUrl() {
+    localStorage.setItem('rpcUrl', newRpcUrl)
+    setNewRpcUrl('')
+    setNonce(nonce + 1)
+  }
+  async function clearRpcUrl() {
+    localStorage.removeItem('rpcUrl')
+    setNewRpcUrl('')
+    setNonce(nonce + 1)
+  }
+
+  return <>
+    <h4>RPC endpoint</h4>
+    <div style={{ display: 'grid', gap: 5 }}>
+      <div style={{ display: 'flex', alignItems: "center", gap: 5 }}>
+        <code><b>saved RPC URL</b>: </code>
+        <input
+          value={savedRpcUrl}
+          readOnly={true}
+          style={{ flex: 1 }}
+        />
+      </div>
+      {(reloadNeeded || storageRpcUrl) ? <div style={{ display: 'flex', gap: 10 }}>
+        {storageRpcUrl ?
+          <button onClick={clearRpcUrl}>Clear RPC URL</button> : null}
+        {reloadNeeded ?
+          <button onClick={() => window.location.reload()}>Reload to apply</button> : null}
+      </div> : null}
+      <div style={{ display: 'flex', alignItems: "center", gap: 5 }}>
+        <code><b>new RPC URL</b>: </code>
+        <input
+          value={newRpcUrl}
+          onChange={(e) => setNewRpcUrl(e.target.value)}
+          style={{ flex: 1 }}
+        />
+      </div>
+      <div>
+        <button onClick={saveRpcUrl} disabled={!newRpcUrl}>Set new RPC URL</button>
+      </div>
+    </div>
+  </>;
 }

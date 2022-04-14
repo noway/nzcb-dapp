@@ -1,6 +1,7 @@
 import injectedModule from "@web3-onboard/injected-wallets";
 import walletConnectModule from "@web3-onboard/walletconnect";
 import { InitOptions } from "@web3-onboard/core";
+import { NETWORK_ID } from "./config";
 
 export function getInitOptions(rpcUrl: string | null): InitOptions {
   const injected = injectedModule();
@@ -63,4 +64,8 @@ export function getInitOptions(rpcUrl: string | null): InitOptions {
       ],
     },
   };
+}
+
+export function getDefaultRpcUrl() {
+  return getInitOptions(null).chains.find((chain) => chain.id === NETWORK_ID)?.rpcUrl;
 }
