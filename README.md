@@ -24,6 +24,9 @@ See [src/config.ts](src/config.ts) for configuration values.
 - Selecting custom RPC endpoint
 - Multiple block explorer links
 
+## Tech Spec
+- [NZ COVID Badge - Tech Spec](https://github.com/noway/nzcb/blob/main/TECH_SPEC.md)
+
 ## Related repos
 - [NZ COVID Badge - Dapp repo](https://github.com/noway/nzcb-dapp)
 - [NZ COVID Badge - Contract repo](https://github.com/noway/nzcb)
