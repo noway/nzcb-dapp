@@ -4,7 +4,7 @@
 Read [the website](https://nzcb.netlify.app/) for more info.
 
 ## Technical info
-Create React App with `typescript` template is used. Wallet handling is done via `@web3-onboard/react`.
+Create React App with `typescript` template is used. Wallet handling is done via `@web3-onboard/react`. Webpack@5 is used alongside the `snarkjs` package.
 
 ## Configuration
 See [src/config.ts](src/config.ts) for configuration values.
