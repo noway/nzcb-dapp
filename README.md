@@ -21,5 +21,10 @@ See [src/config.ts](src/config.ts) for configuration values.
 ## Update contract types
 - Run `yarn compile-contract-types`
 
+## Related repos
+- [NZ COVID Badge - Dapp repo](https://github.com/noway/nzcb-dapp)
+- [NZ COVID Badge - Contract repo](https://github.com/noway/nzcb)
+- [NZ COVID Badge - ZK-SNARK repo](https://github.com/noway/nzcb-circom)
+
 ## License
 MIT License
